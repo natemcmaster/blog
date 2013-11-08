@@ -6,17 +6,23 @@ require 'yaml'
 require 'tmpdir'
 require 'jekyll'
 
-desc "Generate blog files"
-task :generate do
-  Jekyll::Site.new(Jekyll.configuration({
-    "source"      => ".",
-    "destination" => "_site"
-    })).process
+def build level
+   Jekyll::Site.new(Jekyll.configuration({
+    source: ".",
+    destination: "_site",
+    url: "http://blog.natemcmaster#{level}.com"
+    })).process 
 end
 
 
+desc "Generate blog files"
+task :generate do
+    build "loc"
+end
+
 desc "Generate and publish blog to gh-pages"
-    task :publish => [:generate] do
+    task :publish do
+        build nil
         orig=Dir.mktmpdir
           Dir.mktmpdir do |tmp|
             begin

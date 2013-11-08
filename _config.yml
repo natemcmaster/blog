@@ -11,6 +11,5 @@ markdown: redcarpet
 timezone: America/Denver
 
 baseurl: /
-url: blog.natemcmaster.com
 
-exclude: [ blog.sublime-*, 'CNAME' ,'Gemfile', 'Gemfile.lock', 'Rakefile', 'README.md']
+exclude: [ blog.sublime-*, 'CNAME' ,'Gemfile', 'Gemfile.lock', 'Rakefile', 'README.md', lib]
