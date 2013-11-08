@@ -2,8 +2,12 @@
 layout: default
 ---
 <h2>{{ page.title }}</h2>
-<p class="meta">{{ page.date | date_to_string }}</p>
+<p class="meta">{{ page.date | date: "%A, %b. %d, %Y" }}</p>
 
 <div class="post">
 {{ content }}
+</div>
+
+<div class="comment-box col-lg-10 col-lg-push-1 col-sm-12">
+	{% include disqus.html %}
 </div>
