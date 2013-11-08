@@ -12,4 +12,4 @@ timezone: America/Denver
 
 baseurl: /
 
-exclude: [ blog.sublime-*, 'CNAME' ,'Gemfile', 'Gemfile.lock', 'Rakefile', 'README.md', lib]
+exclude: [ blog.sublime-*,'Gemfile', 'Gemfile.lock', 'Rakefile', 'README.md', lib]
