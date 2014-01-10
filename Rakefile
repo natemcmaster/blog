@@ -1,3 +1,4 @@
+#encoding: utf-8 
 require 'jekyll' 
 require 'rubygems'
 require 'rake'
@@ -8,9 +9,10 @@ require 'tmpdir'
 
 def build level
    Jekyll::Site.new(Jekyll.configuration({
-    source: ".",
-    destination: "_site",
-    url: "http://blog.natemcmaster#{level}.com"
+    url: "http://blog.natemcmaster#{level}.com",
+    assets:{
+    	js_compressor: level=='locl'? nil : 'uglify'
+    }
     })).process 
 end
 
@@ -18,6 +20,11 @@ end
 desc "Generate blog files"
 task :generate do
     build "loc"
+end
+
+desc "Clean"
+task :clean do
+	system "rm -r build/*"
 end
 
 # desc "Generate and publish blog to gh-pages"

@@ -1,17 +1,15 @@
 {
-	"build_systems":
-	[
-		{
-			"cmd": "rake",
-			"name": "Rake",
-			"path": "/Users/nmcmaster/.rvm/gems/ruby-2.0.0-p247@global/bin:/Users/nmcmaster/.rvm/rubies/ruby-2.0.0-p247/bin:/Users/nmcmaster/.rvm/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin",
-			"shell": true
-		}
-	],
 	"folders":
 	[
 		{
-			"path": "/Users/nmcmaster/dev/blog"
+			"follow_symlinks": true,
+			"path": "."
+		}
+	],
+	"build_systems":[
+		{
+			"name":"rake",
+			"shell_cmd":"rake"
 		}
 	]
 }
