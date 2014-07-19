@@ -10,3 +10,4 @@ build/
 .jekyll-assets-cache
 .sass-cache/
 Gemfile.lock
+src/_vendors/

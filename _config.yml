@@ -22,4 +22,10 @@ gems:
 assets:
     js_compressor: uglifier
     css_compressor: sass
+    sources:
+        - _assets/images
+        - _assets/javascripts
+        - _assets/stylesheets
+        - _vendors/angulartics/dist
+
 include: [.nojekyll]
