@@ -1,9 +1,4 @@
-[submodule "lib/bootstrap"]
-	path = lib/bootstrap
-	url = https://github.com/twbs/bootstrap.git
-[submodule "lib/fa"]
-	path = lib/fa
-	url = https://github.com/FortAwesome/Font-Awesome.git
-[submodule "_plugins/asset_bundler"]
-	path = _plugins/asset_bundler
-	url = git://github.com/moshen/jekyll-asset_bundler.git
+[submodule "build"]
+	path = build
+	url = git@github.com:natemcmaster/blog.git
+	branch = gh-pages

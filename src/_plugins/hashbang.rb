@@ -7,8 +7,12 @@ module Jekyll
 	end
 	class Page
 		attr_reader :base
+		def getdir
+			@dir
+		end
 	end
 end
+
 module Hashbang
 	class HashbangGen < Jekyll::Generator
 		def generate(site)
@@ -22,12 +26,22 @@ module Hashbang
 				site.pages << HashbangPostPage.new(site,x)
 			end
 		end
+
+		def self.process(data)
+			if data['layout'].nil? or data['layout'] == 'default'
+				data['layout'] = 'blank'
+			else
+				data['layout'] << '_partial'	
+			end
+			data['header'] = false
+			return data
+		end
 	end
 	class HashbangBlankPage < Jekyll::Page
 		def initialize site,page
-			super(site,page.base,page.dir,page.name)
+			super(site, page.base, page.getdir, page.name)
 			@url = File.join('/partial',page.url)
-			self.data['layout']='blank'
+			self.data = HashbangGen.process(self.data)
 		end
 	end
 	class HashbangPostPage < Jekyll::Page
@@ -35,9 +49,7 @@ module Hashbang
 		def initialize site,post
 			super(site,post.base,post.getdir,post.name)
 			@url=File.join('/partial',post.url)
-			self.data['layout']='blank'
-			self.data['title']=post.name + "##hashbang"
-
+			self.data = HashbangGen.process(self.data)
 		end
 	end
 end

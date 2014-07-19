@@ -1,27 +1,20 @@
-# Default Github Settings
-lsi: false
-pygments: true
-source: ./src/
-destination: ./build/
+# Site settings
+title: That Blog Thing
+email: me@natemcmaster.com
+description: >
+    Infrequent blog posts about software development, photography, opinion, etc.
+baseurl: ""
+url: "http://blog.natemcmaster.com"
+twitter_username: natemcmaster
+github_username:  natemcmaster
 
-# My setings
-
-name: That Blog Thing
-
-markdown: redcarpet
-timezone: America/Denver
-
-baseurl: /
-
-exclude: [ blog.sublime-*,'Gemfile', 'Gemfile.lock', 'Rakefile', 'README.md', lib,bower_components]
-
-assets:
-  js_compressor:  uglifier
-  css_compressor: sass
-  cache: true
-  debug: true
-  sources:
-  - _assets/images
-  - _assets/javascripts
-  - _assets/stylesheets
-  - _vendor/components
+# Build settings
+markdown: kramdown
+permalink: pretty
+source: src
+destination: build
+timezone: America/Seattle
+sass:
+    sass_dir: _sass
+gems:
+    - jekyll-sitemap

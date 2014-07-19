@@ -8,3 +8,5 @@ node_modules
 
 build/
 .jekyll-assets-cache
+.sass-cache/
+Gemfile.lock
