@@ -1,30 +1,21 @@
 ---
 layout: default
-title: "That Blog Thing :: Nate McMaster's Blog"
 ---
+
 <div class="home">
-    {% assign fp = site.posts.first %}
-    <div class="jumbotron">
-        <h2>
-            <a href="{{fp.url}}">{{fp.title}}</a>
-        </h2>
-    </div>
-    <div class="row">
-        {% for post in site.posts offset:1 limit: 3 %}
-        <div class="col-sm-4">
-              <a href="{{post.url}}">{{post.title}}</a>
-        </div>
-        {% endfor %}
-    </div>
-        {% for post in site.posts offset:4 limit: 5 %}
-        <div class="media">
-            {% if post.thumbnail %} <a class="pull-left" href="{{post.url}}"><img class="media-object post-thumb" src="{{ post.thumbnail }}" alt="Thumbnail"></a> {% endif %}
-            <div class="media-body">
-                <h4 class="media-heading">
-                    <a href="{{post.url}}">{{post.title}}</a>
-                </h4>{{post.content | strip_html | truncatewords:40 }}
-            </div>
-        </div>
-        {% endfor %}
-        <a href="{{ site.url }}/archive.html"> See all posts </a>
+
+  <h1>Posts</h1>
+
+  <ul class="posts">
+    {% for post in site.posts limit:5 %}
+      <li>
+        <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+  <p><a href="{{ "/archive" | prepend: site.baseurl }}">See all posts...</a></p>
+
+  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+
 </div>

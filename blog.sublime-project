@@ -3,7 +3,9 @@
 	[
 		{
 			"follow_symlinks": true,
-			"path": "."
+			"path": ".",
+			"folder_exclude_patterns":[".idea",".bundle",".jekyll-assets-cache"],
+			"file_exclude_patterns":["Gemfile.lock"]
 		}
 	],
 	"build_systems":[

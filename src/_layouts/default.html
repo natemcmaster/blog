@@ -1,21 +1,19 @@
+<!DOCTYPE html>
 <html ng-app="blog">
-    <head>
-        <title>
-            {{page.title}}
-        </title>
-        {% javascript app %}
-        {% stylesheet app %} 
-    </head>
+
+  {% include head.html %}
+
     <body>
-        <div class="container">
-            <header class="row page-header">
-              <h1>
-                <a href="{{site.url}}" title="{{site.name}}"><img src="{% asset_path logo.svg %}" class="header-logo" alt="logo"> {{site.name}}</a>
-              </h1>
-            </header>
-            <div ng-view>
-                {{content}}
-            </div>
-        </div>
+
+    {% include header.html %}
+
+    <div class="page-content">
+      <div class="wrap" ng-view>
+      {{ content }}
+      </div>
+    </div>
+
+    {% include footer.html %}
+
     </body>
-</html> 
+</html>
