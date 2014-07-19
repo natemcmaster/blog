@@ -18,4 +18,8 @@ sass:
     sass_dir: _sass
 gems:
     - jekyll-sitemap
+    - jekyll-assets
+assets:
+    js_compressor: uglifier
+    css_compressor: sass
 include: [.nojekyll]

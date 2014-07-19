@@ -17,7 +17,7 @@ module Hashbang
 	class HashbangGen < Jekyll::Generator
 		def generate(site)
 			site.pages.select{ |x|
-					!x.instance_of?(HashbangBlankPage) && !/.+\.html$/.match(x.name).nil?
+					!x.instance_of?(HashbangBlankPage) and !(x.data['layout'].nil? or x.data['layout'] == 'none')
 				}.each{|y|
 					z=HashbangBlankPage.new(site,y)
 					site.pages << z

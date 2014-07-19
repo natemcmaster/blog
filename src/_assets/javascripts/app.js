@@ -1,21 +1,27 @@
-//= require angular/angular.js
-//= require angular-route/angular-route.js
-
-var blog=angular.module('blog',['ngRoute'],
-    function($routeProvider, $locationProvider){
+var blog = angular.module('blog', ['ngRoute'],
+    function($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true);
 
         $routeProvider.when('/:partial*', {
-            controller: 'PartialCtrl',
-            templateUrl:function(opts){
-                return '/partial/'+opts.partial;
+            controller: 'PageCtrl',
+            templateUrl: function(opts) {
+                return '/partial/' + opts.partial;
             }
         })
-        .when('/',{
-            controller:'PartialCtrl',
-            templateUrl:'/partial/index.html'
-        });
-    })
-.controller('PartialCtrl',function($routeParams) {
-    console.log('PartialCtrl');
-})
+            .when('/', {
+                controller: 'PageCtrl',
+                templateUrl: '/partial/index.html'
+            });
+    });
+
+blog.controller('PageCtrl', function($scope, $window) {
+    $scope.$on('$routeChangeStart',function(){
+        $window.NProgress.start();
+    });
+     $scope.$on('$routeChangeSuccess',function(){
+        $window.NProgress.done();
+    });
+     $scope.$on('$routeChangeError',function(){
+        $window.NProgress.done();
+     })
+});

@@ -7,11 +7,12 @@
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.1.3/nprogress.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-route.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/js/app.js" type="text/javascript" charset="utf-8"></script>
+    {% javascript app %}
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+    {% stylesheet app %}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.1.3/nprogress.min.css">
 
 </head>
