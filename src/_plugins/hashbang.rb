@@ -12,15 +12,15 @@ end
 module Hashbang
 	class HashbangGen < Jekyll::Generator
 		def generate(site)
-			site.posts.each do |x|
-				site.pages << HashbangPostPage.new(site,x)
-			end
-			site.pages.select {
-				|x| x.name=='index.html'
+			site.pages.select{ |x|
+					!x.instance_of?(HashbangBlankPage) && !/.+\.html$/.match(x.name).nil?
 				}.each{|y|
 					z=HashbangBlankPage.new(site,y)
 					site.pages << z
 				}
+			site.posts.each do |x|
+				site.pages << HashbangPostPage.new(site,x)
+			end
 		end
 	end
 	class HashbangBlankPage < Jekyll::Page

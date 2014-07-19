@@ -1,22 +1,21 @@
 //= require angular/angular.js
 //= require angular-route/angular-route.js
 
-angular.module('blog',['ngView'],
-	function($routeProvider, $locationProvider){
-		$routeProvider.when('/:partial*', {
-	      controller: PartialCtrl,
-	      controllerAs: 'post'
-	    });
+var blog=angular.module('blog',['ngRoute'],
+    function($routeProvider, $locationProvider){
+        $locationProvider.html5Mode(true);
+
+        $routeProvider.when('/:partial*', {
+            controller: 'PartialCtrl',
+            templateUrl:function(opts){
+                return '/partial/'+opts.partial;
+            }
+        })
+        .when('/',{
+            controller:'PartialCtrl',
+            templateUrl:'/partial/index.html'
+        });
+    })
+.controller('PartialCtrl',function($routeParams) {
+    console.log('PartialCtrl');
 })
-
-function MainCntl($route, $routeParams, $location) {
-  this.$route = $route;
-  this.$location = $location;
-  this.$routeParams = $routeParams;
-}
-
-function PartialCtrl($routeParams) {
-  this.name = "PartialCtrl";
-  this.params = $routeParams;
-  console.log($routeParams);
-}

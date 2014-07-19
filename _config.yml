@@ -19,6 +19,7 @@ assets:
   js_compressor:  uglifier
   css_compressor: sass
   cache: true
+  debug: true
   sources:
   - _assets/images
   - _assets/javascripts
