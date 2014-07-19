@@ -4,8 +4,8 @@
 		{
 			"follow_symlinks": true,
 			"path": ".",
-			"folder_exclude_patterns":["build",".idea",".bundle",".jekyll-assets-cache"],
-			"file_exclude_patterns":["Gemfile.lock"]
+			"folder_exclude_patterns":["build",".idea",".bundle",".jekyll-assets-cache",".sass-cache"],
+			"file_exclude_patterns":["Gemfile.lock","*.sassc"]
 		}
 	],
 	"build_systems":[
