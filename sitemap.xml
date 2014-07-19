@@ -467,21 +467,21 @@
   
   <url>
     <loc>http://blog.natemcmaster.com/404.html</loc>
-    <lastmod>2014-07-19T22:19:37+00:00</lastmod>
+    <lastmod>2014-07-19T22:26:32+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://blog.natemcmaster.com/archive/</loc>
-    <lastmod>2014-07-19T22:19:37+00:00</lastmod>
+    <lastmod>2014-07-19T22:26:32+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://blog.natemcmaster.com/</loc>
-    <lastmod>2014-07-19T22:19:37+00:00</lastmod>
+    <lastmod>2014-07-19T22:26:32+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
