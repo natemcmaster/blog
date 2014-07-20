@@ -2,7 +2,10 @@
 
   <div class="wrap">
 
-    <a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}</a>
+    <a class="site-title" href="{{ site.baseurl }}/">
+      {{ site.title }}
+      <small class="subtitle">by Nate McMaster</small>
+    </a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon" analytics-on="click" analytics-event="menu_button">
@@ -19,7 +22,9 @@
       <div class="trigger">
         <a href="http://www.natemcmaster.com" class="page-link" analytics-on="click" analytics-event="outbound" analytics-label="about_me_profile">About Me</a>
         {% for page in site.pages %}
-          {% if page.title and page.header and page.partial != 'true' %}<a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>{% endif %}
+          {% if page.title and page.header and page.partial != 'true' %}
+        <a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
+        {% endif %}
         {% endfor %}
       </div>
     </nav>

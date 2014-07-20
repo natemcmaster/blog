@@ -55,6 +55,8 @@ a
     display: block
     color: #333
     font-size: 26px
+    @media screen and (max-width: 400px)
+        font-size: 18px
     letter-spacing: -1px
     float: left
     line-height: 56px
@@ -69,7 +71,11 @@ a
         line-height: 56px
         position: relative
         z-index: 1
-
+    .subtitle
+        letter-spacing: normal
+        font-size: 14px
+        @media screen and (max-width: 400px)
+            font-size: 12px
 .site-nav
     float: right
     line-height: 56px
