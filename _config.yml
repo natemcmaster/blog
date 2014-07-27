@@ -19,6 +19,7 @@ sass:
 gems:
     - jekyll-sitemap
     - jekyll-assets
+    - jemoji
 assets:
     js_compressor: uglifier
     css_compressor: sass
