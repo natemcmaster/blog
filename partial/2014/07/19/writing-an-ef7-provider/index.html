@@ -13,7 +13,7 @@
   
 
   <article class="post-content">
-  <p>I spend my summer internship at Microsoft to allow Entity Framework 7 to connect with Azure Table Storage accounts. 
+  <p>I spent my summer internship at Microsoft to building a piece of software that allows Entity Framework 7 to connect with Azure Table Storage accounts. 
 In the process of creating this, I attempted to document the interface between the provider and the core APIs of EF. This post includes technical details that should enable third-parties to create their own provider for Entity Framework.</p>
 
 <p><em>Note: this content is accurate as of the today (July 19), but these APIs are subject to change. This content is also available on the <a href="https://github.com/aspnet/EntityFramework/wiki/Writing-an-EF7-Provider">Entity Framework wiki.</a></em></p>
@@ -107,7 +107,7 @@ the original LINQ query requested by user code on DbSet. (Thanks <a href="#relin
 <p>This class manages connection settings and sessions.</p>
 
 <p>Although an EF provider requires an implementation, the details of how the class
-operates is <em>entirely up to the provider</em> i.e. time to freestyle. <img class="emoji" title=":snowboarder:" alt=":snowboarder:" src="https://assets.github.com/images/icons/emoji/snowboarder.png" height="20" width="20" align="absmiddle" /> </p>
+operates is <em>entirely up to the provider</em> i.e. time to freestyle. :snowboarder: </p>
 
 <p>For example, SQL Server uses this class to open TCP/IP connections,
 but SQLite uses this class to create connections to the local filesystem.</p>
@@ -140,11 +140,11 @@ of theses classes:</p>
   <li>Infrastructure.DbContextOptionsExtension</li>
   <li>Storage.DataStoreCreator</li>
   <li>Storage.DataStoreConnection</li>
-  <li>Identity.ValueGeneratorCache <img class="emoji" title=":small_blue_diamond:" alt=":small_blue_diamond:" src="https://assets.github.com/images/icons/emoji/small_blue_diamond.png" height="20" width="20" align="absmiddle" /></li>
-  <li>Storage.Database <img class="emoji" title=":small_blue_diamond:" alt=":small_blue_diamond:" src="https://assets.github.com/images/icons/emoji/small_blue_diamond.png" height="20" width="20" align="absmiddle" /></li>
+  <li>Identity.ValueGeneratorCache :small_blue_diamond:</li>
+  <li>Storage.Database :small_blue_diamond:</li>
 </ul>
 
-<p><img class="emoji" title=":small_blue_diamond:" alt=":small_blue_diamond:" src="https://assets.github.com/images/icons/emoji/small_blue_diamond.png" height="20" width="20" align="absmiddle" /> These classes are not abstract. A default implementation has been provided.</p>
+<p>:small_blue_diamond: These classes are not abstract. A default implementation has been provided.</p>
 
 <p><img src="http://i.imgur.com/nMQM7Dl.png" alt="Datastoresource" /></p>
 
@@ -183,7 +183,7 @@ IntelliSense works best the extension methods are defined in the namespace of th
 Your extension method should add your provider-specific implementation of 
 DbContextOptionsExtension to an instance of DbContextOptions.</p>
 
-<p><img class="emoji" title=":hammer:" alt=":hammer:" src="https://assets.github.com/images/icons/emoji/hammer.png" height="20" width="20" align="absmiddle" /> Power user note: To add a DbContextOptionsExtension to DbContextOptions,
+<p>:hammer: Power user note: To add a DbContextOptionsExtension to DbContextOptions,
 you must first cast DbContextOptions to IDbContextOptionsExtensions, and then use
 **IDbContextOptionsExtensions.AddOrUpdateExtension<t>()**.
 We require this to keep IntelliSense clean for users, but still expose

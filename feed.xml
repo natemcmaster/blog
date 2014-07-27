@@ -6,13 +6,13 @@
 </description>
     <link>http://blog.natemcmaster.com/</link>
     <atom:link href="http://blog.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 27 Jul 2014 16:42:35 +0000</pubDate>
-    <lastBuildDate>Sun, 27 Jul 2014 16:42:35 +0000</lastBuildDate>
+    <pubDate>Sun, 27 Jul 2014 16:51:03 +0000</pubDate>
+    <lastBuildDate>Sun, 27 Jul 2014 16:51:03 +0000</lastBuildDate>
     <generator>Jekyll v2.1.1</generator>
     
       <item>
         <title>Writing an EF7 Provider</title>
-        <description>&lt;p&gt;I spend my summer internship at Microsoft to allow Entity Framework 7 to connect with Azure Table Storage accounts. 
+        <description>&lt;p&gt;I spent my summer internship at Microsoft to building a piece of software that allows Entity Framework 7 to connect with Azure Table Storage accounts. 
 In the process of creating this, I attempted to document the interface between the provider and the core APIs of EF. This post includes technical details that should enable third-parties to create their own provider for Entity Framework.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Note: this content is accurate as of the today (July 19), but these APIs are subject to change. This content is also available on the &lt;a href=&quot;https://github.com/aspnet/EntityFramework/wiki/Writing-an-EF7-Provider&quot;&gt;Entity Framework wiki.&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
@@ -304,7 +304,7 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
     
       <item>
         <title>Don&#39;t Be A Pirate</title>
-        <description>&lt;p&gt;The wild frontier of the Internet allows new forms of piracy. Hacking, pornography, &lt;a href=&quot;http://en.wikipedia.org/wiki/Silk_Road_(marketplace)&quot;&gt;black markets&lt;/a&gt;, and digital theft abound, and the Internet provides anonymity. Although you &lt;em&gt;can&lt;/em&gt; do these, you really not. Contrary to what Captain Barbossa implied, everyone should stick to the “Code.” The code of right and wrong, when ignored, leads only to more misery. I am not talking about any &lt;a href=&quot;http://www.acm.org/about/code-of-ethics&quot;&gt;specific&lt;/a&gt; &lt;a href=&quot;http://en.wikipedia.org/wiki/Pirate_code&quot;&gt;code&lt;/a&gt;, but rather, the divine code inside all humans. Follow your internal moral compass. Seek the good, noble, inspiring, and honorable. If you feel a need to hide your actions, they are probably wrong. Don’t be a pirate: &lt;a href=&quot;http://www.lds.org/ldsorg/v/index.jsp?hideNav=true&amp;amp;locale=0&amp;amp;sourceId=ef1eb8179f4bb010VgnVCM1000004d82620a____&amp;amp;vgnextoid=21bc9fbee98db010VgnVCM1000004d82620aRCRD&quot;&gt;be good&lt;/a&gt;.&lt;/p&gt;
+        <description>&lt;p&gt;The wild frontier of the Internet allows new forms of piracy. Hacking, pornography, &lt;a href=&quot;http://en.wikipedia.org/wiki/Silk_Road_(marketplace)&quot;&gt;black markets&lt;/a&gt;, and digital theft abound, and the Internet provides anonymity. Although you &lt;em&gt;can&lt;/em&gt; do these, you really not. Contrary to what Captain Barbossa implied, everyone should stick to the “Code.” The code of right and wrong, when ignored, leads only to more misery. I am not talking about any &lt;a href=&quot;http://www.acm.org/about/code-of-ethics&quot;&gt;specific&lt;/a&gt; &lt;a href=&quot;http://en.wikipedia.org/wiki/Pirate_code&quot;&gt;code&lt;/a&gt;, but rather, the divine code inside all humans. Follow your internal moral compass. Seek the good, noble, inspiring, and honorable. If you feel a need to hide your actions, they are probably wrong. Don’t be a pirate: be good.&lt;/p&gt;
 
 </description>
         <pubDate>Tue, 10 Dec 2013 16:21:00 +0000</pubDate>
@@ -313,22 +313,6 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
         
         
         <category>opinion</category>
-        
-        <category>cs404</category>
-        
-      </item>
-    
-      <item>
-        <title>Computer Addiction and Programmers</title>
-        <description>&lt;p&gt;The most dangerous part of computer addiction for a programmer is it creates an outstanding employee or brings fame to the software creators. The difference between diligent programmers and computer addicts can be minor. Both may work harder than average, think and dream in code, and enjoy programming regardless of pay. If not restricted, however, programming too much leads to hygiene neglect, social withdrawal, sleep deprivation, low physical activity, and obsessive thinking. Like any substance or behavioral addiction, this can destroy family relationships, impair health, and damage spirituality. Spending large amounts of time working does not necessarily mean a programmer is addicted: rather, an programming addict is one who cannot seem to stop. Computer addicts who program can easily indulge, justifying long hours of programming on “earning an income” or “advancing my career.” This danger is only intensified by employers happy to have for these diligent, self-motivated coders.&lt;/p&gt;
-
-&lt;p&gt;&lt;small&gt;You can read more about addiction and programming in this uncited yet interesting article:  &lt;a href=&quot;http://virtuecenter.com/blog/the_effects_of_computer_programming_on_the_brain.html&quot;&gt;The Effects of Computer Programming on the Brain&lt;/a&gt;. &lt;/small&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 03 Dec 2013 03:43:00 +0000</pubDate>
-        <link>http://blog.natemcmaster.com/2013/12/computer-addiction-and-programmers.html</link>
-        <guid isPermaLink="true">http://blog.natemcmaster.com/2013/12/computer-addiction-and-programmers.html</guid>
-        
         
         <category>cs404</category>
         
@@ -364,11 +348,20 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
         <guid isPermaLink="true">http://blog.natemcmaster.com/2013/11/an-engineer-ette.html</guid>
         
         
+        <category>cs404</category>
+        
       </item>
     
       <item>
         <title>A Lunch-break Soccer Game</title>
-        <description>&lt;p&gt;Some problems cannot be solved by computers. For example, organizing a lunch-break soccer game among co-workers is not solvable via computers. It is best solved by face-to-face invitations. In the last 6 months at my job, I have seen 3 attempts to organize this group. One person setup a small website to send reminders. Another started a spammy, email message list. A third tried text messaging. The problems of these digital format are easy to identify. 1-Recipients ignore the messages. 2-Messages are often duplicated, distorted, or incorrect. 3-Responses give little indication of who will actually show up. In the end, these attempts fall flat and we resort to the old-fashion method: verbal communication.&lt;/p&gt;
+        <description>&lt;p&gt;Some problems cannot be solved by computers. For example, organizing a lunch-break soccer game among co-workers is not solvable via computers. It is best solved by face-to-face invitations. In the last 6 months at my job, I have seen 3 attempts to organize this group. One person setup a small website to send reminders. Another started a spammy, email message list. A third tried text messaging. The problems of these digital format are easy to identify. &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;1. Recipients ignore the messages. 
+2. Messages are often duplicated, distorted, or incorrect. 
+3. Responses give little indication of who will actually show up. I
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In the end, these attempts fall flat and we resort to the old-fashion method: verbal communication.&lt;/p&gt;
 
 </description>
         <pubDate>Tue, 12 Nov 2013 01:30:00 +0000</pubDate>
@@ -382,7 +375,7 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
     
       <item>
         <title>Why Every Computer Science Major Should Work During School</title>
-        <description>&lt;p&gt;Every university student studying computer science or engineering should seek part-time employment while still in school. Even those pursuing positions in academia should try it. I have held 4 programming positions while in school. Work teaches what school cannot. School has taught me some theory and skill, but work has taught me the importance of communication, marketing, and user testing. School has taught me how to write C++, Java, and others. Work has taught me that valuable software solves a problem. School has taught me how to get a grade. Work has taught me how to work on a team. School has given me a toolset of knowledge and information. Without work, however, I would not know how to use those tools to create something &lt;em&gt;real people&lt;/em&gt; will use.&lt;/p&gt;
+        <description>&lt;p&gt;Every university student studying computer science or engineering should seek part-time employment while still in school. Even those pursuing positions in academia should try it. I have held 4 programming positions while in school. Work teaches what school cannot. School has taught me some theory and skill, but work has taught me the importance of communication, marketing, and user testing. School has taught me how to write C++, Java, and others. Work has taught me that valuable software solves a problem. School has taught me how to get a grade. Work has taught me how to work on a team. School has given me a toolset of knowledge and information. Without work, however, I would not know how to use those tools to create something &lt;em&gt;real people&lt;/em&gt; will use.&lt;/p&gt;
 
 </description>
         <pubDate>Thu, 07 Nov 2013 15:28:00 +0000</pubDate>
@@ -430,6 +423,22 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
         <category>book review</category>
         
         <category>cs404</category>
+        
+      </item>
+    
+      <item>
+        <title>Bitcoin and Cloud Crime</title>
+        <description>&lt;p&gt;Bitcoin (BTC), a digital-only currency, became popular after its sudden burst of valuation in early 2013. This currency is completely digital, and no government or institution backs it or regulates exchange. This makes BTC perfect for cyber-crime (such as &lt;a href=&quot;http://www.extremetech.com/tag/silk-road&quot;&gt;the Silk Road&lt;/a&gt;,) and raises an increasingly relevant question: who governs the Internet? Since the establishment of computer networks, governments have attempted to regulate their use (for example, the U.S. Government made &lt;a href=&quot;http://en.wikipedia.org/wiki/ICANN&quot;&gt;ICANN&lt;/a&gt;.) When the operators of Internet activites are located in U.S. Government, &lt;a href=&quot;http://www.extremetech.com/computing/168139-fbi-unable-to-seize-600000-bitcoins-from-silk-road-operator&quot;&gt;the FBI does not hesitate to intervene.&lt;/a&gt; But what happens when Internet crime spreads across many borders? This is a question that this generation will decide. Although some governments have established international agreements to cooperate, there is no answer yet. These treaties have not been tested on matters of digital, government-less currency yet, but that will change soon.&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 08 Oct 2013 01:10:00 +0000</pubDate>
+        <link>http://blog.natemcmaster.com/2013/10/bitcoin-and-cloud-crime.html</link>
+        <guid isPermaLink="true">http://blog.natemcmaster.com/2013/10/bitcoin-and-cloud-crime.html</guid>
+        
+        
+        <category>cs404</category>
+        
+        <category>current event</category>
         
       </item>
     
