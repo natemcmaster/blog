@@ -1,0 +1,290 @@
+<div class="post">
+
+  <header class="post-header">
+    <h1>Writing an EF7 Provider</h1>
+    
+
+    <p class="meta">Jul 19, 2014</p>
+  </header>
+
+  
+    <div class="postimage hero " style="background-image: url(https://farm6.staticflickr.com/5592/14778307563_fbdc53cfed_b.jpg)">
+    </div>
+  
+
+  <article class="post-content">
+  <p>I spend my summer internship at Microsoft to allow Entity Framework 7 to connect with Azure Table Storage accounts. 
+In the process of creating this, I attempted to document the interface between the provider and the core APIs of EF. This post includes technical details that should enable third-parties to create their own provider for Entity Framework.</p>
+
+<p><em>Note: this content is accurate as of the today (July 19), but these APIs are subject to change. This content is also available on the <a href="https://github.com/aspnet/EntityFramework/wiki/Writing-an-EF7-Provider">Entity Framework wiki.</a></em></p>
+
+<p>EF provides a set of Core APIs and services that make it easier to manage the
+interaction of in-memory objects and persistent data storage.
+This core is agnostic of all data store specific details,
+and is used by all of EF supported providers (SQL Server, SQLite, and Azure Table Storage).
+Using these Core APIs, it is possible to create a provider for additional data store types.</p>
+
+<p>An EF provider must implement a set of APIs to manage reading from and writing to
+a persistent data store. See diagrams and reference below for some detail on how the classes interact
+with the EF core.</p>
+
+<h3 id="requirements">Requirements</h3>
+<p>EF providers must implement the following <a href="#abstractclasses">abstract classes</a>.</p>
+
+<ul>
+  <li>Infrastructure.DbContextOptionsExtension</li>
+  <li>Storage.DataStore</li>
+  <li>Storage.DataStoreConnection</li>
+  <li>Storage.DataStoreCreator</li>
+  <li>Storage.DataStoreSource</li>
+</ul>
+
+<p><a href="#optionaloverride">Optional classes to override.</a></p>
+
+<ul>
+  <li>Infrastructure.Database</li>
+  <li>Infrastructure.ValueGeneratorCache</li>
+</ul>
+
+<p>(<em>All reference names in this document are relative to Microsoft.Data.Entity</em>)</p>
+
+<h3 id="recommended">Recommended</h3>
+<p>To help end-users discover provider-specific features via IntelliSense, we <a href="#extensionmethods">recommend
+providing extension methods</a> on some of the default EF classes.</p>
+
+<ul>
+  <li>DbContextOptions</li>
+  <li>EntityServicesBuilder</li>
+  <li>Storage.Database</li>
+</ul>
+
+<h2 id="getting-started-sample-project">Getting Started: Sample Project</h2>
+<p>See <a href="https://github.com/natemcmaster/entityframework-provider-starter">this repository</a>
+to get a starter project for writing a new EF provider.</p>
+
+<h1 id="reference">Reference</h1>
+
+<h2 id="a-nameabstractclassesa-abstract-classes"><a name="abstractclasses"></a> Abstract Classes</h2>
+
+<h3 id="infrastructuredbcontextoptionsextension">Infrastructure.DbContextOptionsExtension</h3>
+<p>This class configures the dependency injection settings used in an instance of DbContext.
+It is used during DbContext initialization to configure the DbContextOptions.</p>
+
+<p>Methods required:</p>
+
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">void</span> <span class="nf">ApplyServices</span><span class="p">(</span><span class="n">EntityServicesBuilder</span> <span class="n">builder</span><span class="p">);</span></code></pre></div>
+
+<p><img src="http://i.imgur.com/abu6gCh.png" alt="DbContextOptionExtension" /></p>
+
+<h3 id="storagedatastore">Storage.Datastore</h3>
+<p>This class is the hub of activity for a provider.
+A data store must implement these methods:</p>
+
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="n">Task</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">SaveChangesAsync</span><span class="p">(</span><span class="n">IReadOnlyList</span><span class="p">&lt;</span><span class="n">StateEntry</span><span class="p">&gt;</span> <span class="n">stateEntries</span><span class="p">,</span>
+                           <span class="n">CancellationToken</span> <span class="n">cancellationToken</span><span class="p">);</span>
+
+<span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">TResult</span><span class="p">&gt;</span> <span class="n">Query</span><span class="p">&lt;</span><span class="n">TResult</span><span class="p">&gt;(</span><span class="n">QueryModel</span> <span class="n">queryModel</span><span class="p">,</span>
+                                    <span class="n">StateManager</span> <span class="n">stateManager</span><span class="p">);</span>
+
+<span class="n">IAsyncEnumerable</span><span class="p">&lt;</span><span class="n">TResult</span><span class="p">&gt;</span> <span class="n">AsyncQuery</span><span class="p">&lt;</span><span class="n">TResult</span><span class="p">&gt;(</span><span class="n">QueryModel</span> <span class="n">queryModel</span><span class="p">,</span>
+                                              <span class="n">StateManager</span> <span class="n">stateManager</span><span class="p">);</span></code></pre></div>
+
+<p><strong>SaveChanges</strong> receives a list of entities which must be persisted to the data store.
+Upon successful completion, return the number of entities successfully saved.
+If an entity cannot be saved, this method should throw an exception containing
+the reason why the action failed.</p>
+
+<p><img src="http://i.imgur.com/chhMeSe.png" alt="Save changes workflow" /></p>
+
+<p><strong>Query</strong> receives a <a href="#relinq">QueryModel</a> containing a query to execute against the data store.
+This method should return an IEnumerable from the data store of all entites matching
+the query model. QueryModel is a simplified, but equivalent expression tree that represents
+the original LINQ query requested by user code on DbSet. (Thanks <a href="#relinq">relinq</a>!)</p>
+
+<p><img src="http://i.imgur.com/FvUcYFZ.png" alt="Query" /></p>
+
+<h3 id="storagedatastoreconnection">Storage.DataStoreConnection</h3>
+<p>This class manages connection settings and sessions.</p>
+
+<p>Although an EF provider requires an implementation, the details of how the class
+operates is <em>entirely up to the provider</em> i.e. time to freestyle. <img class="emoji" title=":snowboarder:" alt=":snowboarder:" src="https://assets.github.com/images/icons/emoji/snowboarder.png" height="20" width="20" align="absmiddle" /> </p>
+
+<p>For example, SQL Server uses this class to open TCP/IP connections,
+but SQLite uses this class to create connections to the local filesystem.</p>
+
+<h3 id="storagedatastorecreator">Storage.DataStoreCreator</h3>
+<p>An implementation of requires implementation of the following methods.</p>
+
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="kt">bool</span>       <span class="nf">EnsureCreated</span><span class="p">(</span><span class="n">IModel</span> <span class="n">model</span><span class="p">);</span>
+<span class="n">Task</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;</span> <span class="n">EnsureCreatedAsync</span><span class="p">(</span><span class="n">IModel</span> <span class="n">model</span><span class="p">,</span> <span class="n">CancellationToken</span> <span class="n">cancellationToken</span><span class="p">);</span>
+
+<span class="kt">bool</span>       <span class="nf">EnsureDeleted</span><span class="p">(</span><span class="n">IModel</span> <span class="n">model</span><span class="p">);</span>
+<span class="n">Task</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;</span> <span class="n">EnsureDeletedAsync</span><span class="p">(</span><span class="n">IModel</span> <span class="n">model</span><span class="p">,</span> <span class="n">CancellationToken</span> <span class="n">cancellationToken</span><span class="p">);</span></code></pre></div>
+
+<p><strong>EnsureCreated</strong> ensures that the database/tables/containers needed to store
+the model on the server exists and are write-accessible.
+<strong>EnsureDeleted</strong> ensures the database/tables/containers are deleted.</p>
+
+<p>Both methods <em>return true</em> when the method call changed something on the server —
+e.g. created a new database, deleted a table — and <em>return false</em> when
+the model has already been created/deleted.</p>
+
+<p><img src="http://i.imgur.com/Taun659.png" alt="datastorecreator" /></p>
+
+<h3 id="a-namedatastoresourceastoragedatastoresource"><a name="datastoresource"></a>Storage.DatastoreSource</h3>
+<p>This class configures Entity Framework to use provider-specific implementations
+of theses classes:</p>
+
+<ul>
+  <li>Storage.DataStore</li>
+  <li>Infrastructure.DbContextOptionsExtension</li>
+  <li>Storage.DataStoreCreator</li>
+  <li>Storage.DataStoreConnection</li>
+  <li>Identity.ValueGeneratorCache <img class="emoji" title=":small_blue_diamond:" alt=":small_blue_diamond:" src="https://assets.github.com/images/icons/emoji/small_blue_diamond.png" height="20" width="20" align="absmiddle" /></li>
+  <li>Storage.Database <img class="emoji" title=":small_blue_diamond:" alt=":small_blue_diamond:" src="https://assets.github.com/images/icons/emoji/small_blue_diamond.png" height="20" width="20" align="absmiddle" /></li>
+</ul>
+
+<p><img class="emoji" title=":small_blue_diamond:" alt=":small_blue_diamond:" src="https://assets.github.com/images/icons/emoji/small_blue_diamond.png" height="20" width="20" align="absmiddle" /> These classes are not abstract. A default implementation has been provided.</p>
+
+<p><img src="http://i.imgur.com/nMQM7Dl.png" alt="Datastoresource" /></p>
+
+<p>Because this is fairly straightforward class, we have provided an abstract implementation that makes it 
+easier to use dependency injection.</p>
+
+<h4 id="datastoresourcelttdatastore-tdbcontextoptionsextension-tcreator-tconnection-tvaluegeneratorcache-tdatabasegt">DatastoreSource&lt;TDataStore, TDbContextOptionsExtension, TCreator, TConnection, TValueGeneratorCache, TDatabase&gt;</h4>
+<p>This generic class requests an implementation of the types classes from ServiceCollection.</p>
+
+<p><img src="http://i.imgur.com/rNucpFG.png" alt="Datastoresource generic" /></p>
+
+<h2 id="a-nameoptionaloverridea-optional-overrides"><a name="optionaloverride"></a> Optional Overrides</h2>
+<p>These classes do not <em>need</em> to be implemented, but they are a way to extend provider features.</p>
+
+<h3 id="infrastructuredatabase">Infrastructure.Database</h3>
+<p>This class provides access to APIs custom to the database of the provider.
+This class is best used as a proxy to DatastoreCreator which should contain the
+logic for manipulating the structure of the data store.</p>
+
+<p>Example: SQLite uses this to provide APIs for creating/deleting a database file.
+In Azure Table Storage, it provides APIs for creating/deleting tables on the server.</p>
+
+<h3 id="infrastructurevaluegeneratorcache">Infrastructure.ValueGeneratorCache</h3>
+<p>This class is used to control value generators.
+Value generators are used by EF7 to populate fields, such as auto-incremented IDs, that are generated on the server or client.</p>
+
+<h2 id="a-nameextensionmethodsarecommended-extension-methods"><a name="extensionmethods"></a>Recommended Extension Methods</h2>
+<p>These classes exist in EF’s Core, but users may not know how to directly interact
+with them to configure their application.
+By creating custom extension methods, IntelliSense in Visual Studio will show users
+custom methods to configure the provider.
+IntelliSense works best the extension methods are defined in the namespace of the class they extend.</p>
+
+<h3 id="dbcontextoptions">DbContextOptions</h3>
+<p>Expose access to your provider within the <em>OnConfiguring</em> method of DbContext. 
+Your extension method should add your provider-specific implementation of 
+DbContextOptionsExtension to an instance of DbContextOptions.</p>
+
+<p><img class="emoji" title=":hammer:" alt=":hammer:" src="https://assets.github.com/images/icons/emoji/hammer.png" height="20" width="20" align="absmiddle" /> Power user note: To add a DbContextOptionsExtension to DbContextOptions,
+you must first cast DbContextOptions to IDbContextOptionsExtensions, and then use
+**IDbContextOptionsExtensions.AddOrUpdateExtension<t>()**.
+We require this to keep IntelliSense clean for users, but still expose
+APIs for EF provider developers.</t></p>
+
+<p>Example: This will help users configure a context that connects to Azure Table Storage.</p>
+
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">namespace</span> <span class="nn">Microsoft.Data.Entity</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">AtsDbContextExtensions</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="n">DbContextOptions</span> <span class="nf">UseAzureTableStorage</span><span class="p">(</span><span class="k">this</span> <span class="n">DbContextOptions</span> <span class="n">options</span><span class="p">,</span>
+                                                            <span class="kt">string</span> <span class="n">connectionString</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="p">((</span><span class="n">IDbContextOptionsExtensions</span><span class="p">)</span><span class="n">options</span><span class="p">).</span><span class="n">AddOrUpdateExtension</span><span class="p">&lt;</span><span class="n">AtsOptionsExtension</span><span class="p">&gt;(</span>
+                <span class="n">e</span> <span class="p">=&gt;</span>
+                    <span class="p">{</span>
+                        <span class="n">e</span><span class="p">.</span><span class="n">ConnectionString</span> <span class="p">=</span> <span class="n">connectionString</span><span class="p">;</span>
+                    <span class="p">});</span>
+
+            <span class="k">return</span> <span class="n">options</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<h3 id="entityservicesbuilder">EntityServicesBuilder</h3>
+<p>Expose access to dependency injection configuration. This extension should configure
+DI to use provider-specific implementations.</p>
+
+<p>Example: Configure DI to use Azure Table Storage’s implementations</p>
+
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">namespace</span> <span class="nn">Microsoft.Framework.DependencyInjection</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">EntityServicesBuilderExtensions</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="n">EntityServicesBuilder</span> <span class="nf">AddAzureTableStorage</span><span class="p">(</span><span class="k">this</span> <span class="n">EntityServicesBuilder</span> <span class="n">builder</span><span class="p">)</span>
+        <span class="p">{</span>
+          <span class="n">builder</span><span class="p">.</span><span class="n">ServiceCollection</span>
+                <span class="p">.</span><span class="n">AddSingleton</span><span class="p">&lt;</span><span class="n">DataStoreSource</span><span class="p">,</span> <span class="n">AtsDataStoreSource</span><span class="p">&gt;()</span>
+                <span class="p">.</span><span class="n">AddSingleton</span><span class="p">&lt;</span><span class="n">AtsQueryFactory</span><span class="p">&gt;()</span>
+                <span class="p">.</span><span class="n">AddSingleton</span><span class="p">&lt;</span><span class="n">TableEntityAdapterFactory</span><span class="p">&gt;()</span>
+                <span class="p">.</span><span class="n">AddSingleton</span><span class="p">&lt;</span><span class="n">AtsValueReaderFactory</span><span class="p">&gt;()</span>
+                <span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">AtsDatabase</span><span class="p">&gt;()</span>
+                <span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">AtsDataStore</span><span class="p">&gt;()</span>
+                <span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">AtsConnection</span><span class="p">&gt;()</span>
+                <span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">AtsDataStoreCreator</span><span class="p">&gt;()</span>
+                <span class="p">.</span><span class="n">AddScoped</span><span class="p">&lt;</span><span class="n">AtsValueGeneratorCache</span><span class="p">&gt;();</span>
+
+            <span class="k">return</span> <span class="n">builder</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<h3 id="storagedatabase">Storage.Database</h3>
+<p>Expose the provider-specific database calls with an extension method that
+safely casts Storage.Database to the provider implementation.</p>
+
+<p>Example: This will light-up the APIs unique to SQL. A user will see this extension method
+listed in IntelliSense when accessing DbContext.Database</p>
+
+<div class="highlight"><pre><code class="language-c#" data-lang="c#"><span class="k">namespace</span> <span class="nn">Microsoft.Data.Entity</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">RelationalDatabaseExtensions</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="n">RelationalDatabase</span> <span class="nf">AsRelational</span><span class="p">(</span><span class="k">this</span> <span class="n">Database</span> <span class="n">database</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">relationalDatabase</span> <span class="p">=</span> <span class="n">database</span> <span class="k">as</span> <span class="n">RelationalDatabase</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">relationalDatabase</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nf">InvalidOperationException</span><span class="p">(</span><span class="s">&quot;RelationalDatabase not in use&quot;</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">relationalDatabase</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<h1 id="third-party-libraries">Third-Party Libraries</h1>
+
+<h3 id="a-namerelinqarelinq"><a name="relinq"></a>Relinq</h3>
+<p><a href="http://relinq.codeplex.com">relinq</a> is a third party library used by Entity Framework to simplify interaction
+with LINQ queries. All LINQ queries against DbSet run through a set of expression
+tree visitors that have been simplified by relinq. A provider may read and/or
+change the expression tree it receives in <strong>Storage.Datastore.Query()</strong></p>
+
+<p>Articles:</p>
+
+<ul>
+  <li><a href="http://chris.eldredge.io/blog/2012/03/29/Getting-Started-With-Relinq/">Getting Started with Re-linq</a></li>
+  <li><a href="https://www.re-motion.org/blogs/mix/category/re-linq">Re-linq blog posts</a></li>
+</ul>
+
+  </article>
+
+	<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'nmblog8'; // required: replace example with your forum shortname
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+</div>
