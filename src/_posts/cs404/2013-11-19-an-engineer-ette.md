@@ -6,12 +6,7 @@ uuid: "8657298536378427564"
 guid: "tag:blogger.com,1999:blog-6882143117181652318.post-8657298536378427564"
 date: "2013-11-19 02:05:00"
 updated: "2013-11-19 02:05:33"
-description: 
-blogger:
-    siteid: "6882143117181652318"
-    postid: "8657298536378427564"
-    comments: "3"
-categories: 
+categories: [cs404]
 author: 
     name: "Nate"
 ---

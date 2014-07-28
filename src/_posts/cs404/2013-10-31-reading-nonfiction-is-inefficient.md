@@ -6,11 +6,6 @@ uuid: "4688320147378381604"
 guid: "tag:blogger.com,1999:blog-6882143117181652318.post-4688320147378381604"
 date: "2013-10-31 15:11:00"
 updated: "2013-11-07 17:29:05"
-description: 
-blogger:
-    siteid: "6882143117181652318"
-    postid: "4688320147378381604"
-    comments: "4"
 categories: [opinion, cs404]
 author: 
     name: "Nate"

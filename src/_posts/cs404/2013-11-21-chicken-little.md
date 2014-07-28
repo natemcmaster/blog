@@ -2,15 +2,9 @@
 title: "A Rebuttal For Mark Bauerline"
 layout: "post"
 permalink: "/2013/11/chicken-little.html"
-uuid: "902733009706175572"
 guid: "tag:blogger.com,1999:blog-6882143117181652318.post-902733009706175572"
 date: "2013-11-21 06:36:00"
 updated: "2013-11-21 06:58:48"
-description: 
-blogger:
-    siteid: "6882143117181652318"
-    postid: "902733009706175572"
-    comments: "0"
 categories: [book post, cs404]
 author: 
     name: "Nate"

@@ -10,7 +10,7 @@ hero:
     height: 1024
     width: 413
 ---
-I spend my summer internship at Microsoft to allow Entity Framework 7 to connect with Azure Table Storage accounts. 
+I spent my summer internship at Microsoft to building a piece of software that allows Entity Framework 7 to connect with Azure Table Storage accounts. 
 In the process of creating this, I attempted to document the interface between the provider and the core APIs of EF. This post includes technical details that should enable third-parties to create their own provider for Entity Framework.
 
 *Note: this content is accurate as of the today (July 19), but these APIs are subject to change. This content is also available on the [Entity Framework wiki.](https://github.com/aspnet/EntityFramework/wiki/Writing-an-EF7-Provider)*

@@ -25,16 +25,15 @@ blog.controller('PageCtrl', ['$scope', '$window',
 
         $scope.$on('$routeChangeStart', function() {
             $window.NProgress.start();
-            if ($window.scrollTo) {
-                $window.scrollTo(0, 0);
-            }
-
         });
 
         $scope.$on('$routeChangeSuccess', function() {
             $window.NProgress.done();
             if ($window.ga) {
                 $window.ga('send', 'pageview');
+            }
+            if ($window.scrollTo) {
+                $window.scrollTo(0, 0);
             }
         });
 
