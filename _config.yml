@@ -3,7 +3,7 @@ title: That Blog Thing
 email: me@natemcmaster.com
 description: >
     Infrequent blog posts about software development, photography, opinion, etc.
-baseurl: ""
+baseurl: /blog
 url: "http://www.natemcmaster.com/blog/"
 twitter_username: natemcmaster
 github_username:  natemcmaster
