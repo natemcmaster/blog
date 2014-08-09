@@ -1,0 +1,1 @@
+!function(e,a,t,n,c,s,o){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,s=a.createElement(t),o=a.getElementsByTagName(t)[0],s.async=1,s.src=n,o.parentNode.insertBefore(s,o)}(window,document,"script","//www.google-analytics.com/analytics.js","ga"),ga("create","UA-38984092-1","natemcmaster.com"),ga("send","pageview");
