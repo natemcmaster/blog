@@ -4,7 +4,7 @@ email: me@natemcmaster.com
 description: >
     Infrequent blog posts about software development, photography, opinion, etc.
 baseurl: ""
-url: "http://blog.natemcmaster.com"
+url: "http://www.natemcmaster.com/blog/"
 twitter_username: natemcmaster
 github_username:  natemcmaster
 
@@ -13,7 +13,7 @@ markdown: kramdown
 permalink: pretty
 source: src
 destination: build
-timezone: America/Seattle
+timezone: America/Denver
 sass:
     sass_dir: _sass
 gems:
@@ -23,6 +23,7 @@ gems:
 assets:
     js_compressor: uglifier
     css_compressor: sass
+    baseurl: /blog/assets/
     sources:
         - _assets/images
         - _assets/javascripts
