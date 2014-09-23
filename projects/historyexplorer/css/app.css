@@ -73,7 +73,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400; }
 
 div, p, span, a {
-  font-family: "museo-sans";
+  font-family: "museo-sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-family: "brandon-grotesque", sans-serif;
@@ -187,7 +187,7 @@ a {
         right: 0;
         padding: 2px;
         padding-right: 10px;
-        font-family: "museo-sans";
+        font-family: "museo-sans", sans-serif;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
         font-family: "brandon-grotesque", sans-serif;
@@ -275,7 +275,7 @@ a {
         padding-right: 10px;
         font-size: 20px; }
       .page .content .searchbar input[type="search"] {
-        font-family: "museo-sans";
+        font-family: "museo-sans", sans-serif;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
         font-family: "brandon-grotesque", sans-serif;
