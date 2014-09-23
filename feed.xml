@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>That Blog Thing</title>
+    <title>Nate McMaster</title>
     <description>Infrequent blog posts about software development, photography, opinion, etc.
 </description>
-    <link>http://www.natemcmaster.com/blog//blog/</link>
-    <atom:link href="http://www.natemcmaster.com/blog//blog/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 09 Aug 2014 11:19:48 -0600</pubDate>
-    <lastBuildDate>Sat, 09 Aug 2014 11:19:48 -0600</lastBuildDate>
+    <link>http://www.natemcmaster.com///</link>
+    <atom:link href="http://www.natemcmaster.com///feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Tue, 23 Sep 2014 11:29:33 -0600</pubDate>
+    <lastBuildDate>Tue, 23 Sep 2014 11:29:33 -0600</lastBuildDate>
     <generator>Jekyll v2.1.1</generator>
     
       <item>
@@ -275,8 +275,8 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
 &lt;/ul&gt;
 </description>
         <pubDate>Sat, 19 Jul 2014 17:30:00 -0600</pubDate>
-        <link>http://www.natemcmaster.com/blog//blog/2014/07/19/writing-an-ef7-provider/</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog//blog/2014/07/19/writing-an-ef7-provider/</guid>
+        <link>http://www.natemcmaster.com///2014/07/19/writing-an-ef7-provider/</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com///2014/07/19/writing-an-ef7-provider/</guid>
         
         
       </item>
@@ -296,8 +296,8 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
 
 </description>
         <pubDate>Mon, 02 Jun 2014 12:00:00 -0600</pubDate>
-        <link>http://www.natemcmaster.com/blog//blog/2014/06/02/history-explorer/</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog//blog/2014/06/02/history-explorer/</guid>
+        <link>http://www.natemcmaster.com///2014/06/02/history-explorer/</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com///2014/06/02/history-explorer/</guid>
         
         
       </item>
@@ -308,8 +308,8 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
 
 </description>
         <pubDate>Tue, 10 Dec 2013 16:21:00 -0700</pubDate>
-        <link>http://www.natemcmaster.com/blog//blog/2013/12/dont-be-pirate.html</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog//blog/2013/12/dont-be-pirate.html</guid>
+        <link>http://www.natemcmaster.com///2013/12/dont-be-pirate.html</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com///2013/12/dont-be-pirate.html</guid>
         
         
         <category>opinion</category>
@@ -329,8 +329,8 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
 &lt;p&gt;Finally, the intellectual future of the United States is brighter than ever. My so-called “dumbest” generation is exposed to an ever wider and diverse stream of ideas, but this does not dull or stupefy. Exposure sharpens our power to filter, discern, interpret, and analyze. My generation cannot be sheltered from learning about lifestyles, opinions, and cultures different from our parents’. We learn younger and better how to judge credibility, ignore noise, and make decisions. The intellectual future rests in our hands, and we come as hungry to know and think as any generation past.&lt;/p&gt;
 </description>
         <pubDate>Thu, 21 Nov 2013 06:36:00 -0700</pubDate>
-        <link>http://www.natemcmaster.com/blog//blog/2013/11/chicken-little.html</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog//blog/2013/11/chicken-little.html</guid>
+        <link>http://www.natemcmaster.com///2013/11/chicken-little.html</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com///2013/11/chicken-little.html</guid>
         
         
         <category>book post</category>
@@ -344,8 +344,8 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
         <description>&lt;p&gt;&lt;a href=&quot;http://www.cirtl.net/node/5424&quot;&gt;Many women feel unwelcomed in computer science&lt;/a&gt;. It’s a shame they feel so because computer software companies need more women programmers. Between all programmers I have met working for BYU, Microsoft, and Ancestry.com, I have only known one woman software engineer. She worked as a testing engineer, and wrote code as well as any. Her most important contribution was her elevating and tempering effect on the men. When she was absent, conversation revolved around Xbox victories, bar-hopping feats, and food. When present, the men adjusted to a nobler vocabulary. Although she bragged about beer festivals too, she favored discussion about social dynamics, management styles, and civics. I am glad she did not let the gender ratio dissuade her from working there. I learned as much from her as I did from anyone else.&lt;/p&gt;
 </description>
         <pubDate>Tue, 19 Nov 2013 02:05:00 -0700</pubDate>
-        <link>http://www.natemcmaster.com/blog//blog/2013/11/an-engineer-ette.html</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog//blog/2013/11/an-engineer-ette.html</guid>
+        <link>http://www.natemcmaster.com///2013/11/an-engineer-ette.html</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com///2013/11/an-engineer-ette.html</guid>
         
         
         <category>cs404</category>
@@ -365,8 +365,8 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
 
 </description>
         <pubDate>Tue, 12 Nov 2013 01:30:00 -0700</pubDate>
-        <link>http://www.natemcmaster.com/blog//blog/2013/11/a-lunch-break-soccer-game.html</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog//blog/2013/11/a-lunch-break-soccer-game.html</guid>
+        <link>http://www.natemcmaster.com///2013/11/a-lunch-break-soccer-game.html</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com///2013/11/a-lunch-break-soccer-game.html</guid>
         
         
         <category>cs404</category>
@@ -379,8 +379,8 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
 
 </description>
         <pubDate>Thu, 07 Nov 2013 15:28:00 -0700</pubDate>
-        <link>http://www.natemcmaster.com/blog//blog/2013/11/why-every-computer-science-major-should.html</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog//blog/2013/11/why-every-computer-science-major-should.html</guid>
+        <link>http://www.natemcmaster.com///2013/11/why-every-computer-science-major-should.html</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com///2013/11/why-every-computer-science-major-should.html</guid>
         
         
         <category>opinion</category>
@@ -396,8 +396,8 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
         <description>&lt;p&gt;The Internet is a satisfactory substitute for reading nonfiction cover-to-cover. The reading habits of the younger generation reflect this attitude. Studies&lt;a href=&quot;http://www.boston.com/news/nation/articles/2007/11/19/young_people_reading_a_lot_less/?page=full&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; &lt;a href=&quot;http://www.npr.org/templates/story/story.php?storyId=16739654&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; &lt;a href=&quot;http://books.google.com/books?id=lpq3ryL1c6sC&amp;amp;dq=the+dumbest+generation&quot;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt; show those 25 and younger read books significantly less than previous generations. For anyone in this group, such as me, this seems obvious. Read books for days, even weeks, and you might find the information you seek. Google it for minutes, maybe hours, and you will find the same thing. Unless you are a Ph.D. student, the overabundant information in books is extraneous, especially in technical and historical books. So why read nonfiction cover-to-cover? The &lt;a href=&quot;http://www.greatschools.org/reading/7071-non-fiction-why-its-important.gs&quot;&gt;reasons&lt;/a&gt; others give are not compelling.&lt;/p&gt;
 </description>
         <pubDate>Thu, 31 Oct 2013 15:11:00 -0600</pubDate>
-        <link>http://www.natemcmaster.com/blog//blog/2013/10/reading-nonfiction-is-inefficient.html</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog//blog/2013/10/reading-nonfiction-is-inefficient.html</guid>
+        <link>http://www.natemcmaster.com///2013/10/reading-nonfiction-is-inefficient.html</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com///2013/10/reading-nonfiction-is-inefficient.html</guid>
         
         
         <category>opinion</category>
@@ -416,8 +416,8 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
 
 </description>
         <pubDate>Thu, 17 Oct 2013 16:10:00 -0600</pubDate>
-        <link>http://www.natemcmaster.com/blog//blog/2013/10/the-cuckoos-egg-review.html</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog//blog/2013/10/the-cuckoos-egg-review.html</guid>
+        <link>http://www.natemcmaster.com///2013/10/the-cuckoos-egg-review.html</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com///2013/10/the-cuckoos-egg-review.html</guid>
         
         
         <category>book review</category>
@@ -432,8 +432,8 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
 
 </description>
         <pubDate>Tue, 08 Oct 2013 01:10:00 -0600</pubDate>
-        <link>http://www.natemcmaster.com/blog//blog/2013/10/bitcoin-and-cloud-crime.html</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog//blog/2013/10/bitcoin-and-cloud-crime.html</guid>
+        <link>http://www.natemcmaster.com///2013/10/bitcoin-and-cloud-crime.html</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com///2013/10/bitcoin-and-cloud-crime.html</guid>
         
         
         <category>cs404</category>
