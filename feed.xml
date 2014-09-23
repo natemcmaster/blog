@@ -6,8 +6,8 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 23 Sep 2014 12:20:42 -0600</pubDate>
-    <lastBuildDate>Tue, 23 Sep 2014 12:20:42 -0600</lastBuildDate>
+    <pubDate>Tue, 23 Sep 2014 12:26:36 -0600</pubDate>
+    <lastBuildDate>Tue, 23 Sep 2014 12:26:36 -0600</lastBuildDate>
     <generator>Jekyll v2.1.1</generator>
     
       <item>
@@ -283,7 +283,7 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
     
       <item>
         <title>Graphs, Trees, and Leonardo da Vinci</title>
-        <description>&lt;p&gt;&lt;a href=&quot;http://www.natemcmaster.com/historyexplorer/&quot;&gt;History Explorer&lt;/a&gt; allows users to explore the relationship between historical people, places, and ideas. The content itself is almost completely verbatim Wikipedia. The more important part is the graphical presentation. &lt;/p&gt;
+        <description>&lt;p&gt;&lt;a href=&quot;http://www.natemcmaster.com/projects/historyexplorer/&quot;&gt;History Explorer&lt;/a&gt; allows users to explore the relationship between historical people, places, and ideas. The content itself is almost completely verbatim Wikipedia. The more important part is the graphical presentation. &lt;/p&gt;
 
 &lt;p&gt;Ideas, people, and places share a connection. Karinthy theorized that everyone can be connected to everyone in a chain of six links or fewer, or six degrees of separation. Unique ideas, wars, political leaders, books, painting, and music share a similar connection. History explorer attempts to capture and present some of those connections (but only a very minor subset).&lt;/p&gt;
 
@@ -292,7 +292,7 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
 &lt;p&gt;Most college seniors barely survive their last and final history class. I got lucky. My history class allowed me to do something new and innovative. The professor chose to theme his class around &lt;em&gt;creativity&lt;/em&gt;. For the final project, worth a third of our grade, we had to present a “creative work that involves historical content.” This project is the fruit of those open-ended guidelines.&lt;/p&gt;
 
 &lt;h2 id=&quot;technical-details&quot;&gt;Technical Details&lt;/h2&gt;
-&lt;p&gt;This static website relys almost entirely on client-side JavaScript. &lt;a href=&quot;https://github.com/natemcmaster/historyexplorer/tree/gh-pages&quot;&gt;The application&lt;/a&gt; relies on &lt;a href=&quot;https://angularjs.org&quot;&gt;AngularJS&lt;/a&gt; and &lt;a href=&quot;http://d3js.org&quot;&gt;D3.js&lt;/a&gt; to organize and present the content. The website is served from GitHub pages, and includes a rather large (900 kb) JSON file to provide the data for the graph. I crafted the JSON using some &lt;a href=&quot;https://github.com/natemcmaster/historyexplorer/tree/master/builder&quot;&gt;Python scripts&lt;/a&gt; and a list of historical terms from the course. The most rigorous part of the project involved matching connections between key terms and choosing images. This took almost as much time as the invention of a good heuristic for arranging the nodes in the graph.&lt;/p&gt;
+&lt;p&gt;This static website relys almost entirely on client-side JavaScript. &lt;a href=&quot;https://github.com/natemcmaster/historyexplorer/tree/build&quot;&gt;The application&lt;/a&gt; relies on &lt;a href=&quot;https://angularjs.org&quot;&gt;AngularJS&lt;/a&gt; and &lt;a href=&quot;http://d3js.org&quot;&gt;D3.js&lt;/a&gt; to organize and present the content. The website is served from GitHub pages, and includes a rather large (900 kb) JSON file to provide the data for the graph. I crafted the JSON using some &lt;a href=&quot;https://github.com/natemcmaster/historyexplorer/tree/master/builder&quot;&gt;Python scripts&lt;/a&gt; and a list of historical terms from the course. The most rigorous part of the project involved matching connections between key terms and choosing images. This took almost as much time as the invention of a good heuristic for arranging the nodes in the graph.&lt;/p&gt;
 
 </description>
         <pubDate>Mon, 02 Jun 2014 12:00:00 -0600</pubDate>
