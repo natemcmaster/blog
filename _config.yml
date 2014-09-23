@@ -31,4 +31,3 @@ assets:
         - _assets/stylesheets
         - _vendors/angulartics/dist
 
-include: [.nojekyll]
