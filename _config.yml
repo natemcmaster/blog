@@ -12,7 +12,7 @@ github_username:  natemcmaster
 markdown: kramdown
 permalink: /blog/:categories/:year/:month/:day/:title/
 source: src
-destination: _site
+destination: build
 timezone: America/Denver
 sass:
     sass_dir: _sass
@@ -31,3 +31,4 @@ assets:
         - _assets/stylesheets
         - _vendors/angulartics/dist
 
+include: [.nojekyll]
