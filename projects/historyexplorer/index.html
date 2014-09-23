@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="graphApp" ng-keypress="$broadcast('keypress',$event)">
+
+<head>
+    <title>History Explorer</title>
+    <meta name="author" content="Nate McMaster">
+    <meta name="description" content="An interactive way to view the connections between historical figures, places, and events">
+    <meta name="keywords" content="history,graph,map,web,wikipedia,learning tool">
+    <meta name="generator" content="my keyboard">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/app.css" />
+    <script type="text/javascript" src="http://use.typekit.net/oqq0qpe.js"></script>
+    <script type="text/javascript">
+        try {
+            Typekit.load();
+        } catch (e) {}
+    </script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.15/angular.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.4/d3.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.2/bloodhound.min.js"></script>
+
+    <script type="text/javascript" src="js/SideBarCtrl.js"></script>
+    <script type="text/javascript" src="js/GraphCtrl.js"></script>
+    <script type="text/javascript" src="js/GraphData.js"></script>
+    <script type="text/javascript" src="js/SearchCtrl.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/ga.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <nav class="header">
+            <h1>
+                <span class="icon-hotairballoon"></span>
+                History Explorer
+                <small>Explore the connections between people, places, and ideas</small>
+            </h1>
+        </nav>
+
+        <div class="page">
+            <div class="content">
+                <div class="searchbar" ng-controller="SearchCtrl">
+                    <span class="icon-magnifying-glass"></span>
+                    <input type="search" placeholder="Search for a term" ng-model="searchQuery" ng-blur="clear(100)" ng-submit="$event.preventDefault()" ng-keydown="searchKey($event)"/>
+                    <div class="matches" ng-if="matches" ng-mouseleave="$parent.selectedResult=-1">
+                        <div class="match" ng-repeat="node in matches" ng-click="goTo(node.id)" ng-class="{active: $parent.selectedResult == $index}" ng-mouseenter="$parent.selectedResult=$index">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="graph" ng-controller="GraphCtrl">
+                </div>
+            </div>
+            <div class="sidebar" ng-controller="SideBarCtrl">
+                <div class="hero" ng-class="{true:'animate'}[animate]" ng-if="heroImage">
+                    <div ng-style="{'background-image':'url('+heroImage+')','background-size':imageSize}"></div>
+                    <p ng-if="caption">
+                        
+                    </p>
+                </div>
+                <div class=" heading ">
+                    <h1></h1>
+                    <h2 ng-if="subtitle "></h2>
+                </div>
+                <div class="article ">
+                    <p>
+                    </p>
+                    <p>
+                    <a ng-href="" target="_blank"  ng-if="sourceURI">Read more
+                            <span class="icon-arrow-right "></span>
+                        </a></p>
+
+                    <small ng-if="source">Source: </small>
+                </div>
+                <div class="related " ng-if="related">
+                    <h3>Related</h3>
+                    <ul>
+                        <li ng-repeat="item in related" ng-click="loadRelated(item)">
+                            <span class="icon-expand "></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
