@@ -1,7 +1,7 @@
 ---
 title: "You're On Your Own — \"The Cuckoo's Egg\" Review"
 layout: "post"
-permalink: "/2013/10/the-cuckoos-egg-review.html"
+permalink: "/blog/2013/10/the-cuckoos-egg-review.html"
 uuid: "2482564824747012562"
 guid: "tag:blogger.com,1999:blog-6882143117181652318.post-2482564824747012562"
 date: "2013-10-17 16:10:00"

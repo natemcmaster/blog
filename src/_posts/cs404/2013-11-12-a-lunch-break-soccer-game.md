@@ -1,7 +1,7 @@
 ---
 title: "A Lunch-break Soccer Game"
 layout: "post"
-permalink: "/2013/11/a-lunch-break-soccer-game.html"
+permalink: "/blog/2013/11/a-lunch-break-soccer-game.html"
 guid: "tag:blogger.com,1999:blog-6882143117181652318.post-14179362678722951"
 date: "2013-11-12 01:30:00"
 updated: "2013-11-12 01:30:22"

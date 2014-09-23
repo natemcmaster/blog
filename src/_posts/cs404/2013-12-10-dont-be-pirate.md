@@ -1,7 +1,7 @@
 ---
 title: "Don't Be A Pirate"
 layout: "post"
-permalink: "/2013/12/dont-be-pirate.html"
+permalink: "/blog/2013/12/dont-be-pirate.html"
 uuid: "10588862542844770"
 guid: "tag:blogger.com,1999:blog-6882143117181652318.post-10588862542844770"
 date: "2013-12-10 16:21:00"

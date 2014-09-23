@@ -1,7 +1,7 @@
 ---
 title: "An Engineer-ette"
 layout: "post"
-permalink: "/2013/11/an-engineer-ette.html"
+permalink: "/blog/2013/11/an-engineer-ette.html"
 uuid: "8657298536378427564"
 guid: "tag:blogger.com,1999:blog-6882143117181652318.post-8657298536378427564"
 date: "2013-11-19 02:05:00"

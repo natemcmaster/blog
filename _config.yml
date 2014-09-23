@@ -3,16 +3,16 @@ title: Nate McMaster
 email: hello@natemcmaster.com
 description: >
     Infrequent blog posts about software development, photography, opinion, etc.
-baseurl: /
+baseurl:
 url: "http://www.natemcmaster.com/"
 twitter_username: natemcmaster
 github_username:  natemcmaster
 
 # Build settings
 markdown: kramdown
-permalink: pretty
+permalink: /blog/:categories/:year/:month/:day/:title/
 source: src
-destination: build
+destination: _site
 timezone: America/Denver
 sass:
     sass_dir: _sass
@@ -20,6 +20,7 @@ gems:
     - jekyll-sitemap
     - jekyll-assets
     - jemoji
+    - jekyll-redirect-from
 assets:
     js_compressor: uglifier
     css_compressor: sass

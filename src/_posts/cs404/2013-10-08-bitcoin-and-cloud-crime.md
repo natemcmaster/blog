@@ -1,7 +1,7 @@
 ---
 title: "Bitcoin and Cloud Crime"
 layout: "post"
-permalink: "/2013/10/bitcoin-and-cloud-crime.html"
+permalink: "/blog/2013/10/bitcoin-and-cloud-crime.html"
 uuid: "599942256700291484"
 guid: "tag:blogger.com,1999:blog-6882143117181652318.post-599942256700291484"
 date: "2013-10-08 01:10:00"

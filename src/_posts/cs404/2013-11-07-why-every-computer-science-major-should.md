@@ -1,7 +1,7 @@
 ---
 title: "Why Every Computer Science Major Should Work During School"
 layout: "post"
-permalink: "/2013/11/why-every-computer-science-major-should.html"
+permalink: "/blog/2013/11/why-every-computer-science-major-should.html"
 uuid: "3105397098111976167"
 guid: "tag:blogger.com,1999:blog-6882143117181652318.post-3105397098111976167"
 date: "2013-11-07 15:28:00"
