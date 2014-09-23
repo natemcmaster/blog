@@ -1,4 +1,4 @@
-var GraphCtrl = (function _constuct() {
+graphApp.controller('GraphCtrl', ['$scope', '$http', '$element', 'GraphData', (function _constuct() {
     var svg, graph, goToNode;
 
     function Link(a, b) {
@@ -9,7 +9,6 @@ var GraphCtrl = (function _constuct() {
     var MAX_LEVEL = 2,
         WIDTH = 500,
         HEIGHT = 500,
-        MAX_LEVEL = 2,
         MAX_NODE_RADIUS = 14,
         MIN_NODE_RADIUS = 5,
         TRANSITION = 1300,
@@ -54,7 +53,7 @@ var GraphCtrl = (function _constuct() {
         } else {
             var words = d.title.split(' ');
             el.text('').attr('y', nodeRadius)
-                .attr('transform','translate(0)rotate(0)')
+                .attr('transform', 'translate(0)rotate(0)')
                 .attr('text-anchor', 'middle');
 
             for (var i = 0; i < words.length; i++) {
@@ -77,23 +76,23 @@ var GraphCtrl = (function _constuct() {
             var level1 = tree.items.children[i];
             var count = level1.children.length;
             for (var j = 0; j < count; j++) {
-                var level2=level1.children[j]
+                var level2 = level1.children[j];
                 level2.radius = 2;
                 level2.angle = outerAngle;
                 outerAngle += incr;
-            };
+            }
 
-            if(count % 2 == 0){
-                var right = count/2;
-                var left = right-1;
+            if (count % 2 === 0) {
+                var right = count / 2;
+                var left = right - 1;
                 level1.angle = (level1.children[left].angle + level1.children[right].angle) / 2;
-            } else{
-                level1.angle = level1.children[(count-1)/2].angle
+            } else {
+                level1.angle = level1.children[(count - 1) / 2].angle;
             }
             level1.radius = 1;
-        };
+        }
 
-        tree.items.angle = 0
+        tree.items.angle = 0;
         tree.items.radius = 0;
 
         return tree.items;
@@ -106,12 +105,12 @@ var GraphCtrl = (function _constuct() {
         function flatten(parent) {
             nodes.push(parent);
             parent.children.forEach(function(child) {
-                if(child.empty){
+                if (child.empty) {
                     return;
                 }
-                links.push(new Link(parent, child))
+                links.push(new Link(parent, child));
                 flatten(child);
-            })
+            });
         }
         flatten(items);
         drawLinks(links);
@@ -181,19 +180,19 @@ var GraphCtrl = (function _constuct() {
                 return 'item level-' + d.radius;
             })
             .attr('transform', function(d) {
-                var pt=d.parent || d;
-                return 'rotate(' + radToDeg(pt.angle) + ')translate('+pt.radius * scale+')'
+                var pt = d.parent || d;
+                return 'rotate(' + radToDeg(pt.angle) + ')translate(' + pt.radius * scale + ')';
             });
 
         group.transition()
             .duration(TRANSITION)
             .attr('transform', function(d) {
-                return 'rotate(' + radToDeg(d.angle) + ')translate(' + d.radius * scale + ')'
+                return 'rotate(' + radToDeg(d.angle) + ')translate(' + d.radius * scale + ')';
             });
 
         group.append('text')
             .attr('class', 'node-label')
-            .each(nodeLabel)
+            .each(nodeLabel);
 
         group.append('circle')
             .attr('r', nodeRadius)
@@ -203,18 +202,17 @@ var GraphCtrl = (function _constuct() {
 
         //update
         var updatedGroup = items.attr('class', function(d) {
-            return 'item level-' + d.radius;
-        })
+                return 'item level-' + d.radius;
+            })
             .transition()
             .duration(TRANSITION)
             .attr('transform', function(d) {
-                return 'rotate(' + radToDeg(d.angle) + ')translate(' + d.radius * scale + ')'
+                return 'rotate(' + radToDeg(d.angle) + ')translate(' + d.radius * scale + ')';
             });
         updatedGroup.select('circle')
             .attr('r', nodeRadius);
         updatedGroup.select('text')
-            .each(nodeLabel)
-
+            .each(nodeLabel);
 
         //exit
         items.exit().remove();
@@ -250,12 +248,14 @@ var GraphCtrl = (function _constuct() {
     GraphCtrl.prototype.centerOnNode = function(ctr) {
         var tree = graph.tree(ctr);
         for (var i = tree.items.children.length - 1; i >= 0; i--) {
-            var s =tree.items.children[i];
-            if(!s.children.length){
+            var s = tree.items.children[i];
+            if (!s.children.length) {
                 tree.count[2]++;
-                s.children=[{empty:true}];
+                s.children = [{
+                    empty: true
+                }];
             }
-        };
+        }
 
         var items = arrangeNodes(tree);
         draw(items);
@@ -263,4 +263,4 @@ var GraphCtrl = (function _constuct() {
     }
 
     return GraphCtrl;
-})();
+})()]);

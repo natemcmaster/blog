@@ -8,7 +8,11 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
     {% javascript ga %}
-
+    <script type="text/javascript">
+        (function (ga) {
+            ga('send', 'pageview');
+        })(ga);
+    </script>
     {% stylesheet app %}
 
 </head>

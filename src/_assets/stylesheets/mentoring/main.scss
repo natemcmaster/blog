@@ -71,7 +71,7 @@ section {
 
     aside{
         @include flex(1 1 200px);
-        background-image: url('../images/portrait.jpg');
+        background-image: url(asset_path('mentoring/portrait.jpg'));
         background-repeat: no-repeat;
         background-size: contain;
         background-position: bottom right;

@@ -1,11 +1,12 @@
 var graphApp = angular.module('graphApp', []);
-graphApp.config(function($locationProvider){
-    $locationProvider.html5Mode(true);
-})
-graphApp.service('GraphData', ['$rootScope','$http','$location',GraphData]);
 
-graphApp.filter('cut', function () {
-    return function (value, max, wordwise,tail) {
+graphApp.config(function($locationProvider) {
+    $locationProvider.html5Mode(true);
+});
+graphApp.service('GraphData', ['$rootScope', '$location', GraphData]);
+
+graphApp.filter('cut', function() {
+    return function(value, max, wordwise, tail) {
         if (!value) return '';
         max = parseInt(max, 10);
         if (!max) return value;
@@ -19,6 +20,10 @@ graphApp.filter('cut', function () {
             }
         }
 
-        return value + (wordwise ? '.' : (tail ||' ...'));
+        return value + (wordwise ? '.' : (tail || ' ...'));
     };
 });
+
+if(window.ga){
+    window.ga('set', 'appName', 'History Explorer');
+}

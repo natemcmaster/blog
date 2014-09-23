@@ -4,7 +4,7 @@ email: hello@natemcmaster.com
 description: >
     Infrequent blog posts about software development, photography, opinion, etc.
 baseurl:
-url: "http://www.natemcmaster.com/"
+url: "http://www.natemcmaster.com"
 twitter_username: natemcmaster
 github_username:  natemcmaster
 
@@ -17,18 +17,22 @@ timezone: America/Denver
 sass:
     sass_dir: _sass
 gems:
-    - jekyll-sitemap
     - jekyll-assets
+    - jekyll-sitemap
     - jemoji
+    - compass
     - jekyll-redirect-from
 assets:
-    js_compressor: uglifier
+    cache: true
+    js_compressor: no_mangle_uglifier
     css_compressor: sass
     baseurl: /assets/
+    gzip: [ text/css, application/javascript ]
     sources:
         - _assets/images
         - _assets/javascripts
         - _assets/stylesheets
+        - _assets/fonts
         - _vendors/angulartics/dist
 
 include: [.nojekyll]

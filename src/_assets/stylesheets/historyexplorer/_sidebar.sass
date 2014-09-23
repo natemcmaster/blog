@@ -1,0 +1,81 @@
+$kenburnsZoom: 1.2
+
+=sidebar($width)
+    float: left
+    display: inline-block
+    height: 100%
+    width: $width
+    background: white
+    color: black
+    overflow-y: auto
+    border-left: $pageSeparator
+    +sidebarTransision
+        
+    $gutter: 10px
+    
+    .hero
+        height: 200px
+        position: relative
+        overflow: hidden
+        p
+            z-index: 3
+            bottom: 0
+            position: absolute
+            display: inline-block
+            right: 0
+            padding: 2px
+            padding-right: 10px
+            +bodyFont
+            font-size: 12pt
+            +text-shadow(0 0 5px rgba(0,0,0,0.4))
+            color: white
+        div
+            z-index: 2
+            display: inline-block
+            height: 100%
+            width: 100%
+            background-color: lighten(black,40%)
+            background-repeat: no-repeat
+            background-position: center center
+            background-size: cover
+            +scale($kenburnsZoom)
+        &.animate div
+            +scale(1)
+            +animation(kenburns,8s,ease)
+    .heading
+        padding: 10px $gutter
+        background: $highlight
+        color: white
+        h1, h2
+            margin: 0
+    .article
+        padding: 5px $gutter
+        width: 100%
+        
+    .related
+        h3
+            background: $tertiary
+            color: white
+            margin: 5px 0 0
+            padding: 5px $gutter
+        ul
+            margin: 0 
+            
+        li
+            cursor: pointer
+            padding: 10px $gutter
+            &:nth-child(odd)
+                background: darken(white, 3%)
+            .icon-expand
+                float: right
+            +transition(all 150ms ease)
+            &:hover
+                background: lighten(black,15%)
+                color: white
+    
+        
++keyframe('kenburns')
+    from
+        +scale($kenburnsZoom)
+    to
+        +scale(1)
