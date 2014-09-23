@@ -1,10 +1,10 @@
 # Site settings
-title: That Blog Thing
-email: me@natemcmaster.com
+title: Nate McMaster
+email: hello@natemcmaster.com
 description: >
     Infrequent blog posts about software development, photography, opinion, etc.
-baseurl: /blog
-url: "http://www.natemcmaster.com/blog/"
+baseurl: /
+url: "http://www.natemcmaster.com/"
 twitter_username: natemcmaster
 github_username:  natemcmaster
 
@@ -23,7 +23,7 @@ gems:
 assets:
     js_compressor: uglifier
     css_compressor: sass
-    baseurl: /blog/assets/
+    baseurl: /assets/
     sources:
         - _assets/images
         - _assets/javascripts
