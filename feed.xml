@@ -6,9 +6,9 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 23 Sep 2014 13:59:15 -0600</pubDate>
-    <lastBuildDate>Tue, 23 Sep 2014 13:59:15 -0600</lastBuildDate>
-    <generator>Jekyll v2.1.1</generator>
+    <pubDate>Tue, 23 Sep 2014 14:31:57 -0600</pubDate>
+    <lastBuildDate>Tue, 23 Sep 2014 14:31:57 -0600</lastBuildDate>
+    <generator>Jekyll v2.4.0</generator>
     
       <item>
         <title>Writing an EF7 Provider</title>
@@ -106,7 +106,7 @@ the original LINQ query requested by user code on DbSet. (Thanks &lt;a href=&quo
 &lt;p&gt;This class manages connection settings and sessions.&lt;/p&gt;
 
 &lt;p&gt;Although an EF provider requires an implementation, the details of how the class
-operates is &lt;em&gt;entirely up to the provider&lt;/em&gt; i.e. time to freestyle. &lt;img class=&quot;emoji&quot; title=&quot;:snowboarder:&quot; alt=&quot;:snowboarder:&quot; src=&quot;https://assets.github.com/images/icons/emoji/snowboarder.png&quot; height=&quot;20&quot; width=&quot;20&quot; align=&quot;absmiddle&quot; /&gt; &lt;/p&gt;
+operates is &lt;em&gt;entirely up to the provider&lt;/em&gt; i.e. time to freestyle. &lt;img class=&quot;emoji&quot; title=&quot;:snowboarder:&quot; alt=&quot;:snowboarder:&quot; src=&quot;https://assets.github.com/images/icons/emoji/unicode/1f3c2.png&quot; height=&quot;20&quot; width=&quot;20&quot; align=&quot;absmiddle&quot; /&gt; &lt;/p&gt;
 
 &lt;p&gt;For example, SQL Server uses this class to open TCP/IP connections,
 but SQLite uses this class to create connections to the local filesystem.&lt;/p&gt;
@@ -139,11 +139,11 @@ of theses classes:&lt;/p&gt;
   &lt;li&gt;Infrastructure.DbContextOptionsExtension&lt;/li&gt;
   &lt;li&gt;Storage.DataStoreCreator&lt;/li&gt;
   &lt;li&gt;Storage.DataStoreConnection&lt;/li&gt;
-  &lt;li&gt;Identity.ValueGeneratorCache &lt;img class=&quot;emoji&quot; title=&quot;:small_blue_diamond:&quot; alt=&quot;:small_blue_diamond:&quot; src=&quot;https://assets.github.com/images/icons/emoji/small_blue_diamond.png&quot; height=&quot;20&quot; width=&quot;20&quot; align=&quot;absmiddle&quot; /&gt;&lt;/li&gt;
-  &lt;li&gt;Storage.Database &lt;img class=&quot;emoji&quot; title=&quot;:small_blue_diamond:&quot; alt=&quot;:small_blue_diamond:&quot; src=&quot;https://assets.github.com/images/icons/emoji/small_blue_diamond.png&quot; height=&quot;20&quot; width=&quot;20&quot; align=&quot;absmiddle&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;Identity.ValueGeneratorCache &lt;img class=&quot;emoji&quot; title=&quot;:small_blue_diamond:&quot; alt=&quot;:small_blue_diamond:&quot; src=&quot;https://assets.github.com/images/icons/emoji/unicode/1f539.png&quot; height=&quot;20&quot; width=&quot;20&quot; align=&quot;absmiddle&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;Storage.Database &lt;img class=&quot;emoji&quot; title=&quot;:small_blue_diamond:&quot; alt=&quot;:small_blue_diamond:&quot; src=&quot;https://assets.github.com/images/icons/emoji/unicode/1f539.png&quot; height=&quot;20&quot; width=&quot;20&quot; align=&quot;absmiddle&quot; /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img class=&quot;emoji&quot; title=&quot;:small_blue_diamond:&quot; alt=&quot;:small_blue_diamond:&quot; src=&quot;https://assets.github.com/images/icons/emoji/small_blue_diamond.png&quot; height=&quot;20&quot; width=&quot;20&quot; align=&quot;absmiddle&quot; /&gt; These classes are not abstract. A default implementation has been provided.&lt;/p&gt;
+&lt;p&gt;&lt;img class=&quot;emoji&quot; title=&quot;:small_blue_diamond:&quot; alt=&quot;:small_blue_diamond:&quot; src=&quot;https://assets.github.com/images/icons/emoji/unicode/1f539.png&quot; height=&quot;20&quot; width=&quot;20&quot; align=&quot;absmiddle&quot; /&gt; These classes are not abstract. A default implementation has been provided.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://i.imgur.com/nMQM7Dl.png&quot; alt=&quot;Datastoresource&quot; /&gt;&lt;/p&gt;
 
@@ -182,7 +182,7 @@ IntelliSense works best the extension methods are defined in the namespace of th
 Your extension method should add your provider-specific implementation of 
 DbContextOptionsExtension to an instance of DbContextOptions.&lt;/p&gt;
 
-&lt;p&gt;&lt;img class=&quot;emoji&quot; title=&quot;:hammer:&quot; alt=&quot;:hammer:&quot; src=&quot;https://assets.github.com/images/icons/emoji/hammer.png&quot; height=&quot;20&quot; width=&quot;20&quot; align=&quot;absmiddle&quot; /&gt; Power user note: To add a DbContextOptionsExtension to DbContextOptions,
+&lt;p&gt;&lt;img class=&quot;emoji&quot; title=&quot;:hammer:&quot; alt=&quot;:hammer:&quot; src=&quot;https://assets.github.com/images/icons/emoji/unicode/1f528.png&quot; height=&quot;20&quot; width=&quot;20&quot; align=&quot;absmiddle&quot; /&gt; Power user note: To add a DbContextOptionsExtension to DbContextOptions,
 you must first cast DbContextOptions to IDbContextOptionsExtensions, and then use
 **IDbContextOptionsExtensions.AddOrUpdateExtension&lt;t&gt;()**.
 We require this to keep IntelliSense clean for users, but still expose

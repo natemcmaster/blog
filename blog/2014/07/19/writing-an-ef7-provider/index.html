@@ -11,8 +11,12 @@
     <link rel="canonical" href="http://www.natemcmaster.com/blog/2014/07/19/writing-an-ef7-provider/">
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/assets/ga-047f0250104ab7a223c3f292205d749e.js"></script>
-
+    <script src="/assets/ga-c5fd0d84fdb792b9204d3be21a30f81f.js"></script>
+    <script type="text/javascript">
+        (function (ga) {
+            ga('send', 'pageview');
+        })(ga);
+    </script>
     <link rel="stylesheet" href="/assets/app-6f6755c76f9634d4b4aaa06eb3c40b54.css">
 
 </head>
@@ -46,6 +50,8 @@
           
         <a class="page-link" href="/blog/archive/">Archive</a>
         
+        
+          
         
           
         
@@ -176,7 +182,7 @@ the original LINQ query requested by user code on DbSet. (Thanks <a href="#relin
 <p>This class manages connection settings and sessions.</p>
 
 <p>Although an EF provider requires an implementation, the details of how the class
-operates is <em>entirely up to the provider</em> i.e. time to freestyle. <img class="emoji" title=":snowboarder:" alt=":snowboarder:" src="https://assets.github.com/images/icons/emoji/snowboarder.png" height="20" width="20" align="absmiddle" /> </p>
+operates is <em>entirely up to the provider</em> i.e. time to freestyle. <img class="emoji" title=":snowboarder:" alt=":snowboarder:" src="https://assets.github.com/images/icons/emoji/unicode/1f3c2.png" height="20" width="20" align="absmiddle" /> </p>
 
 <p>For example, SQL Server uses this class to open TCP/IP connections,
 but SQLite uses this class to create connections to the local filesystem.</p>
@@ -209,11 +215,11 @@ of theses classes:</p>
   <li>Infrastructure.DbContextOptionsExtension</li>
   <li>Storage.DataStoreCreator</li>
   <li>Storage.DataStoreConnection</li>
-  <li>Identity.ValueGeneratorCache <img class="emoji" title=":small_blue_diamond:" alt=":small_blue_diamond:" src="https://assets.github.com/images/icons/emoji/small_blue_diamond.png" height="20" width="20" align="absmiddle" /></li>
-  <li>Storage.Database <img class="emoji" title=":small_blue_diamond:" alt=":small_blue_diamond:" src="https://assets.github.com/images/icons/emoji/small_blue_diamond.png" height="20" width="20" align="absmiddle" /></li>
+  <li>Identity.ValueGeneratorCache <img class="emoji" title=":small_blue_diamond:" alt=":small_blue_diamond:" src="https://assets.github.com/images/icons/emoji/unicode/1f539.png" height="20" width="20" align="absmiddle" /></li>
+  <li>Storage.Database <img class="emoji" title=":small_blue_diamond:" alt=":small_blue_diamond:" src="https://assets.github.com/images/icons/emoji/unicode/1f539.png" height="20" width="20" align="absmiddle" /></li>
 </ul>
 
-<p><img class="emoji" title=":small_blue_diamond:" alt=":small_blue_diamond:" src="https://assets.github.com/images/icons/emoji/small_blue_diamond.png" height="20" width="20" align="absmiddle" /> These classes are not abstract. A default implementation has been provided.</p>
+<p><img class="emoji" title=":small_blue_diamond:" alt=":small_blue_diamond:" src="https://assets.github.com/images/icons/emoji/unicode/1f539.png" height="20" width="20" align="absmiddle" /> These classes are not abstract. A default implementation has been provided.</p>
 
 <p><img src="http://i.imgur.com/nMQM7Dl.png" alt="Datastoresource" /></p>
 
@@ -252,7 +258,7 @@ IntelliSense works best the extension methods are defined in the namespace of th
 Your extension method should add your provider-specific implementation of 
 DbContextOptionsExtension to an instance of DbContextOptions.</p>
 
-<p><img class="emoji" title=":hammer:" alt=":hammer:" src="https://assets.github.com/images/icons/emoji/hammer.png" height="20" width="20" align="absmiddle" /> Power user note: To add a DbContextOptionsExtension to DbContextOptions,
+<p><img class="emoji" title=":hammer:" alt=":hammer:" src="https://assets.github.com/images/icons/emoji/unicode/1f528.png" height="20" width="20" align="absmiddle" /> Power user note: To add a DbContextOptionsExtension to DbContextOptions,
 you must first cast DbContextOptions to IDbContextOptionsExtensions, and then use
 **IDbContextOptionsExtensions.AddOrUpdateExtension<t>()**.
 We require this to keep IntelliSense clean for users, but still expose
