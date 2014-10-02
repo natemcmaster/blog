@@ -6,9 +6,49 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 23 Sep 2014 14:31:57 -0600</pubDate>
-    <lastBuildDate>Tue, 23 Sep 2014 14:31:57 -0600</lastBuildDate>
+    <pubDate>Thu, 02 Oct 2014 10:42:13 -0600</pubDate>
+    <lastBuildDate>Thu, 02 Oct 2014 10:42:13 -0600</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>A Day at YouTube: Onsite Interviews</title>
+        <description>&lt;p&gt;At Google, onsite interviews vet a candidate’s dev skills and do not focus positions with specific teams or projects. I went hoping to learn who I might work with, what I might work on, and how I can expect to spend my time as a YouTube engineer. I left with no answers to such, a coding headache, and a lingering question, “how &lt;em&gt;do&lt;/em&gt; you rotate subtrees in a BST?”&lt;/p&gt;
+
+&lt;p&gt;I almost wrote a scathing review of how the interviews left me feeling unimpressed and confused, but my recruiter called an hour after and clarified the process: team and project selection comes after a job offer is extended. I wish I had known earlier so I could have curbed my expectations.&lt;/p&gt;
+
+&lt;p&gt;Google paid for my flight and hotel. (Thanks!) I arrived a day in advance, spent free time touring the Bay Area, and had a fretful night of pre-interview nightmares in which I repeatedly forget English, JavaScript, my clothing, or all three.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-coding-interviews&quot;&gt;The Coding Interviews&lt;/h2&gt;
+&lt;p&gt;Within 15 minutes, I was “on trial.” A recruiter greeted me in the lobby of the San Bruno office. We talked pleasantries for a few minutes until my first examiner promptly arrived. My recruiter wished me luck and turned me over to the wolves.&lt;/p&gt;
+
+&lt;p&gt;At YouTube, I interviewed with four engineers, each for 45 minutes. My interviewers cut to the chase, mostly skipping personal questions (with one exception) and dove head-first into programming questions.
+They grilled me on subjects ranging from JavaScript’s “this” to data structure implementations. I had no time to stop and breathe between the interviews. Except for a 45 minute lunch interview, I stayed in a small conference room next to HR.&lt;/p&gt;
+
+&lt;p&gt;The exception I mentioned above was my first inteview. We talked first about my previous experience and work at Microsoft. He seemed genuinely interested in my GitHub profile. The programming gauntlet was easy and only lasted 10 minutes. The rest of the time my interviewer tried to sell me on working for YouTube.&lt;/p&gt;
+
+&lt;p&gt;But as I said before, this was the only exception. The other interviews were exhausting. Like oral exams in high school Spanish, I left convinced of my idiocy and expecting a flunking grade.&lt;/p&gt;
+
+&lt;h2 id=&quot;onsite-impressions-of-google&quot;&gt;Onsite Impressions of Google&lt;/h2&gt;
+&lt;p&gt;The empowering do-cool-things culture at Google is fresh air to the suffocating red tape of some big companies. I, like many engineers, feel most effect and creative when given minimal restrictions. &lt;/p&gt;
+
+&lt;p&gt;That said, Google has flaws, too. I expected Googlers to exhibit enthusiasm for their work. Instead, most seemed to think their work is routine. A few implied that exciting work is done at start-ups, not Google. In addition, the interviews felt fairly canned and impersonal. I hoped to get a sense of who my coworkers may be. Instead, I rehearsed memorized algorithms from college textbooks.&lt;/p&gt;
+
+&lt;h3 id=&quot;san-bruno-office&quot;&gt;San Bruno Office&lt;/h3&gt;
+&lt;p&gt;The San Bruno office has spunk and lots of red. In the lobby, four TV’s were playing a loop of zanny music videos, dancing cats, and DIY instructionals. All chairs, umbrellas, candy jars, slides, and walls were solid red. The lunch is free for all employees, and I suppose they get what they pay for. I had cold rice and bland pesto chicken.&lt;/p&gt;
+
+&lt;h3 id=&quot;googleplex&quot;&gt;Googleplex&lt;/h3&gt;
+&lt;p&gt;I also had time to tour the Googleplex in Mountain View. Unlike San Bruno, they have &lt;em&gt;four&lt;/em&gt; colors in their schema: red, blue, green, and yellow. Employees ride bikes between buildings. There is one soccer field, and some open area behind the building. The glass walls reveal large open work areas where a mix of hypsters, nerds, and few nuts work on laptops.&lt;/p&gt;
+
+&lt;h2 id=&quot;next-steps&quot;&gt;Next steps&lt;/h2&gt;
+&lt;p&gt;Interviewer feedback is funneled into a hiring system. First, Hiring Committee says yes or no. If yes, then Compensation Committee says how much yes.Meanwhile, I will be back home, browsing dusty textbooks trying to find the answer to, “how &lt;em&gt;do&lt;/em&gt; you rotate subtrees in a BST?”&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 31 Aug 2014 00:00:00 -0600</pubDate>
+        <link>http://www.natemcmaster.com/blog/2014/08/31/youtube-interview/</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2014/08/31/youtube-interview/</guid>
+        
+        
+      </item>
     
       <item>
         <title>Writing an EF7 Provider</title>
@@ -423,22 +463,6 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
         <category>book review</category>
         
         <category>cs404</category>
-        
-      </item>
-    
-      <item>
-        <title>Bitcoin and Cloud Crime</title>
-        <description>&lt;p&gt;Bitcoin (BTC), a digital-only currency, became popular after its sudden burst of valuation in early 2013. This currency is completely digital, and no government or institution backs it or regulates exchange. This makes BTC perfect for cyber-crime (such as &lt;a href=&quot;http://www.extremetech.com/tag/silk-road&quot;&gt;the Silk Road&lt;/a&gt;,) and raises an increasingly relevant question: who governs the Internet? Since the establishment of computer networks, governments have attempted to regulate their use (for example, the U.S. Government made &lt;a href=&quot;http://en.wikipedia.org/wiki/ICANN&quot;&gt;ICANN&lt;/a&gt;.) When the operators of Internet activites are located in U.S. Government, &lt;a href=&quot;http://www.extremetech.com/computing/168139-fbi-unable-to-seize-600000-bitcoins-from-silk-road-operator&quot;&gt;the FBI does not hesitate to intervene.&lt;/a&gt; But what happens when Internet crime spreads across many borders? This is a question that this generation will decide. Although some governments have established international agreements to cooperate, there is no answer yet. These treaties have not been tested on matters of digital, government-less currency yet, but that will change soon.&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 08 Oct 2013 01:10:00 -0600</pubDate>
-        <link>http://www.natemcmaster.com/blog/2013/10/bitcoin-and-cloud-crime.html</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2013/10/bitcoin-and-cloud-crime.html</guid>
-        
-        
-        <category>cs404</category>
-        
-        <category>current event</category>
         
       </item>
     
