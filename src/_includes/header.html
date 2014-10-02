@@ -19,7 +19,7 @@
         </svg>
       </a>
       <div class="trigger">
-        <a href="http://www.natemcmaster.com" class="page-link" analytics-on="click" analytics-event="outbound" analytics-label="about_me_profile">About Me</a>
+        <a href="{{ '/resume/' | prepend: site.baseurl}}" class="page-link" analytics-on="click" analytics-event="outbound" analytics-label="about_me_profile">R&eacute;sum&eacute;</a>
         {% for page in site.pages %}
           {% if page.title and page.header and page.partial != 'true' %}
         <a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
