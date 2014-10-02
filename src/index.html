@@ -30,7 +30,7 @@ layout: default
     {% for post in site.posts offset:1 limit:4 %}
     <li>
       <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
-      <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+      <h3><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h3>
       <p>{% if post.subtitle %}
         {{ post.subtitle }}
       {% elsif post.excerpt %}
