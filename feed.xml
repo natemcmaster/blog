@@ -6,9 +6,30 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 02 Oct 2014 11:30:20 -0600</pubDate>
-    <lastBuildDate>Thu, 02 Oct 2014 11:30:20 -0600</lastBuildDate>
+    <pubDate>Mon, 06 Oct 2014 10:56:07 -0600</pubDate>
+    <lastBuildDate>Mon, 06 Oct 2014 10:56:07 -0600</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>Plex TV Announced For Xbox One</title>
+        <description>&lt;p&gt;Plex TV announced the release of their Xbox 360 and One client today.
+For Xbox One, this is the first app that provides a simple way to stream
+media via Xbox from a personal media server.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;(The Xbox apps will) be available for free for Plex Pass members on Tuesday Oct 7th for the Xbox One, and shortly after that for the Xbox 360. (Don’t have a console? We thought of everything: we’ll be giving an Xbox One away on our social media channels, so stay tuned.) If you don’t have a Plex Pass, you’ll be able to purchase the apps with a one-time fee after the Plex Pass preview period. Also, we focused on video for this initial release; rest easy knowing we’re working hard on adding photo and music support, but we didn’t want to wait to get it into your hands!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://blog.plex.tv/2014/10/05/plex-xbox-one-xbox-360/&quot;&gt;Original Article&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, this app will not be free. I am still looking forward the expected release of a media player for Xbox One that comes with DLNA support.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 06 Oct 2014 00:00:00 -0600</pubDate>
+        <link>http://www.natemcmaster.com/blog/2014/10/06/plex-for-xbox/</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2014/10/06/plex-for-xbox/</guid>
+        
+        
+      </item>
     
       <item>
         <title>A Day at YouTube: Onsite Interviews</title>
@@ -441,26 +462,6 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
         
         
         <category>opinion</category>
-        
-        <category>cs404</category>
-        
-      </item>
-    
-      <item>
-        <title>You&#39;re On Your Own — &quot;The Cuckoo&#39;s Egg&quot; Review</title>
-        <description>&lt;p&gt;The main point of &lt;em&gt;The Cuckoo’s Egg&lt;/em&gt; is not what I expected. The book describes Clifford Stoll’s first year as a hacker-hunting system administrator for Berkeley. I expected a dry, technical description of computer networks. Although the story briefly addresses the technical details of network hacking, it contains more human drama and politics. The book’s main point is philosophical: networks cannot rely on government for security. The digital world is a wild country where the only set rule is, “Every man (computer) for himself.” &lt;/p&gt;
-
-&lt;p&gt;How long does it take city police to respond to a reported robbery? Typically less than a day. Often less than hours. Stoll repeatedly points this out as he narrates his frustrated attempts to get government assistance.  75% of the book repeats an incident that occurred weekly throughout 1986: Stoll found the hackers attacking U.S. Government systems. He called the CIA, NSA, FBI, Air Force, or Army. The organization thanked him (sort of), but ultimately shrugged their shoulders. It took a year of Stoll’s nagging to eventually to shut down the hackers.&lt;/p&gt;
-
-&lt;p&gt;This disturbing account of ignored pleas for protection indicate an important caveat to the &lt;a href=&quot;http://en.wikipedia.org/wiki/Social_contract&quot;&gt;social contract&lt;/a&gt;. Although we depend upon government authority to provide physical security and protection of property rights, government is nearly powerless to defend digital rights. We cannot surrounded the United States’ digital land with armies to fight foreigners. Instead, every man (computer) must build his own fortress for protection. Venture into the Internet without a firewall or virus protection if you dare, but be prepared to face digital threats alone.&lt;/p&gt;
-
-</description>
-        <pubDate>Thu, 17 Oct 2013 16:10:00 -0600</pubDate>
-        <link>http://www.natemcmaster.com/blog/2013/10/the-cuckoos-egg-review.html</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2013/10/the-cuckoos-egg-review.html</guid>
-        
-        
-        <category>book review</category>
         
         <category>cs404</category>
         
