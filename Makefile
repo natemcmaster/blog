@@ -9,7 +9,7 @@ serve:
 	@open http://localhost:4000
 	jekyll serve --watch
 
-publish:
+publish: j_build
 	git --git-dir=$(DIR)/.git add --all
 	git --git-dir=$(DIR)/.git commit -m "Build `date`"
 	git --git-dir=$(DIR)/.git push

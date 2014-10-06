@@ -14,4 +14,4 @@ media via Xbox from a personal media server.
 
 [Original Article](https://blog.plex.tv/2014/10/05/plex-xbox-one-xbox-360/)
 
-Unfortunately, this app will not be free. I am still looking forward the expected release of a media player for Xbox One that comes with DLNA support.
+Unfortunately, this app will not be free. I am still looking forward to the expected release of a media player for Xbox One that comes with DLNA support.
