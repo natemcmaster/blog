@@ -7,11 +7,5 @@
 			"folder_exclude_patterns":[".idea",".bundle",".jekyll-assets-cache",".sass-cache"],
 			"file_exclude_patterns":["Gemfile.lock","*.sassc"]
 		}
-	],
-	"build_systems":[
-		{
-			"name":"rake",
-			"shell_cmd":"rake"
-		}
 	]
 }
