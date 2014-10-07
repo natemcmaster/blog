@@ -3,6 +3,14 @@
   
   
   <url>
+    <loc>http://www.natemcmaster.com/blog/2014/10/07/github-student-pack/</loc>
+    
+    <lastmod>2014-10-07T00:00:00-06:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://www.natemcmaster.com/blog/2014/10/06/plex-for-xbox/</loc>
     
     <lastmod>2014-10-06T00:00:00-06:00</lastmod>
@@ -637,35 +645,35 @@
   
   <url>
     <loc>http://www.natemcmaster.com/blog/archive/</loc>
-    <lastmod>2014-10-06T11:07:31-06:00</lastmod>
+    <lastmod>2014-10-07T14:52:25-06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://www.natemcmaster.com/projects/historyexplorer/</loc>
-    <lastmod>2014-10-06T11:07:31-06:00</lastmod>
+    <lastmod>2014-10-07T14:52:25-06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://www.natemcmaster.com/</loc>
-    <lastmod>2014-10-06T11:07:31-06:00</lastmod>
+    <lastmod>2014-10-07T14:52:25-06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://www.natemcmaster.com/mentoring/</loc>
-    <lastmod>2014-10-06T11:07:31-06:00</lastmod>
+    <lastmod>2014-10-07T14:52:25-06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://www.natemcmaster.com/historyexplorer/</loc>
-    <lastmod>2014-10-06T11:07:31-06:00</lastmod>
+    <lastmod>2014-10-07T14:52:25-06:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

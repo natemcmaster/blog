@@ -6,9 +6,44 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 06 Oct 2014 11:07:31 -0600</pubDate>
-    <lastBuildDate>Mon, 06 Oct 2014 11:07:31 -0600</lastBuildDate>
+    <pubDate>Tue, 07 Oct 2014 14:52:25 -0600</pubDate>
+    <lastBuildDate>Tue, 07 Oct 2014 14:52:25 -0600</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>Github Student Pack</title>
+        <description>&lt;p&gt;I just received access to the GitHub Student Developer Pack. Obviously, I am very pleased to receive special access to discounted and free services. &lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;There’s no substitute for hands-on experience, but for most students, real world tools can be cost prohibitive. That’s why we created the GitHub Student Developer Pack with some of our partners and friends: to give students free access to the best developer tools in one place so they can learn by doing.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://education.github.com/pack&quot;&gt;GitHub Student Developer Pack&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Here is a list of some of the free services included:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Atom&lt;/li&gt;
+  &lt;li&gt;Bitnami&lt;/li&gt;
+  &lt;li&gt;Crowdflower&lt;/li&gt;
+  &lt;li&gt;DigitalOcean&lt;/li&gt;
+  &lt;li&gt;DNSimple&lt;/li&gt;
+  &lt;li&gt;GitHub&lt;/li&gt;
+  &lt;li&gt;HackHands&lt;/li&gt;
+  &lt;li&gt;Namecheap&lt;/li&gt;
+  &lt;li&gt;Orchestrate&lt;/li&gt;
+  &lt;li&gt;Screenhero&lt;/li&gt;
+  &lt;li&gt;SendGrid&lt;/li&gt;
+  &lt;li&gt;Stripe&lt;/li&gt;
+  &lt;li&gt;Travis CI&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 07 Oct 2014 00:00:00 -0600</pubDate>
+        <link>http://www.natemcmaster.com/blog/2014/10/07/github-student-pack/</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2014/10/07/github-student-pack/</guid>
+        
+        
+      </item>
     
       <item>
         <title>Plex TV Announced For Xbox One</title>
@@ -449,21 +484,6 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
         <category>cs404</category>
         
         <category>tech</category>
-        
-      </item>
-    
-      <item>
-        <title>Reading Nonfiction Is Inefficient</title>
-        <description>&lt;p&gt;The Internet is a satisfactory substitute for reading nonfiction cover-to-cover. The reading habits of the younger generation reflect this attitude. Studies&lt;a href=&quot;http://www.boston.com/news/nation/articles/2007/11/19/young_people_reading_a_lot_less/?page=full&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; &lt;a href=&quot;http://www.npr.org/templates/story/story.php?storyId=16739654&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; &lt;a href=&quot;http://books.google.com/books?id=lpq3ryL1c6sC&amp;amp;dq=the+dumbest+generation&quot;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt; show those 25 and younger read books significantly less than previous generations. For anyone in this group, such as me, this seems obvious. Read books for days, even weeks, and you might find the information you seek. Google it for minutes, maybe hours, and you will find the same thing. Unless you are a Ph.D. student, the overabundant information in books is extraneous, especially in technical and historical books. So why read nonfiction cover-to-cover? The &lt;a href=&quot;http://www.greatschools.org/reading/7071-non-fiction-why-its-important.gs&quot;&gt;reasons&lt;/a&gt; others give are not compelling.&lt;/p&gt;
-</description>
-        <pubDate>Thu, 31 Oct 2013 15:11:00 -0600</pubDate>
-        <link>http://www.natemcmaster.com/blog/2013/10/reading-nonfiction-is-inefficient.html</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2013/10/reading-nonfiction-is-inefficient.html</guid>
-        
-        
-        <category>opinion</category>
-        
-        <category>cs404</category>
         
       </item>
     
