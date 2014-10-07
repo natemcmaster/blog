@@ -6,7 +6,8 @@ hero:
    width: 473
    height: 545
 ---
-I just received access to the GitHub Student Developer Pack. Obviously, I am very pleased to receive special access to discounted and free services. 
+I just received access to the GitHub Student Developer Pack. Obviously, I am very pleased to receive special access to discounted and free services.
+With all of these discounts, I will save about *$2,700* in monthly subscription fees and receive almost *$1,200* in platform credits.
 
 >There's no substitute for hands-on experience, but for most students, real world tools can be cost prohibitive. That's why we created the GitHub Student Developer Pack with some of our partners and friends: to give students free access to the best developer tools in one place so they can learn by doing.
 
@@ -27,3 +28,4 @@ Here is a list of some of the free services included:
 - SendGrid
 - Stripe
 - Travis CI
+- Unreal Engine
