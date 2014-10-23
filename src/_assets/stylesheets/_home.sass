@@ -1,5 +1,47 @@
+@import "compass/css3"
+
 .home h1
     margin-bottom: 25px
+
+.personal-banner
+    $banner-color: #0e6e60
+    $banner-cutoff: 400px
+    +background-image(linear-gradient(150deg, $banner-color, darken($primary, 10%)))
+    color: white
+    .wrap
+        min-height: 430px
+        height: 85vh
+        +display-flex
+        +align-items(center)
+        @media screen and (max-width: $banner-cutoff)
+            +flex-wrap(wrap)
+
+    .focus
+        +flex(0 1 auto)
+        @media screen and (max-width: $banner-cutoff)
+        h1, h2
+            +mainFont
+        h1
+            font-size: 40px
+            font-weight: 400
+        h2
+            font-size: 26px
+            font-weight: 200
+        p
+            font-size: 20px
+        [class^="icon-"]
+            font-size: 30px
+            margin: 0.5em 0.25em 0.25em
+            &:first-child
+                margin-left: 0
+            opacity: 0.9
+            color: white
+    .aside
+        +flex(3 0 137px)
+        text-align: right
+        @media screen and (max-width: $banner-cutoff)
+            text-align: center
+        font-size: 100px
 
 .posts
     list-style-type: none
