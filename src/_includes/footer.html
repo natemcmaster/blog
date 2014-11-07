@@ -2,30 +2,35 @@
 
   <div class="wrap">
 
-    <h2 class="footer-heading">{{ site.title }}</h2>
+  <div class="vcard">
+    <h2 class="fn">{{ site.full_name }}</h2>
+     <span class="adr">
+      <span class="locality">Provo,</span>
+      <span class="region">UT</span>
+   </span>
+  </div>
 
     <div class="footer-col-1 column">
-      <ul>
-        <li><a href="mailto:{{ site.email }}" analytics-on="click" analytics-event="email">{{ site.email }}</a></li>
-      </ul>
+      <div>
+        <a href="mailto:{{ site.email }}" analytics-on="click" analytics-event="email" rel="">{{ site.email }}</a>
+      </div>
+      <div class="footer-icons">
+          {% if site.github_username %}
+            <a href="https://github.com/{{ site.github_username }}" analytics-on="click" analytics-event="outbound" analytics-label="github_profile">
+              <span class="icon-github"></span>
+            </a>{% endif %}
+          {% if site.twitter_username %}
+            <a href="https://twitter.com/{{ site.twitter_username }}" analytics-on="click" analytics-event="outbound" analytics-label="twitter_profile">
+              <span class="icon-twitter"></span>
+            </a>{% endif %}
+          {% if site.linkedin_username %}
+           <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}" analytics-on="click" analytics-event="outbound" analytics-label="linkedin_profile">
+            <span class="icon-linkedin"></span>
+            </a>
+          {% endif %}
+      </div>
     </div>
 
-    <div class="footer-col-2 column">
-      <ul>
-        {% if site.github_username %}<li>
-          <a href="https://github.com/{{ site.github_username }}" analytics-on="click" analytics-event="outbound" analytics-label="github_profile">
-            <span class="icon-github"></span>
-            <span class="username">{{ site.github_username }}</span>
-          </a>
-        </li>{% endif %}
-        {% if site.twitter_username %}<li>
-          <a href="https://twitter.com/{{ site.twitter_username }}" analytics-on="click" analytics-event="outbound" analytics-label="twitter_profile">
-            <span class="icon-twitter"></span>
-            <span class="username">{{ site.twitter_username }}</span>
-          </a>
-        </li>{% endif %}
-      </ul>
-    </div>
 
     <div class="footer-col-3 column">
       <p class="text">{{ site.description }}</p>

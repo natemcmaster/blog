@@ -1,0 +1,8 @@
+- title: History Explorer
+  url: projects/historyexplorer
+  description: >
+    History Explorer is a simple web application that allows users to explore the relationship between historical people, places, and ideas.
+
+- title: Adopt-a-Source
+  link: https://github.com/natemcmaster/adopt-a-source
+  description: Find dormant open source projects a new home
