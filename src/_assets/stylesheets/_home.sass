@@ -5,45 +5,44 @@
 
 $banner-cutoff: 400px
 .personal-banner
-    $banner-color: #0e6e60
-    +background-image(linear-gradient(150deg, $banner-color, darken($primary, 10%)))
     color: white
-    .wrap
-        min-height: 430px
-        height: 85vh
-        +display-flex
-        +align-items(center)
-        @media screen and (max-width: $banner-cutoff)
-            +flex-wrap(wrap)
+    background: rgb(50, 65, 94)
+    padding: 20px
+    .icons
+        margin-top: 16px
+        font-size: 14px
+        display: inline-block
+        float: right
+        a:hover
+            text-decoration: none
+    [class^="icon-"]
+        font-size: 30px
+        margin: 0.5em 0.25em 0.25em
+        &:first-child
+            margin-left: 0
+        opacity: 0.5
+        color: white
+    h1
+        +mainFont
+        font-size: 32px
+        font-weight: 200
+        margin: 0
+        margin-top: 10px
+        line-height: 1em
+        padding-right: 32px
 
-    .focus
-        +flex(0 1 auto)
-        h1, h2
-            +mainFont
-        h1
-            font-size: 40px
-            font-weight: 400
-        h2
-            font-size: 26px
-            font-weight: 200
-        p
-            font-size: 20px
-        .icons
-            a:hover
-                text-decoration: none
-        [class^="icon-"]
-            font-size: 30px
-            margin: 0.5em 0.25em 0.25em
-            &:first-child
-                margin-left: 0
-            opacity: 0.9
-            color: white
-    .aside
-        +flex(3 0 137px)
-        text-align: right
-        @media screen and (max-width: $banner-cutoff)
-            text-align: center
-        font-size: 100px
+    .brand
+        > div
+            display: inline-block
+        .brand-img
+            padding-right: 10px
+
+    .img-profile
+        $size: 64px
+        height: $size
+        width: $size
+        border-radius: $size
+        vertical-align: bottom
 
 .no-flexbox .personal-banner
     .wrap
@@ -62,6 +61,13 @@ $banner-cutoff: 400px
             padding-top: 20vh
             box-sizing: border-box
             text-align: right
+
+.aside
+    display: inline
+    float: right
+    max-width: 250px
+    background: darken(white,15%)
+    padding: 10px
 
 .posts
     list-style-type: none

@@ -21,57 +21,39 @@ Feel free to write me at hello@natemcmaster.com
 <body>
   <div class="personal-banner">
     <div class="wrap">
-      <div class="focus">
-        <h2>Hi, I'm Nate McMaster</h2>
-        <p>I create software, climb mountains, take photos, and occasionally write blog posts. </p>
-        <p class="icons">
-         {% if site.github_username %}
-         <a href="https://www.github.com/{{ site.github_username }}" analytics-on="click" analytics-event="outbound" analytics-label="github_profile">
-          <span class="icon-github"></span>
-        </a>
-        {% endif %}
-        {% if site.twitter_username %}
-        <a href="https://www.twitter.com/{{ site.twitter_username }}" analytics-on="click" analytics-event="outbound" analytics-label="twitter_profile">
-          <span class="icon-twitter"></span>
-        </a>
-        {% endif %}
-        {% if site.linkedin_username %}
-        <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}" analytics-on="click" analytics-event="outbound" analytics-label="linkedin_profile">
-          <span class="icon-linkedin"></span>
-        </a>
-        {% endif %}
-      </p>
+    <p class="icons">
+     {% if site.github_username %}
+     <a href="https://www.github.com/{{ site.github_username }}" analytics-on="click" analytics-event="outbound" analytics-label="github_profile">
+      <span class="icon-github"></span>
+    </a>
+    {% endif %}
+    {% if site.twitter_username %}
+    <a href="https://www.twitter.com/{{ site.twitter_username }}" analytics-on="click" analytics-event="outbound" analytics-label="twitter_profile">
+      <span class="icon-twitter"></span>
+    </a>
+    {% endif %}
+    {% if site.linkedin_username %}
+    <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}" analytics-on="click" analytics-event="outbound" analytics-label="linkedin_profile">
+      <span class="icon-linkedin"></span>
+    </a>
+    {% endif %}
+    </p>
+    <div class="brand">
+      <div class="brand-img">
+        <img src="//www.gravatar.com/avatar/692c58f37a3704944bd31c4cbcb287e7.png?s=150" class="img-profile">
+      </div>
+      <div class="brand-name">
+        <h1>Nate McMaster</h1>
+        <h3>Software dev &amp; infrequent blogger</h3>
+      </div>
     </div>
-    <div class="aside">
-      <span class="icon-natemcmaster"></span>
-    </div>
-  </div>
+</div>
 </div>
 <div class="page-content">
   <div class="wrap">
-<!--     <h1>Projects</h1>
-
-    <ul class="projects">
-      {% for project in site.data.projects %}
-      <li>
-        <h2>
-          {% if project.link %}
-          <a href="{{project.link}}">{{ project.title }}</a>
-          {% elsif project.url %}
-          <a href="{{project.url | prepend: site.baseurl}}">{{ project.title }}</a>
-          {% else %}
-          {{project.title}}
-          {% endif %}
-        </h2>
-        <p>{{ project.description }}</p>
-      </li>
-      {% endfor %}
-    </ul> -->
-
-    <!-- <h1>Blog</h1> -->
-    <ul class="posts">
+    <div class="posts">
       {% assign fp = site.posts.first %}
-      <li class="first-post">
+      <div class="first-post">
         <span class="post-date">{{ fp.date | date: "%b %-d, %Y" }}</span>
         <a class="post-link" href="{{ fp.url | prepend: site.baseurl }}">
           <h1>{{ fp.title }}</h1>
@@ -92,9 +74,9 @@ Feel free to write me at hello@natemcmaster.com
         <p class="read-full">
           <a  href="{{ fp.url | prepend: site.baseurl }}">Read full post...</a>
         </p>
-      </li>
+      </div>
       {% for post in site.posts offset:1 limit:3 %}
-      <li>
+      <div>
         <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
         <h3><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h3>
         <p>{% if post.subtitle %}
@@ -103,9 +85,9 @@ Feel free to write me at hello@natemcmaster.com
           {{ post.excerpt |truncatewords: 20 }}
           {% endif %}
         </p>
-      </li>
+      </div>
       {% endfor %}
-    </ul>
+    </div>
     <div>
       <a href="{{ "/blog/archive" | prepend: site.baseurl }}">See all posts...</a>
     </div>

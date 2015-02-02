@@ -37,3 +37,4 @@ assets:
         - _vendors/angulartics/dist
 
 include: [.nojekyll, CNAME]
+
