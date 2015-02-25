@@ -1,0 +1,58 @@
+---
+layout: default
+title: Blog
+header: true
+group: navigation
+permalink: /blog/
+---
+<div id="page-blog">
+
+  <div class="posts">
+    {% assign fp = site.posts.first %}
+    <div class="post">
+      <span class="post-date">{{ fp.date | date: "%b %-d, %Y" }}</span>
+      <a class="post-link" href="{{ fp.url | prepend: site.baseurl }}">
+        <h1>{{ fp.title }}</h1>
+      </a>
+      {% if fp.subtitle %}
+      <h2>{{ fp.subtitle }}</h2>
+      {% endif %}
+{% if fp.hero %}
+      <div class="postimage hero {{fp.hero.classes}}" style="background-image: url({{fp.hero.url}})"></div>
+      {% endif %}
+      <div>
+        {% if fp.excerpt %}
+  {{ fp.excerpt }}
+  {% else %}
+  {{ fp.content | truncatewords: 75 }}
+  {% endif %}
+      </div>
+      <p class="read-full">
+        <a  href="{{ fp.url | prepend: site.baseurl }}">Read full post...</a>
+      </p>
+    </div>
+    {% for post in site.posts offset:1 limit:8 %}
+    <div class="post">
+      <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+      <h3>
+        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+      </h3>
+      <p>
+        {% if post.subtitle %}
+  {{ post.subtitle }}
+  {% elsif post.excerpt %}
+  {{ post.excerpt |truncatewords: 20 }}
+  {% endif %}
+      </p>
+    </div>
+    {% endfor %}
+  </div>
+  <div>
+    <a href="{{ "/blog/archive" | prepend: site.baseurl }}">See all posts...</a>
+  </div>
+
+  <p class="rss-subscribe">
+    Subscribe
+    <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a>
+  </p>
+</div>

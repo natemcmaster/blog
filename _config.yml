@@ -1,7 +1,7 @@
 # Site settings
 title: Nate McMaster
 description: >
-    Infrequent blog posts about software development, photography, opinion, etc.
+    Infrequent blog posts about software development, lifehacks, opinion, etc.
 baseurl:
 url: "http://www.natemcmaster.com"
 twitter_username: natemcmaster
@@ -32,6 +32,7 @@ assets:
     sources:
         - _assets/images
         - _assets/javascripts
+        - _vendors/bootstrap-sass/assets/stylesheets
         - _assets/stylesheets
         - _assets/fonts
         - _vendors/angulartics/dist

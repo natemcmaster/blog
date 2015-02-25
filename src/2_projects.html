@@ -1,0 +1,23 @@
+---
+layout: default
+header: true
+group: navigation
+title: Projects
+permalink: /projects/
+---
+<div class="post-content">
+    <h1>Personal Projects</h1>
+{% for prj in site.data.projects %}
+{% if prj.url %}
+{% assign prjLink = prj.url %}
+{% elsif prj.page %}
+{% capture prjLink %}{{ prj.page | prepend: site.baseurl }}{% endcapture %}
+{% endif %}
+    <div>
+        <h2>
+            <a href="{{prjLink}}">{{prj.title}}</a>
+        </h2>
+        {{prj.description | markdownify}}
+    </div>
+{% endfor %}
+</div>

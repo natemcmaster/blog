@@ -1,5 +1,4 @@
 ---
-layout: none
 ---
 <!--
 
@@ -15,90 +14,95 @@ Feel free to write me at hello@natemcmaster.com
 -->
 <!doctype html>
 <html lang="en">
-
-{% include head.html %}
-
+  {% include head.html %}
 <body>
   <div class="personal-banner">
     <div class="wrap">
-    <p class="icons">
-     {% if site.github_username %}
-     <a href="https://www.github.com/{{ site.github_username }}" analytics-on="click" analytics-event="outbound" analytics-label="github_profile">
-      <span class="icon-github"></span>
-    </a>
-    {% endif %}
+      <p class="icons">
+        {% if site.github_username %}
+        <a href="https://www.github.com/{{ site.github_username }}" analytics-on="click" analytics-event="outbound" analytics-label="github_profile">
+          <span class="icon-github"></span>
+        </a>
+        {% endif %}
     {% if site.twitter_username %}
-    <a href="https://www.twitter.com/{{ site.twitter_username }}" analytics-on="click" analytics-event="outbound" analytics-label="twitter_profile">
-      <span class="icon-twitter"></span>
-    </a>
-    {% endif %}
+        <a href="https://www.twitter.com/{{ site.twitter_username }}" analytics-on="click" analytics-event="outbound" analytics-label="twitter_profile">
+          <span class="icon-twitter"></span>
+        </a>
+        {% endif %}
     {% if site.linkedin_username %}
-    <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}" analytics-on="click" analytics-event="outbound" analytics-label="linkedin_profile">
-      <span class="icon-linkedin"></span>
-    </a>
-    {% endif %}
-    </p>
-    <div class="brand">
-      <div class="brand-img">
-        <img src="//www.gravatar.com/avatar/692c58f37a3704944bd31c4cbcb287e7.png?s=150" class="img-profile">
-      </div>
-      <div class="brand-name">
-        <h1>Nate McMaster</h1>
-        <h3>Software dev &amp; infrequent blogger</h3>
+        <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}" analytics-on="click" analytics-event="outbound" analytics-label="linkedin_profile">
+          <span class="icon-linkedin"></span>
+        </a>
+        {% endif %}
+      </p>
+      <div class="brand">
+        <div class="brand-img">
+          <img src="//www.gravatar.com/avatar/692c58f37a3704944bd31c4cbcb287e7.png?s=150" class="img-profile"></div>
+        <div class="brand-name">
+          <h1>Nate McMaster</h1>
+          <h3>Software dev &amp; infrequent blogger</h3>
+        </div>
       </div>
     </div>
-</div>
-</div>
-<div class="page-content">
-  <div class="wrap">
-    <div class="posts">
-      {% assign fp = site.posts.first %}
-      <div class="first-post">
-        <span class="post-date">{{ fp.date | date: "%b %-d, %Y" }}</span>
-        <a class="post-link" href="{{ fp.url | prepend: site.baseurl }}">
-          <h1>{{ fp.title }}</h1>
-        </a>
-        {% if fp.subtitle %}
-        <h2>{{ fp.subtitle }}</h2>
-        {% endif %}
+  </div>
+  <div class="nav nav-homepage">
+    <div class="wrap">
+      {% for page in site.pages %}
+          {% if page.title and page.header and page.partial != 'true' %}
+      <a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="wrap">
+      <div id="page-blog">
+        {% assign fp = site.posts.first %}
+        <div class="posts">
+        <div class="post">
+          <span class="post-date">{{ fp.date | date: "%b %-d, %Y" }}</span>
+          <a class="post-link" href="{{ fp.url | prepend: site.baseurl }}">
+            <h1>{{ fp.title }}</h1>
+          </a>
+          {% if fp.subtitle %}
+          <h2>{{ fp.subtitle }}</h2>
+          {% endif %}
         {% if fp.hero %}
-        <div class="postimage hero {{fp.hero.classes}}" style="background-image: url({{fp.hero.url}})"></div>
-        {% endif %}
-        <div>
-          {% if fp.excerpt %}
+          <div class="postimage hero {{fp.hero.classes}}" style="background-image: url({{fp.hero.url}})"></div>
+          {% endif %}
+          <div>
+            {% if fp.excerpt %}
           {{ fp.excerpt }}
           {% else %}
           {{ fp.content | truncatewords: 75 }}
           {% endif %}
+          </div>
+          <p class="read-full">
+            <a  href="{{ fp.url | prepend: site.baseurl }}">Read full post...</a>
+          </p>
         </div>
-        <p class="read-full">
-          <a  href="{{ fp.url | prepend: site.baseurl }}">Read full post...</a>
-        </p>
-      </div>
-      {% for post in site.posts offset:1 limit:3 %}
-      <div>
-        <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
-        <h3><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h3>
-        <p>{% if post.subtitle %}
+        {% for post in site.posts offset:1 limit:3 %}
+        <div class="post">
+          <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+          <h3>
+            <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+          </h3>
+          <p>
+            {% if post.subtitle %}
           {{ post.subtitle }}
           {% elsif post.excerpt %}
           {{ post.excerpt |truncatewords: 20 }}
           {% endif %}
-        </p>
+          </p>
+        </div>
+        {% endfor %}
       </div>
-      {% endfor %}
     </div>
-    <div>
-      <a href="{{ "/blog/archive" | prepend: site.baseurl }}">See all posts...</a>
+      <div>
+        <a href="{{ "/blog/" | prepend: site.baseurl }}">Read more...</a>
+      </div>
+
     </div>
-
-    <p class="rss-subscribe">
-      Subscribe
-      <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a>
-    </p>
-
   </div>
-</div>
-
-{% include footer.html %}
+  {% include footer.html %}
 </html>

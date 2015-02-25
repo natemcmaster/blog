@@ -3,7 +3,7 @@ layout: post
 title: The Empire Reboots
 subtitle: Many believe Microsoft is dying. Can Satya Nadella save it?
 hero:
-  url: http://www.vanityfair.com/business/2014/11/satya-nadella-bill-gates-steve-ballmer-microsoft/.i.1.the-empire-reboots-gates-ballmer-01.jpg
+  url: http://i.imgur.com/wCyRB2t.jpg
   width: 640
   height: 436
 ---

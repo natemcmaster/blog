@@ -1,0 +1,41 @@
+---
+layout: default
+title: About Me
+header: true
+group: navigation
+permalink: /profile/
+---
+<div class="post-header">
+    <h1>About Me</h1>
+</div>
+<div class="post-content">
+    <p>
+        I am a software developer for <a href="http://www.contoso.com">Microsoft</a>. I love C#, .NET, Linux, and OS X. I have worked on Microsoft's ASP.NET team, specifically on the Entity Framework. I have also worked for Ancestry.com and a few other small Utah-based startups.
+    </p>
+    <h2>@natemcmaster</h2>
+    <p>Feel free to reach out and connect with me on social media</p>
+    {% if site.github_username %}
+    <p>
+        <a href="https://github.com/{{ site.github_username }}">
+            <span class="icon-github"></span>
+            GitHub
+        </a>
+    </p>
+    {% endif %}
+          {% if site.twitter_username %}
+    <p>
+        <a href="https://twitter.com/{{ site.twitter_username }}">
+            <span class="icon-twitter"></span>
+            Twitter
+        </a>
+    </p>
+    {% endif %}
+          {% if site.linkedin_username %}
+    <p>
+        <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}">
+            <span class="icon-linkedin"></span>
+            LinkedIn
+        </a>
+    </p>
+    {% endif %}
+</div>

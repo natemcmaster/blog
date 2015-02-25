@@ -1,8 +1,12 @@
 - title: History Explorer
-  url: projects/historyexplorer
+  page: /projects/historyexplorer
   description: >
     History Explorer is a simple web application that allows users to explore the relationship between historical people, places, and ideas.
 
 - title: Adopt-a-Source
-  link: https://github.com/natemcmaster/adopt-a-source
-  description: Find dormant open source projects a new home
+  url: http://adopt-a-source.natemcmaster.com/
+  description: >
+    Find dormant open source projects a new home. The web application fetches data from GitHub and helps users identify the most active fork. I created this with [Matt Holt](https://github.com/mholt) for a class at [BYU](https://www.byu.edu).
+
+
+    Checkout the source code on [GitHub](https://github.com/natemcmaster/adopt-a-source).
