@@ -38,16 +38,16 @@
     p + p
         margin-top: 1em
 
-.post
-    ul, ol
-        margin-left: 1.35em
-
 .postimage
-    background-repeat: no-repeat
-    background-position: center center
-    background-size: contain
-    height: 300px
-    @media screen and (max-width: 400px)
-        max-height: 150px
-    &.small
-        height: 100px
+    text-align: center
+    img
+        max-height: 300px
+        @media screen and (max-width: 400px)
+            max-height: 150px
+    &.small img
+        max-height: 100px
+
+.comments
+    border-top: 1px solid darken(white, 30%)
+    padding-top: 20px
+    margin-top: 20px

@@ -18,7 +18,9 @@ permalink: /blog/
       <h2>{{ fp.subtitle }}</h2>
       {% endif %}
 {% if fp.hero %}
-      <div class="postimage hero {{fp.hero.classes}}" style="background-image: url({{fp.hero.url}})"></div>
+      <div class="postimage hero {{fp.hero.classes}}">
+        <img src="{{fp.hero.url}}" alt="{{fp.hero.description}}" />
+      </div>
       {% endif %}
       <div>
         {% if fp.excerpt %}

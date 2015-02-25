@@ -1,22 +1,22 @@
 ---
 layout: default
 ---
-<div class="post">
-  <header class="post-header">
-    <p class="meta">Blog Post: {{ page.date | date: "%B %-d, %Y" }}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
-    <h1>{{ page.title }}</h1>
-    {% if page.subtitle %}
-      <h2>{{ page.subtitle }}</h2>
-    {% endif %}
-  </header>
+<header class="post-header">
+  <p class="meta">Blog Post: {{ page.date | date: "%B %-d, %Y" }}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
+  <h1>{{ page.title }}</h1>
+  {% if page.subtitle %}
+    <h2>{{ page.subtitle }}</h2>
+  {% endif %}
+</header>
 
-  <article class="post-content">
-    {% if page.hero %}
-      <div class="postimage hero {{page.hero.classes}}" style="background-image: url({{page.hero.url}})">
-      </div>
-    {% endif %}
-  {{ content }}
-  </article>
-
-  {% include disqus.html %}
+<article class="post-content">
+  {% if page.hero %}
+    <p class="postimage hero {{page.hero.classes}}">
+      <img src="{{page.hero.url}}" alt="{{page.hero.description}}"/>
+    </p>
+  {% endif %}
+{{ content }}
+</article>
+<div class="comments">
+{% include disqus.html %}
 </div>
