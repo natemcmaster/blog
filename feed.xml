@@ -6,9 +6,69 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 25 Feb 2015 01:02:26 -0700</pubDate>
-    <lastBuildDate>Wed, 25 Feb 2015 01:02:26 -0700</lastBuildDate>
+    <pubDate>Wed, 11 Mar 2015 22:56:30 -0600</pubDate>
+    <lastBuildDate>Wed, 11 Mar 2015 22:56:30 -0600</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Blogging with Jekyll and GitHub Pages</title>
+        <description>&lt;p&gt;I host this blog for free. I don’t worry about hosting plans, bandwidth, or others common website concerns. How? To get this setup, you will need to be a little proficient with these tools:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Git&lt;/li&gt;
+  &lt;li&gt;The command line&lt;/li&gt;
+  &lt;li&gt;Markdown or HTML&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;free-hosting-thanks-to-pagesgithubcomhttppagesgithubcom&quot;&gt;Free Hosting (thanks to &lt;a href=&quot;http://pages.github.com&quot;&gt;pages.github.com&lt;/a&gt;)&lt;/h2&gt;
+
+&lt;p&gt;GitHub provides a way for developers to post free webpages. This requires a little bit of hacking, but it is not too difficult. Their instructions are so simple, that rather than duplicate them here, I will just point you to their website.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://pages.github.com/&quot;&gt;Setup free hosting with GitHub Pages&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;generating-pages-with-jekyll&quot;&gt;Generating Pages with Jekyll&lt;/h2&gt;
+&lt;p&gt;GitHub pages requires that you serve static content only. For those update their blogs infrequently and don’t need a complicated web service, static content works just fine. This blog is generated using &lt;a href=&quot;http://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;, which is a light framework written in Ruby for generating content.&lt;/p&gt;
+
+&lt;p&gt;Jekyll is setup to generated blogs&lt;/p&gt;
+
+&lt;h2 id=&quot;customizing-jekyll&quot;&gt;Customizing Jekyll&lt;/h2&gt;
+&lt;p&gt;By default, GitHub will run Jekyll when you push your content and generate the HTML for you. Jekyll supports &lt;a href=&quot;http://jekyllrb.com/docs/plugins/#available-plugins&quot;&gt;some powerful plugins&lt;/a&gt;, but to run these you must commit the generated content to your GitHub branch instead of the Jekyll code.&lt;/p&gt;
+
+&lt;h2 id=&quot;my-setup&quot;&gt;My setup&lt;/h2&gt;
+&lt;p&gt;For this blog, I have setup a separate folder within my project where Jekyll builds the content. This folder is configured as a git submodule for the same repo as the parent project.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ini&quot; data-lang=&quot;ini&quot;&gt;&lt;span class=&quot;k&quot;&gt;[submodule &amp;quot;build&amp;quot;]&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;build&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;    url = git@github.com:natemcmaster/natemcmaster.github.io.git&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;    branch = master&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;I added a simple &lt;strong&gt;Makefile&lt;/strong&gt; to simplify the build and publishing process.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-make&quot; data-lang=&quot;make&quot;&gt;&lt;span class=&quot;nv&quot;&gt;DIR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;./build
+
+&lt;span class=&quot;nf&quot;&gt;.PHONY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;publish&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j_build&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;serve&lt;/span&gt;
+
+&lt;span class=&quot;nf&quot;&gt;j_build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    jekyll build
+
+&lt;span class=&quot;nf&quot;&gt;serve&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    @open http://localhost:4000
+    jekyll serve --watch
+
+&lt;span class=&quot;nf&quot;&gt;publish&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j_build&lt;/span&gt;
+    git --git-dir&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;DIR&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;/.git add --all
+    git --git-dir&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;DIR&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;/.git commit -m &lt;span class=&quot;s2&quot;&gt;&amp;quot;Build `date`&amp;quot;&lt;/span&gt;
+    git --git-dir&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;DIR&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;/.git push
+    git add build/&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Happy blogging! ■&lt;/p&gt;
+</description>
+        <pubDate>Sun, 01 Mar 2015 09:00:00 -0700</pubDate>
+        <link>http://www.natemcmaster.com/blog/2015/03/01/blogging-with-jekyll/</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2015/03/01/blogging-with-jekyll/</guid>
+        
+        
+      </item>
     
       <item>
         <title>The Empire Reboots</title>
@@ -461,27 +521,6 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
         <pubDate>Tue, 19 Nov 2013 02:05:00 -0700</pubDate>
         <link>http://www.natemcmaster.com/blog/2013/11/an-engineer-ette.html</link>
         <guid isPermaLink="true">http://www.natemcmaster.com/blog/2013/11/an-engineer-ette.html</guid>
-        
-        
-        <category>cs404</category>
-        
-      </item>
-    
-      <item>
-        <title>A Lunch-break Soccer Game</title>
-        <description>&lt;p&gt;Some problems cannot be solved by computers. For example, organizing a lunch-break soccer game among co-workers is not solvable via computers. It is best solved by face-to-face invitations. In the last 6 months at my job, I have seen 3 attempts to organize this group. One person setup a small website to send reminders. Another started a spammy, email message list. A third tried text messaging. The problems of these digital format are easy to identify. &lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;1. Recipients ignore the messages. 
-2. Messages are often duplicated, distorted, or incorrect. 
-3. Responses give little indication of who will actually show up. I
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;In the end, these attempts fall flat and we resort to the old-fashion method: verbal communication.&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 12 Nov 2013 01:30:00 -0700</pubDate>
-        <link>http://www.natemcmaster.com/blog/2013/11/a-lunch-break-soccer-game.html</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2013/11/a-lunch-break-soccer-game.html</guid>
         
         
         <category>cs404</category>
