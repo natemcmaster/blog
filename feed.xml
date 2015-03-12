@@ -6,9 +6,48 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 11 Mar 2015 22:56:30 -0600</pubDate>
-    <lastBuildDate>Wed, 11 Mar 2015 22:56:30 -0600</lastBuildDate>
+    <pubDate>Wed, 11 Mar 2015 23:22:19 -0600</pubDate>
+    <lastBuildDate>Wed, 11 Mar 2015 23:22:19 -0600</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>My Favorite Sublime Text 3 Plugins</title>
+        <description>&lt;p&gt;&lt;a href=&quot;http://www.sublimetext.com/&quot;&gt;Sublime Text 3&lt;/a&gt; is my favorite text editor and has been for years. One of the best features is its extensibility. There are thousands of packages available. To install them, checkout &lt;a href=&quot;https://packagecontrol.io&quot;&gt;packagecontrol.io&lt;/a&gt;. Here are my favorite Sublime Text 3 plugins.&lt;/p&gt;
+
+&lt;h2 id=&quot;jsformathttpspackagecontroliopackagesjsformat&quot;&gt;1. &lt;a href=&quot;https://packagecontrol.io/packages/JsFormat&quot;&gt;JsFormat&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;If you write JavaScript as much as I do, it’s handy to quickly and easily format your code. This plugin adds a new shortcut, Ctrl+Alt+F to format your code.&lt;/p&gt;
+
+&lt;h2 id=&quot;theme---el-capitanhttpspackagecontroliopackagestheme20-20el20capitan&quot;&gt;2. &lt;a href=&quot;https://packagecontrol.io/packages/Theme%20-%20El%20Capitan&quot;&gt;Theme - El Capitan&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;This theme makes ST3 feel at home in Os X Yosemite.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://packagecontrol.io/readmes/img/501ed397b43071998ece2f048086d9d32863673d.png&quot; alt=&quot;El Capitan Screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;package-controlhttppackagecontrolio&quot;&gt;3. &lt;a href=&quot;http://packagecontrol.io&quot;&gt;Package Control&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Install packages from the Command Palette.&lt;/p&gt;
+
+&lt;h2 id=&quot;taghttpspackagecontroliopackagestag&quot;&gt;4. &lt;a href=&quot;https://packagecontrol.io/packages/Tag&quot;&gt;Tag&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Helps quick (and correctly) format your HTML and XML documents.&lt;/p&gt;
+
+&lt;h2 id=&quot;select-quotedhttpspackagecontroliopackagesselect20quoted&quot;&gt;5. &lt;a href=&quot;https://packagecontrol.io/packages/Select%20Quoted&quot;&gt;Select Quoted&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;This little nugget of a package adds on simple, but frequently useful keyboard shortcut: Cmd+’ for “Expand Selection To Quoted”&lt;/p&gt;
+
+&lt;h2 id=&quot;sublime-code-intelhttpspackagecontroliopackagessublimecodeintel&quot;&gt;6. &lt;a href=&quot;https://packagecontrol.io/packages/SublimeCodeIntel&quot;&gt;Sublime Code Intel&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;It doesn’t always work well, but when it does, it is one of the better auto-complete engines for Python and NodeJS.&lt;/p&gt;
+
+&lt;h2 id=&quot;sidebar-enhancementshttpspackagecontroliopackagessidebarenhancements&quot;&gt;7. &lt;a href=&quot;https://packagecontrol.io/packages/SideBarEnhancements&quot;&gt;Sidebar Enhancements&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;No Sublime Text installation is complete without these enhancements. Frankly, these should come default in Sublime. Fortunately, @titeando was nice enought to build it for us.&lt;/p&gt;
+
+&lt;h2 id=&quot;sassbeautifyhttpspackagecontroliopackagessassbeautify&quot;&gt;8. &lt;a href=&quot;https://packagecontrol.io/packages/SassBeautify&quot;&gt;SassBeautify&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;And finally, SassBeautify. If this package only formatted SASS it wouldn’t be in the my list. But this adds a crucial feature. SassBeautify can convert easily between CSS, SCSS, and SASS from the Command Palette. This has come in especially handy when taking someone elses clunky CSS and attempting to slim it down to SASS.&lt;/p&gt;
+
+&lt;p&gt;Of course, there are many more packages available, including my favorite color schemes and some useful language-highlighting packages. But these above are the packages I could not code as effectively without. ■&lt;/p&gt;
+</description>
+        <pubDate>Thu, 05 Mar 2015 12:30:00 -0700</pubDate>
+        <link>http://www.natemcmaster.com/blog/2015/03/05/st3-plugins/</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2015/03/05/st3-plugins/</guid>
+        
+        
+      </item>
     
       <item>
         <title>Blogging with Jekyll and GitHub Pages</title>
@@ -509,19 +548,6 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
         
         
         <category>book post</category>
-        
-        <category>cs404</category>
-        
-      </item>
-    
-      <item>
-        <title>An Engineer-ette</title>
-        <description>&lt;p&gt;&lt;a href=&quot;http://www.cirtl.net/node/5424&quot;&gt;Many women feel unwelcomed in computer science&lt;/a&gt;. It’s a shame they feel so because computer software companies need more women programmers. Between all programmers I have met working for BYU, Microsoft, and Ancestry.com, I have only known one woman software engineer. She worked as a testing engineer, and wrote code as well as any. Her most important contribution was her elevating and tempering effect on the men. When she was absent, conversation revolved around Xbox victories, bar-hopping feats, and food. When present, the men adjusted to a nobler vocabulary. Although she bragged about beer festivals too, she favored discussion about social dynamics, management styles, and civics. I am glad she did not let the gender ratio dissuade her from working there. I learned as much from her as I did from anyone else.&lt;/p&gt;
-</description>
-        <pubDate>Tue, 19 Nov 2013 02:05:00 -0700</pubDate>
-        <link>http://www.natemcmaster.com/blog/2013/11/an-engineer-ette.html</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2013/11/an-engineer-ette.html</guid>
-        
         
         <category>cs404</category>
         
