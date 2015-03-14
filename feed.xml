@@ -6,9 +6,23 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 14 Mar 2015 09:32:29 -0600</pubDate>
-    <lastBuildDate>Sat, 14 Mar 2015 09:32:29 -0600</lastBuildDate>
+    <pubDate>Sat, 14 Mar 2015 09:44:35 -0600</pubDate>
+    <lastBuildDate>Sat, 14 Mar 2015 09:44:35 -0600</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>ASP.NET 5 and .NET Core: Slides</title>
+        <description>&lt;p&gt;This presentation covers an overview of what is new from Microsoft’s ASP.NET team. For more information, checkout their official website at &lt;a href=&quot;http://asp.net&quot;&gt;asp.net&lt;/a&gt; or &lt;a href=&quot;http://github.com/aspnet/home&quot;&gt;on GitHub&lt;/a&gt;.  ■&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/codecamp_slides-0cafbc883faab0c35987917806f2a5bc.pdf&quot; class=&quot;btn btn-primary&quot;&gt;Download slides&lt;/a&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 14 Mar 2015 04:35:00 -0600</pubDate>
+        <link>http://www.natemcmaster.com/blog/2015/03/14/codecamp-slides/</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2015/03/14/codecamp-slides/</guid>
+        
+        
+      </item>
     
       <item>
         <title>Installing ASP.NET 5 (beta 3)</title>
@@ -560,22 +574,6 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
         <link>http://www.natemcmaster.com/blog/2014/06/02/history-explorer/</link>
         <guid isPermaLink="true">http://www.natemcmaster.com/blog/2014/06/02/history-explorer/</guid>
         
-        
-      </item>
-    
-      <item>
-        <title>Don&#39;t Be A Pirate</title>
-        <description>&lt;p&gt;The wild frontier of the Internet allows new forms of piracy. Hacking, pornography, &lt;a href=&quot;http://en.wikipedia.org/wiki/Silk_Road_(marketplace)&quot;&gt;black markets&lt;/a&gt;, and digital theft abound, and the Internet provides anonymity. Although you &lt;em&gt;can&lt;/em&gt; do these, you really not. Contrary to what Captain Barbossa implied, everyone should stick to the “Code.” The code of right and wrong, when ignored, leads only to more misery. I am not talking about any &lt;a href=&quot;http://www.acm.org/about/code-of-ethics&quot;&gt;specific&lt;/a&gt; &lt;a href=&quot;http://en.wikipedia.org/wiki/Pirate_code&quot;&gt;code&lt;/a&gt;, but rather, the divine code inside all humans. Follow your internal moral compass. Seek the good, noble, inspiring, and honorable. If you feel a need to hide your actions, they are probably wrong. Don’t be a pirate: be good.&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 10 Dec 2013 16:21:00 -0700</pubDate>
-        <link>http://www.natemcmaster.com/blog/2013/12/dont-be-pirate.html</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2013/12/dont-be-pirate.html</guid>
-        
-        
-        <category>opinion</category>
-        
-        <category>cs404</category>
         
       </item>
     
