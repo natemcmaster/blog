@@ -37,7 +37,7 @@ The San Bruno office has spunk and lots of red. In the lobby, four TV's were pla
 I also had time to tour the Googleplex in Mountain View. Unlike San Bruno, they have *four* colors in their schema: red, blue, green, and yellow. Employees ride bikes between buildings. There is one soccer field, and some open area behind the building. The glass walls reveal large open work areas where a mix of hypsters, nerds, and few nuts work on laptops.
 
 ## Next steps
-Interviewer feedback is funneled into a hiring system. First, Hiring Committee says yes or no. If yes, then Compensation Committee says how much yes.Meanwhile, I will be back home, browsing dusty textbooks trying to find the answer to, "how *do* you rotate subtrees in a BST?"
+Interviewer feedback is funneled into a hiring system. First, Hiring Committee says yes or no. If yes, then Compensation Committee says how much yes.Meanwhile, I will be back home, browsing dusty textbooks trying to find the answer to, "how *do* you rotate subtrees in a BST?"  ■
 
 
 

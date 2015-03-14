@@ -273,3 +273,5 @@ Articles:
 
 - [Getting Started with Re-linq](http://chris.eldredge.io/blog/2012/03/29/Getting-Started-With-Relinq/)
 - [Re-linq blog posts](https://www.re-motion.org/blogs/mix/category/re-linq)
+
+ ■

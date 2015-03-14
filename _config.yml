@@ -6,7 +6,7 @@ baseurl:
 url: "http://www.natemcmaster.com"
 twitter_username: natemcmaster
 github_username:  natemcmaster
-linkedin_username:  natemcmaster
+# linkedin_username:  natemcmaster
 full_name: Nate McMaster
 
 # Build settings
@@ -36,6 +36,7 @@ assets:
         - _assets/stylesheets
         - _assets/fonts
         - _vendors/angulartics/dist
+        - _assets/files
 
 include: [.nojekyll, CNAME]
 

@@ -19,7 +19,13 @@ permalink: /blog/
       {% endif %}
 {% if fp.hero %}
       <div class="postimage hero {{fp.hero.classes}}">
-        <img src="{{fp.hero.url}}" alt="{{fp.hero.description}}" />
+        <a href="{{ fp.url | prepend: site.baseurl }}">
+          {% if fp.hero.asset_path %}
+            <img src="{{fp.hero.asset_path | asset_path}}" alt="{{fp.hero.description}}" />
+          {% else %}
+            <img src="{{fp.hero.url}}" alt="{{fp.hero.description}}" />
+          {% endif %}
+        </a>
       </div>
       {% endif %}
       <div>
@@ -33,7 +39,7 @@ permalink: /blog/
         <a  href="{{ fp.url | prepend: site.baseurl }}">Read full post...</a>
       </p>
     </div>
-    {% for post in site.posts offset:1 limit:8 %}
+    {% for post in site.posts offset:1 limit:4 %}
     <div class="post">
       <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
       <h3>

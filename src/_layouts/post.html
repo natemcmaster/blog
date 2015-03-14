@@ -12,7 +12,11 @@ layout: default
 <article class="post-content">
   {% if page.hero %}
     <p class="postimage hero {{page.hero.classes}}">
+      {% if page.hero.asset_path %}
+      <img src="{{page.hero.asset_path | asset_path }}" alt="{{page.hero.description}}"/>
+      {% else %}
       <img src="{{page.hero.url}}" alt="{{page.hero.description}}"/>
+      {% endif %}
     </p>
   {% endif %}
 {{ content }}
