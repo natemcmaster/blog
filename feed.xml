@@ -6,9 +6,54 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 11 Mar 2015 23:45:00 -0600</pubDate>
-    <lastBuildDate>Wed, 11 Mar 2015 23:45:00 -0600</lastBuildDate>
+    <pubDate>Sat, 14 Mar 2015 09:32:29 -0600</pubDate>
+    <lastBuildDate>Sat, 14 Mar 2015 09:32:29 -0600</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Installing ASP.NET 5 (beta 3)</title>
+        <description>&lt;p&gt;The easiest, but slowest, way to install ASP.NET 5 is through Visual Studio 2015. &lt;/p&gt;
+
+&lt;p&gt;Alternatively, you can install the command line tools by following the instructions below. These are instructions are for the &lt;strong&gt;beta 3&lt;/strong&gt; versions of the tools as posted on &lt;a href=&quot;https://github.com/aspnet/home&quot;&gt;ASP.NET 5 on GitHub&lt;/a&gt;. Beginning with &lt;strong&gt;beta 4&lt;/strong&gt; these will be obsolete.&lt;/p&gt;
+
+&lt;h1 id=&quot;visual-studio-2015&quot;&gt;Visual Studio 2015&lt;/h1&gt;
+
+&lt;p&gt;Go here download a free copy of &lt;strong&gt;Visual Studio 2015 CTP&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a class=&quot;btn btn-primary&quot; href=&quot;https://www.visualstudio.com/downloads/visual-studio-2015-ctp-vs&quot;&gt;Download Visual Studio 2015 CTP 6&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;command-line-tools&quot;&gt;Command Line Tools&lt;/h1&gt;
+
+&lt;p&gt;These instructions are found in more complete form on the &lt;a href=&quot;https://github.com/aspnet/home&quot;&gt;ASP.NET 5 Home&lt;/a&gt; GitHub repository.&lt;/p&gt;
+
+&lt;h2 id=&quot;windows&quot;&gt;Windows&lt;/h2&gt;
+&lt;p&gt;Execute the following in &lt;em&gt;Command Prompt&lt;/em&gt; (cmd.exe)&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bat&quot; data-lang=&quot;bat&quot;&gt;&lt;span class=&quot;p&quot;&gt;@&lt;/span&gt;powershell -NoProfile -ExecutionPolicy unrestricted -Command &lt;span class=&quot;s2&quot;&gt;&amp;quot;iex ((new-object net.webclient).DownloadString(&amp;#39;https://raw.githubusercontent.com/aspnet/Home/master/kvminstall.ps1&amp;#39;))&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;os-x&quot;&gt;OS X&lt;/h2&gt;
+&lt;p&gt;You must have &amp;gt;= Mono 3.6.0 installed. &lt;/p&gt;
+
+&lt;p&gt;If you have &lt;a href=&quot;http://brew.sh&quot;&gt;brew&lt;/a&gt;, the following will the correct version of Mono and the KVM. Execute these in the Terminal.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;brew tap aspnet/k
+brew install kvm
+&lt;span class=&quot;nb&quot;&gt;source &lt;/span&gt;kvm.sh&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;linux&quot;&gt;Linux&lt;/h2&gt;
+&lt;p&gt;You must have Mono 3.4.1 or greater installed. Execute these on the command line.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;curl -sSL https://raw.githubusercontent.com/aspnet/Home/master/kvminstall.sh &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; sh &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.k/kvm/kvm.sh&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;beta-4&quot;&gt;Beta 4&lt;/h1&gt;
+&lt;p&gt;K, KRE, KVM, and KLR were all placeholder names. They have all been renamed in beta 4, but are stable as of March 14, 2015.  ■&lt;/p&gt;
+</description>
+        <pubDate>Sat, 14 Mar 2015 03:10:00 -0600</pubDate>
+        <link>http://www.natemcmaster.com/blog/2015/03/14/installing-aspnet5/</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2015/03/14/installing-aspnet5/</guid>
+        
+        
+      </item>
     
       <item>
         <title>My Favorite Sublime Text 3 Plugins</title>
@@ -214,7 +259,7 @@ They grilled me on subjects ranging from JavaScript’s “this” to data struc
 &lt;p&gt;I also had time to tour the Googleplex in Mountain View. Unlike San Bruno, they have &lt;em&gt;four&lt;/em&gt; colors in their schema: red, blue, green, and yellow. Employees ride bikes between buildings. There is one soccer field, and some open area behind the building. The glass walls reveal large open work areas where a mix of hypsters, nerds, and few nuts work on laptops.&lt;/p&gt;
 
 &lt;h2 id=&quot;next-steps&quot;&gt;Next steps&lt;/h2&gt;
-&lt;p&gt;Interviewer feedback is funneled into a hiring system. First, Hiring Committee says yes or no. If yes, then Compensation Committee says how much yes.Meanwhile, I will be back home, browsing dusty textbooks trying to find the answer to, “how &lt;em&gt;do&lt;/em&gt; you rotate subtrees in a BST?”&lt;/p&gt;
+&lt;p&gt;Interviewer feedback is funneled into a hiring system. First, Hiring Committee says yes or no. If yes, then Compensation Committee says how much yes.Meanwhile, I will be back home, browsing dusty textbooks trying to find the answer to, “how &lt;em&gt;do&lt;/em&gt; you rotate subtrees in a BST?”  ■&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 31 Aug 2014 00:00:00 -0600</pubDate>
@@ -487,6 +532,8 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
   &lt;li&gt;&lt;a href=&quot;http://chris.eldredge.io/blog/2012/03/29/Getting-Started-With-Relinq/&quot;&gt;Getting Started with Re-linq&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.re-motion.org/blogs/mix/category/re-linq&quot;&gt;Re-linq blog posts&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;p&gt;■&lt;/p&gt;
 </description>
         <pubDate>Sat, 19 Jul 2014 17:30:00 -0600</pubDate>
         <link>http://www.natemcmaster.com/blog/2014/07/19/writing-an-ef7-provider/</link>
@@ -527,27 +574,6 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
         
         
         <category>opinion</category>
-        
-        <category>cs404</category>
-        
-      </item>
-    
-      <item>
-        <title>A Rebuttal For Mark Bauerline</title>
-        <description>&lt;p&gt;I have never read a book more infuriating than &lt;em&gt;&lt;a href=&quot;http://www.amazon.com/The-Dumbest-Generation-Stupefies-Jeopardizes/dp/1585427128&quot;&gt;The Dumbest Generation&lt;/a&gt;&lt;/em&gt;. Its author, Mark Bauerline, predicts a grim future based on statistics about my generation. His facts may be accurate, but his interpretation is wrong. No, the sky is not falling. Here are a few reasons why. &lt;/p&gt;
-
-&lt;p&gt;Change does not jeopardize the future. The technology of communication has changed many times. Neither the printing press, typewriter, nor telegram crashed civilization. Rather, they sped the Enlightenment, Reformation, and Scientific Revolution. Likewise, the Internet is an opportunity, not a curse. It lowers the cost of widespread publication. Expensive books limited publication of ideas to highly literate authors. Blogging and social media expand publishing power to all.  &lt;/p&gt;
-
-&lt;p&gt;Civic activity is not the only variable in producing quality government. Cultural pressure, wealthy lobbyists, foreign affairs, and the health of the economy influence government, too. Today’s youth may not vote, campaign, or lobby as much as the youth of the 1950s, but this is not necessarily a decline: it is change. Decades ago, the public square was the place to share and spread ideas. Today, the public square is the Internet. The political tools of decades past must adapt to advance of digital communication. &lt;/p&gt;
-
-&lt;p&gt;Finally, the intellectual future of the United States is brighter than ever. My so-called “dumbest” generation is exposed to an ever wider and diverse stream of ideas, but this does not dull or stupefy. Exposure sharpens our power to filter, discern, interpret, and analyze. My generation cannot be sheltered from learning about lifestyles, opinions, and cultures different from our parents’. We learn younger and better how to judge credibility, ignore noise, and make decisions. The intellectual future rests in our hands, and we come as hungry to know and think as any generation past.&lt;/p&gt;
-</description>
-        <pubDate>Thu, 21 Nov 2013 06:36:00 -0700</pubDate>
-        <link>http://www.natemcmaster.com/blog/2013/11/chicken-little.html</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2013/11/chicken-little.html</guid>
-        
-        
-        <category>book post</category>
         
         <category>cs404</category>
         

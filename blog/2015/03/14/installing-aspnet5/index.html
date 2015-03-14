@@ -4,14 +4,14 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bell Caves</title>
+    <title>Installing ASP.NET 5 (beta 3)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Infrequent blog posts about software development, lifehacks, opinion, etc.
 ">
     <meta name="generator" content="Jekyll">
     <meta name="author" content="Nate McMaster" comment="Surprised?">
     <meta http-equiv="Content-Language" content="en">
-    <link rel="canonical" href="http://www.natemcmaster.com/blog/2012/05/bell-caves.html">
+    <link rel="canonical" href="http://www.natemcmaster.com/blog/2015/03/14/installing-aspnet5/">
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/assets/ga-e3932f73c8c13f1f4ed196916cb93e35.js"></script>
@@ -91,16 +91,50 @@
     <div class="page-content">
       <div class="wrap">
       <header class="post-header">
-  <p class="meta">Blog Post: May 28, 2012</p>
-  <h1>Bell Caves</h1>
+  <p class="meta">Blog Post: March 14, 2015</p>
+  <h1>Installing ASP.NET 5 (beta 3)</h1>
+  
+    <h2>Installing VS 2015 and the ASP.NET 5 CLI tools</h2>
   
 </header>
 
 <article class="post-content">
   
-<div class="css-full-post-content js-full-post-content">
-<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody><tr><td style="text-align: center;"><a href="http://4.bp.blogspot.com/-WqcGezqtmdM/T9ZHohYh4qI/AAAAAAAABII/WL4pJUcOBDc/s1600/DSC_1558-706407.JPG" style="margin-left: auto; margin-right: auto;"><img alt="" border="0" height="427" id="BLOGGER_PHOTO_ID_5752864335493980834" src="http://4.bp.blogspot.com/-WqcGezqtmdM/T9ZHohYh4qI/AAAAAAAABII/WL4pJUcOBDc/s640/DSC_1558-706407.JPG" width="640" /></a></td></tr><tr><td class="tr-caption" style="text-align: center;">Stair case inside a bell cave at Maresha (Beit Guvrin) in Israel</td></tr></tbody></table><a href="http://en.wikipedia.org/wiki/Beit_Guvrin_National_Park">Beit Guvrin National Park</a>
-</div>
+<p>The easiest, but slowest, way to install ASP.NET 5 is through Visual Studio 2015. </p>
+
+<p>Alternatively, you can install the command line tools by following the instructions below. These are instructions are for the <strong>beta 3</strong> versions of the tools as posted on <a href="https://github.com/aspnet/home">ASP.NET 5 on GitHub</a>. Beginning with <strong>beta 4</strong> these will be obsolete.</p>
+
+<h1 id="visual-studio-2015">Visual Studio 2015</h1>
+
+<p>Go here download a free copy of <strong>Visual Studio 2015 CTP</strong>.</p>
+
+<p><a class="btn btn-primary" href="https://www.visualstudio.com/downloads/visual-studio-2015-ctp-vs">Download Visual Studio 2015 CTP 6</a></p>
+
+<h1 id="command-line-tools">Command Line Tools</h1>
+
+<p>These instructions are found in more complete form on the <a href="https://github.com/aspnet/home">ASP.NET 5 Home</a> GitHub repository.</p>
+
+<h2 id="windows">Windows</h2>
+<p>Execute the following in <em>Command Prompt</em> (cmd.exe)</p>
+
+<div class="highlight"><pre><code class="language-bat" data-lang="bat"><span class="p">@</span>powershell -NoProfile -ExecutionPolicy unrestricted -Command <span class="s2">&quot;iex ((new-object net.webclient).DownloadString(&#39;https://raw.githubusercontent.com/aspnet/Home/master/kvminstall.ps1&#39;))&quot;</span></code></pre></div>
+
+<h2 id="os-x">OS X</h2>
+<p>You must have &gt;= Mono 3.6.0 installed. </p>
+
+<p>If you have <a href="http://brew.sh">brew</a>, the following will the correct version of Mono and the KVM. Execute these in the Terminal.</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">brew tap aspnet/k
+brew install kvm
+<span class="nb">source </span>kvm.sh</code></pre></div>
+
+<h2 id="linux">Linux</h2>
+<p>You must have Mono 3.4.1 or greater installed. Execute these on the command line.</p>
+
+<div class="highlight"><pre><code class="language-sh" data-lang="sh">curl -sSL https://raw.githubusercontent.com/aspnet/Home/master/kvminstall.sh <span class="p">|</span> sh <span class="o">&amp;&amp;</span> <span class="nb">source</span> ~/.k/kvm/kvm.sh</code></pre></div>
+
+<h1 id="beta-4">Beta 4</h1>
+<p>K, KRE, KVM, and KLR were all placeholder names. They have all been renamed in beta 4, but are stable as of March 14, 2015.  ■</p>
 
 </article>
 <div class="comments">
