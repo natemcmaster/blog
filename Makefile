@@ -3,6 +3,7 @@ DIR=./build
 .PHONY: publish j_build serve
 
 j_build:
+	bower install
 	jekyll build
 
 serve:

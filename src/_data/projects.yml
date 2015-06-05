@@ -1,12 +1,27 @@
 - title: History Explorer
+  category: personal
   page: /projects/historyexplorer
   description: >
     History Explorer is a simple web application that allows users to explore the relationship between historical people, places, and ideas.
 
 - title: Adopt-a-Source
+  category: personal
   url: http://adopt-a-source.natemcmaster.com/
   description: >
     Find dormant open source projects a new home. The web application fetches data from GitHub and helps users identify the most active fork. I created this with [Matt Holt](https://github.com/mholt) for a class at [BYU](https://www.byu.edu).
 
 
     Checkout the source code on [GitHub](https://github.com/natemcmaster/adopt-a-source).
+
+- title: Entity Framework 7
+  category: work
+  url: https://www.github.com/aspnet/EntityFramework
+  description: >
+    Microsoft's recommended data-access framework. This makes it easy for developers to created
+    and access databases. It helps them manage migrations for changing schemas, and makes it easy
+    to insert, modify, and delete data in a persistent database.
+
+- title: SQLite for ADO.NET
+  category: work
+  url: https://www.github.com/aspnet/Microsoft.Data.SQLite
+  description: This library allows interaction with SQLite databases using ADO.NET patterns and interfaces.

@@ -6,15 +6,17 @@ baseurl:
 url: "http://www.natemcmaster.com"
 twitter_username: natemcmaster
 github_username:  natemcmaster
-# linkedin_username:  natemcmaster
+linkedin_username:  natemcmaster
 full_name: Nate McMaster
+
 
 # Build settings
 markdown: kramdown
 permalink: /blog/:categories/:year/:month/:day/:title/
 source: src
 destination: build
-timezone: America/Denver
+encoding: utf-8
+timezone: US/Pacific
 sass:
     sass_dir: _sass
 gems:
@@ -35,7 +37,6 @@ assets:
         - _vendors/bootstrap-sass/assets/stylesheets
         - _assets/stylesheets
         - _assets/fonts
-        - _vendors/angulartics/dist
         - _assets/files
 
 include: [.nojekyll, CNAME]

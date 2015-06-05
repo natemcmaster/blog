@@ -1,12 +1,24 @@
+---
+title: Résumé
+permalink: /resume/
+---
 <!doctype HTML>
 <html>
 
 <head>
-    <title>Nate McMaster</title>
-    <meta name="viewport" content="initial-scale=1.0;" />
+    <title>Nate McMaster՚s Résumé</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta name="generator" content="Jekyll">
+    <meta name="author" content="Nate McMaster" comment="Surprised?">
+    <meta http-equiv="Content-Language" content="en">
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+
+
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/main.css" />
-    <script src="/js/ga.js" type="text/javascript"></script>
+    {% stylesheet resume %}
+    {% javascript ga %}
     <script type="text/javascript">
         (function (ga) {
             ga('send', 'pageview');
@@ -18,21 +30,29 @@
     <div class="container">
         <div class="row">
             <div class="brand">
-                Nate McMaster
+                <a href="{{site.url}}">Nate McMaster</a>
             </div>
             <div class="contact-icons">
-                <a href="https://github.com/natemcmaster">
+                {% if site.github_username %}
+                <a href="https://github.com/{{ site.github_username }}">
                     <span class="fa fa-github"></span>
                 </a>
-                <a href="https://twitter.com/natemcmaster">
+                {% endif %}
+                {% if site.twitter_username %}
+                <a href="https://twitter.com/{{ site.twitter_username }}">
                     <span class="fa fa-twitter-square"></span>
                 </a>
-                <a href="https://www.linkedin.com/in/natemcmaster"><span class="fa fa-linkedin-square"></span></a>
+                {% endif %}
+                {% if site.linkedin_username %}
+                <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}">
+                    <span class="fa fa-linkedin-square"></span>
+                </a>
+                {% endif %}
             </div>
         </div>
         <article>
             <div class="subtitle">
-                I'm a
+                I՚m a
                 <div class="rotating-titles">
                     <ul class="rotating">
                         <li>developer.</li>
@@ -47,38 +67,37 @@
             <section>
                 <h1 class="section-start-tag">&lt;jobs&gt;</h1>
                 <div>
-                    <img src="img/microsoft.png" class="msft-logo" />
-                    <h2 class="long-title first">
-                Software Development Engineer Intern
-
-            </h2>
-                    <h3>May 2014 - July 2014</h3>
+                    {% image microsoft.png class="msft-logo" %}
+                    <h2 class="first">Software Engineer</h2>
+                    <h3>May 2015 - present</h3>
                     <p>
-                        Active contributor to <a href="https://www.github.com/aspnet/EntityFramework">
-                    Entity Framework
-                    </a>
-                        <br />Created the EF provider for Azure Table Storage
+                    Developer for the <a href="https://www.github.com/aspnet">ASP.NET</a> team
                     </p>
                 </div>
                 <div>
-                    <img src="img/ancestry.png" class="ancestry-logo" />
+                    {% image byulogo.jpg class="byu-logo" %}
                     <h2>
-                Software Engineer Intern, PT
+                    Research Assistant</h2>
+                    <h3>Nov. 2014 - May 2014</h3>
+                    <p>
+                        Researched user interface design and human-computer interaction
+                        <br />
+                        Prototyped programmable LED lighting devices
+                        <br />
+                        Designed software to automate circuit board design and assembly
+                        <br />
+                        Refactored vanilla JS web application into AngularJS
+                    </p>
+                </div>
+                <div>
+                    {% image ancestry.png class="ancestry-logo" %}
+                    <h2>
+                Software Engineer Intern
             </h2>
                     <h3>August 2013 - April 2014</h3>
                     <p>
                         Created front-end visualizations of family history data
                         <br />Used JavaScript, ASP.NET MVC, and NodeJS
-                    </p>
-                </div>
-                <div>
-                    <img src="img/microsoft.png" class="msft-logo" />
-                    <h2>Program Manager Intern               </h2>
-                    <h3>May  - August 2013</h3>
-                    <p>
-                        UX and developer tools, Windows Phone
-                        <br />
-                        <a href="http://blogs.windows.com/windows_phone/b/wpdev/archive/2013/08/15/creating-a-ui-for-background-transfer-requests.aspx">Windows Phone Toolkit</a> - blog post about one of my projects
                     </p>
                 </div>
                 <div class="section-end-tag">
@@ -87,19 +106,21 @@
             </section>
             <section>
                 <h1 class="section-start-tag">&lt;education&gt;</h1>
-                <img src="img/byulogo.jpg" class="byu-logo" />
+                {% image byulogo.jpg class="byu-logo" %}
                 <h2 class="first">Brigham Young University</h2>
                 <h3>Class 2015</h3>
                 <p>
                     BS in Computer Science
                     <br>
+                    Cum Laude
+                    <br>
                     <br>
                     <em>Example projects:</em>
-                    <br><a href="http://natemcmaster.com/historyexplorer/">History Explorer</a> - a website for exploring historical concepts
+                    <br><a href="{{site.baseurl}}/projects/historyexplorer">History Explorer</a> - a website for exploring historical concepts
                     <br>
                     <a href="https://github.com/lumberjack3/catan">Settlers of Catan</a> - an online, multiplayer version of the board game, created with a NodeJS server and JavaScript front-end
                     <br>
-                    <a href="https://github.com/"></a>
+                    <a href="https://github.com/">More projects on my GitHub profile</a>
                 </p>
                 <div class="section-end-tag">
                     &lt;/education&gt;
@@ -107,7 +128,7 @@
             </section>
             <section>
                 <h1 class="section-start-tag">&lt;honors&gt;</h1>
-                <h2 class="job-header first">Dean's List, BYU</h2>
+                <h2 class="job-header first">Dean՚s List, BYU</h2>
                 <p>
                     Honored in 2009, 2013, and 2014. Given to full-time students in the top 5% of their class
                 </p>
@@ -123,17 +144,21 @@
             </section>
             <section>
                 <h1 class="section-start-tag">&lt;contact.me&gt;</h1>
+                {% if site.email %}
                 <div>
-                    <span class="fa fa-envelope-o"></span>  <a href="mailto: hello@natemcmaster.com">hello@natemcmaster.com</a>
+                    <span class="fa fa-envelope-o"></span>  <a href="mailto: {{ site.email }}">{{ site.email }}</a>
                 </div>
+                {% endif %}
+                {% if site.github_username %}
                 <div>
-                    <span class="fa fa-github"></span> To see more examples of my code, checkout <a href="https://github.com/natemcmaster">my GitHub profile.</a>
+                    <span class="fa fa-github"></span> To see more examples of my code, checkout <a href="https://github.com/{{ site.github_username }}">my GitHub profile.</a>
                 </div>
+                {% endif %}
                 <div class="section-end-tag">&lt;/contact.me&gt;</div>
             </section>
         </article>
         <footer>
-            <a href="resume.pdf">
+            <a href="{% asset_path resume.pdf %}">
             Printable version
             </a>
         </footer>

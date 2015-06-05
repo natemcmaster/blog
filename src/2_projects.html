@@ -1,13 +1,16 @@
 ---
 layout: default
-header: false
+header: true
 group: navigation
 title: Projects
 permalink: /projects/
 ---
 <div class="post-content">
-    <h1>Personal Projects</h1>
+    <h1>Work Projects</h1>
+    <p>I work as a developer for Microsoft. These are some of the projects to which I contribute.</p>
+
 {% for prj in site.data.projects %}
+{% if prj.category == 'work' %}
 {% if prj.url %}
 {% assign prjLink = prj.url %}
 {% elsif prj.page %}
@@ -19,5 +22,27 @@ permalink: /projects/
         </h2>
         {{prj.description | markdownify}}
     </div>
+{% endif %}
 {% endfor %}
+
+
+    <h1>Personal Projects</h1>
+    <p>The following are personal projects I created on my own time</p>
+
+{% for prj in site.data.projects %}
+{% if prj.category == 'personal' %}
+{% if prj.url %}
+{% assign prjLink = prj.url %}
+{% elsif prj.page %}
+{% capture prjLink %}{{ prj.page | prepend: site.baseurl }}{% endcapture %}
+{% endif %}
+    <div>
+        <h2>
+            <a href="{{prjLink}}">{{prj.title}}</a>
+        </h2>
+        {{prj.description | markdownify}}
+    </div>
+{% endif %}
+{% endfor %}
+
 </div>
