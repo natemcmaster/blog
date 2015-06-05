@@ -22,7 +22,7 @@
     </script>
     <script src="//use.typekit.net/yup5hor.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
-    <link rel="stylesheet" href="/assets/app-748f8a4db7dd1654689e16de81df5988.css">
+    <link rel="stylesheet" href="/assets/app-93cf29e82ec000d88a9d4c268dd5ad47.css">
 </head>
 
 
@@ -108,48 +108,13 @@
   <li>Markdown or HTML</li>
 </ul>
 
-<h2 id="free-hosting-thanks-to-pagesgithubcomhttppagesgithubcom">Free Hosting (thanks to <a href="http://pages.github.com">pages.github.com</a>)</h2>
+<h1 id="free-hosting-thanks-to-pagesgithubcomhttppagesgithubcom">Free Hosting (thanks to <a href="http://pages.github.com">pages.github.com</a>)</h1>
 
 <p>GitHub provides a way for developers to post free webpages. This requires a little bit of hacking, but it is not too difficult. Their instructions are so simple, that rather than duplicate them here, I will just point you to their website.</p>
 
 <p><a href="https://pages.github.com/">Setup free hosting with GitHub Pages</a></p>
 
-<h2 id="generating-pages-with-jekyll">Generating Pages with Jekyll</h2>
-<p>GitHub pages requires that you serve static content only. For those update their blogs infrequently and don’t need a complicated web service, static content works just fine. This blog is generated using <a href="http://jekyllrb.com/">Jekyll</a>, which is a light framework written in Ruby for generating content.</p>
-
-<p>Jekyll is setup to generated blogs</p>
-
-<h2 id="customizing-jekyll">Customizing Jekyll</h2>
-<p>By default, GitHub will run Jekyll when you push your content and generate the HTML for you. Jekyll supports <a href="http://jekyllrb.com/docs/plugins/#available-plugins">some powerful plugins</a>, but to run these you must commit the generated content to your GitHub branch instead of the Jekyll code.</p>
-
-<h2 id="my-setup">My setup</h2>
-<p>For this blog, I have setup a separate folder within my project where Jekyll builds the content. This folder is configured as a git submodule for the same repo as the parent project.</p>
-
-<div class="highlight"><pre><code class="language-ini" data-lang="ini"><span class="k">[submodule &quot;build&quot;]</span>
-    <span class="na">path</span> <span class="o">=</span> <span class="s">build</span>
-<span class="s">    url = git@github.com:natemcmaster/natemcmaster.github.io.git</span>
-<span class="s">    branch = master</span></code></pre></div>
-
-<p>I added a simple <strong>Makefile</strong> to simplify the build and publishing process.</p>
-
-<div class="highlight"><pre><code class="language-make" data-lang="make"><span class="nv">DIR</span><span class="o">=</span>./build
-
-<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">publish</span> <span class="n">j_build</span> <span class="n">serve</span>
-
-<span class="nf">j_build</span><span class="o">:</span>
-    jekyll build
-
-<span class="nf">serve</span><span class="o">:</span>
-    @open http://localhost:4000
-    jekyll serve --watch
-
-<span class="nf">publish</span><span class="o">:</span> <span class="n">j_build</span>
-    git --git-dir<span class="o">=</span><span class="k">$(</span>DIR<span class="k">)</span>/.git add --all
-    git --git-dir<span class="o">=</span><span class="k">$(</span>DIR<span class="k">)</span>/.git commit -m <span class="s2">&quot;Build `date`&quot;</span>
-    git --git-dir<span class="o">=</span><span class="k">$(</span>DIR<span class="k">)</span>/.git push
-    git add build/</code></pre></div>
-
-<p>Happy blogging! ■</p>
+<p># </p>
 
 </article>
 <div class="comments">

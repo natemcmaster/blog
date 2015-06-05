@@ -6,9 +6,62 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 14 Mar 2015 09:44:35 -0600</pubDate>
-    <lastBuildDate>Sat, 14 Mar 2015 09:44:35 -0600</lastBuildDate>
+    <pubDate>Thu, 04 Jun 2015 21:14:55 -0600</pubDate>
+    <lastBuildDate>Thu, 04 Jun 2015 21:14:55 -0600</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Vagrant Recipe for Ubuntu with ASP.NET 5</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://www.vagrantup.com/&quot;&gt;Vagrant&lt;/a&gt; is a command-line utility that makes it easy to setup
+and configure virtual machines. This configuration is controlled with special file called a &lt;strong&gt;Vagrantfile&lt;/strong&gt;. This is a small ruby file that controls the config settings for your vm.&lt;/p&gt;
+
+&lt;p&gt;If you do not already have Vagrant, follow their &lt;a href=&quot;http://docs.vagrantup.com/v2/getting-started/index.html&quot;&gt;Getting Started Guide&lt;/a&gt; to get setup.&lt;/p&gt;
+
+&lt;p&gt;Add this file to the root folder of you project. Running &lt;code&gt;vagrant up&lt;/code&gt; will install a VM of Ubuntu 14 and then install all the libraries and runtime config needed to use ASP.NET 5. &lt;/p&gt;
+
+&lt;p&gt;When you connect to the VM using &lt;code&gt;vagrant ssh&lt;/code&gt;, your project will be accessible in the folder &lt;strong&gt;/vagrant/&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://gist.github.com/natemcmaster/9b021e030c3c906bf940&quot;&gt;View this code snippet on Gist&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://gist.githubusercontent.com/natemcmaster/9b021e030c3c906bf940/raw/bc1fdd9cc6d6d49f969f3a27a1bc6e988b036bf9/Vagrantfile&quot;&gt;Raw file&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Copy and paste this into a file name &amp;#39;Vagrantfile&amp;#39;&lt;/span&gt;
+
+&lt;span class=&quot;no&quot;&gt;Vagrant&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;configure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# The most common configuration options are documented and commented below.&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# For a complete reference, please see the online documentation at&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# https://docs.vagrantup.com.&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;box&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;ubuntu/trusty64&amp;quot;&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;# Enable provisioning with a shell script.&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;provision&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;shell&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;privileged&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;inline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SHELL&lt;/span&gt;
+&lt;span class=&quot;sh&quot;&gt;    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF&lt;/span&gt;
+&lt;span class=&quot;sh&quot;&gt;    echo &amp;quot;deb http://download.mono-project.com/repo/debian wheezy main&amp;quot; | sudo tee /etc/apt/sources.list.d/mono-xamarin.list&lt;/span&gt;
+&lt;span class=&quot;sh&quot;&gt;    sudo apt-get update&lt;/span&gt;
+&lt;span class=&quot;sh&quot;&gt;    sudo apt-get install -y mono-complete&lt;/span&gt;
+
+&lt;span class=&quot;sh&quot;&gt;    sudo apt-get install -y unzip automake libtool curl&lt;/span&gt;
+
+&lt;span class=&quot;sh&quot;&gt;    curl -sSL https://github.com/libuv/libuv/archive/v1.4.2.tar.gz | sudo tar zxfv - -C /usr/local/src&lt;/span&gt;
+&lt;span class=&quot;sh&quot;&gt;    cd /usr/local/src/libuv-1.4.2&lt;/span&gt;
+&lt;span class=&quot;sh&quot;&gt;    sudo sh autogen.sh&lt;/span&gt;
+&lt;span class=&quot;sh&quot;&gt;    sudo ./configure&lt;/span&gt;
+&lt;span class=&quot;sh&quot;&gt;    sudo make&lt;/span&gt;
+&lt;span class=&quot;sh&quot;&gt;    sudo make install&lt;/span&gt;
+&lt;span class=&quot;sh&quot;&gt;    sudo rm -rf /usr/local/src/libuv-1.4.2 &amp;amp;&amp;amp; cd ~/&lt;/span&gt;
+&lt;span class=&quot;sh&quot;&gt;    sudo ldconfig&lt;/span&gt;
+
+&lt;span class=&quot;sh&quot;&gt;    curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh &amp;amp;&amp;amp; source ~/.dnx/dnvm/dnvm.sh&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;  SHELL&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+</description>
+        <pubDate>Thu, 04 Jun 2015 21:13:00 -0600</pubDate>
+        <link>http://www.natemcmaster.com/blog/2015/06/04/vagrant-dnvm/</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2015/06/04/vagrant-dnvm/</guid>
+        
+        
+      </item>
     
       <item>
         <title>ASP.NET 5 and .NET Core: Slides</title>
@@ -104,6 +157,31 @@ brew install kvm
         <pubDate>Thu, 05 Mar 2015 12:30:00 -0700</pubDate>
         <link>http://www.natemcmaster.com/blog/2015/03/05/st3-plugins/</link>
         <guid isPermaLink="true">http://www.natemcmaster.com/blog/2015/03/05/st3-plugins/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Blogging with Jekyll and GitHub Pages</title>
+        <description>&lt;p&gt;I host this blog for free. I don’t worry about hosting plans, bandwidth, or others common website concerns. How? To get this setup, you will need to be a little proficient with these tools:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Git&lt;/li&gt;
+  &lt;li&gt;The command line&lt;/li&gt;
+  &lt;li&gt;Markdown or HTML&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;free-hosting-thanks-to-pagesgithubcomhttppagesgithubcom&quot;&gt;Free Hosting (thanks to &lt;a href=&quot;http://pages.github.com&quot;&gt;pages.github.com&lt;/a&gt;)&lt;/h1&gt;
+
+&lt;p&gt;GitHub provides a way for developers to post free webpages. This requires a little bit of hacking, but it is not too difficult. Their instructions are so simple, that rather than duplicate them here, I will just point you to their website.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://pages.github.com/&quot;&gt;Setup free hosting with GitHub Pages&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;# &lt;/p&gt;
+</description>
+        <pubDate>Sun, 01 Mar 2015 09:00:00 -0700</pubDate>
+        <link>http://www.natemcmaster.com/blog/2015/03/01/blogging-with-jekyll/</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2015/03/01/blogging-with-jekyll/</guid>
         
         
       </item>
@@ -273,306 +351,12 @@ They grilled me on subjects ranging from JavaScript’s “this” to data struc
 &lt;p&gt;I also had time to tour the Googleplex in Mountain View. Unlike San Bruno, they have &lt;em&gt;four&lt;/em&gt; colors in their schema: red, blue, green, and yellow. Employees ride bikes between buildings. There is one soccer field, and some open area behind the building. The glass walls reveal large open work areas where a mix of hypsters, nerds, and few nuts work on laptops.&lt;/p&gt;
 
 &lt;h2 id=&quot;next-steps&quot;&gt;Next steps&lt;/h2&gt;
-&lt;p&gt;Interviewer feedback is funneled into a hiring system. First, Hiring Committee says yes or no. If yes, then Compensation Committee says how much yes.Meanwhile, I will be back home, browsing dusty textbooks trying to find the answer to, “how &lt;em&gt;do&lt;/em&gt; you rotate subtrees in a BST?”  ■&lt;/p&gt;
+&lt;p&gt;Interviewer feedback is funneled into a hiring system. First, Hiring Committee says yes or no. If yes, then Compensation Committee says how much yes.Meanwhile, I will be back home, browsing dusty textbooks trying to find the answer to, “how &lt;em&gt;do&lt;/em&gt; you rotate subtrees in a BST?”&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 31 Aug 2014 00:00:00 -0600</pubDate>
         <link>http://www.natemcmaster.com/blog/2014/08/31/youtube-interview/</link>
         <guid isPermaLink="true">http://www.natemcmaster.com/blog/2014/08/31/youtube-interview/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Writing an EF7 Provider</title>
-        <description>&lt;p&gt;I spent my summer internship at Microsoft to building a piece of software that allows Entity Framework 7 to connect with Azure Table Storage accounts. 
-In the process of creating this, I attempted to document the interface between the provider and the core APIs of EF. This post includes technical details that should enable third-parties to create their own provider for Entity Framework.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Note: this content is accurate as of the today (July 19), but these APIs are subject to change. This content is also available on the &lt;a href=&quot;https://github.com/aspnet/EntityFramework/wiki/Writing-an-EF7-Provider&quot;&gt;Entity Framework wiki.&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;EF provides a set of Core APIs and services that make it easier to manage the
-interaction of in-memory objects and persistent data storage.
-This core is agnostic of all data store specific details,
-and is used by all of EF supported providers (SQL Server, SQLite, and Azure Table Storage).
-Using these Core APIs, it is possible to create a provider for additional data store types.&lt;/p&gt;
-
-&lt;p&gt;An EF provider must implement a set of APIs to manage reading from and writing to
-a persistent data store. See diagrams and reference below for some detail on how the classes interact
-with the EF core.&lt;/p&gt;
-
-&lt;h3 id=&quot;requirements&quot;&gt;Requirements&lt;/h3&gt;
-&lt;p&gt;EF providers must implement the following &lt;a href=&quot;#abstractclasses&quot;&gt;abstract classes&lt;/a&gt;.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Infrastructure.DbContextOptionsExtension&lt;/li&gt;
-  &lt;li&gt;Storage.DataStore&lt;/li&gt;
-  &lt;li&gt;Storage.DataStoreConnection&lt;/li&gt;
-  &lt;li&gt;Storage.DataStoreCreator&lt;/li&gt;
-  &lt;li&gt;Storage.DataStoreSource&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;a href=&quot;#optionaloverride&quot;&gt;Optional classes to override.&lt;/a&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Infrastructure.Database&lt;/li&gt;
-  &lt;li&gt;Infrastructure.ValueGeneratorCache&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;(&lt;em&gt;All reference names in this document are relative to Microsoft.Data.Entity&lt;/em&gt;)&lt;/p&gt;
-
-&lt;h3 id=&quot;recommended&quot;&gt;Recommended&lt;/h3&gt;
-&lt;p&gt;To help end-users discover provider-specific features via IntelliSense, we &lt;a href=&quot;#extensionmethods&quot;&gt;recommend
-providing extension methods&lt;/a&gt; on some of the default EF classes.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;DbContextOptions&lt;/li&gt;
-  &lt;li&gt;EntityServicesBuilder&lt;/li&gt;
-  &lt;li&gt;Storage.Database&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;getting-started-sample-project&quot;&gt;Getting Started: Sample Project&lt;/h2&gt;
-&lt;p&gt;See &lt;a href=&quot;https://github.com/natemcmaster/entityframework-provider-starter&quot;&gt;this repository&lt;/a&gt;
-to get a starter project for writing a new EF provider.&lt;/p&gt;
-
-&lt;h1 id=&quot;reference&quot;&gt;Reference&lt;/h1&gt;
-
-&lt;h2 id=&quot;a-nameabstractclassesa-abstract-classes&quot;&gt;&lt;a name=&quot;abstractclasses&quot;&gt;&lt;/a&gt; Abstract Classes&lt;/h2&gt;
-
-&lt;h3 id=&quot;infrastructuredbcontextoptionsextension&quot;&gt;Infrastructure.DbContextOptionsExtension&lt;/h3&gt;
-&lt;p&gt;This class configures the dependency injection settings used in an instance of DbContext.
-It is used during DbContext initialization to configure the DbContextOptions.&lt;/p&gt;
-
-&lt;p&gt;Methods required:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ApplyServices&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;EntityServicesBuilder&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/abu6gCh.png&quot; alt=&quot;DbContextOptionExtension&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;storagedatastore&quot;&gt;Storage.Datastore&lt;/h3&gt;
-&lt;p&gt;This class is the hub of activity for a provider.
-A data store must implement these methods:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;n&quot;&gt;Task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SaveChangesAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IReadOnlyList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StateEntry&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stateEntries&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                           &lt;span class=&quot;n&quot;&gt;CancellationToken&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cancellationToken&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;IEnumerable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TResult&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TResult&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;QueryModel&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queryModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                                    &lt;span class=&quot;n&quot;&gt;StateManager&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stateManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;IAsyncEnumerable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TResult&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AsyncQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TResult&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;QueryModel&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queryModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                                              &lt;span class=&quot;n&quot;&gt;StateManager&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stateManager&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;SaveChanges&lt;/strong&gt; receives a list of entities which must be persisted to the data store.
-Upon successful completion, return the number of entities successfully saved.
-If an entity cannot be saved, this method should throw an exception containing
-the reason why the action failed.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/chhMeSe.png&quot; alt=&quot;Save changes workflow&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Query&lt;/strong&gt; receives a &lt;a href=&quot;#relinq&quot;&gt;QueryModel&lt;/a&gt; containing a query to execute against the data store.
-This method should return an IEnumerable from the data store of all entites matching
-the query model. QueryModel is a simplified, but equivalent expression tree that represents
-the original LINQ query requested by user code on DbSet. (Thanks &lt;a href=&quot;#relinq&quot;&gt;relinq&lt;/a&gt;!)&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/FvUcYFZ.png&quot; alt=&quot;Query&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;storagedatastoreconnection&quot;&gt;Storage.DataStoreConnection&lt;/h3&gt;
-&lt;p&gt;This class manages connection settings and sessions.&lt;/p&gt;
-
-&lt;p&gt;Although an EF provider requires an implementation, the details of how the class
-operates is &lt;em&gt;entirely up to the provider&lt;/em&gt; i.e. time to freestyle. &lt;img class=&quot;emoji&quot; title=&quot;:snowboarder:&quot; alt=&quot;:snowboarder:&quot; src=&quot;https://assets.github.com/images/icons/emoji/unicode/1f3c2.png&quot; height=&quot;20&quot; width=&quot;20&quot; align=&quot;absmiddle&quot; /&gt; &lt;/p&gt;
-
-&lt;p&gt;For example, SQL Server uses this class to open TCP/IP connections,
-but SQLite uses this class to create connections to the local filesystem.&lt;/p&gt;
-
-&lt;h3 id=&quot;storagedatastorecreator&quot;&gt;Storage.DataStoreCreator&lt;/h3&gt;
-&lt;p&gt;An implementation of requires implementation of the following methods.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt;       &lt;span class=&quot;nf&quot;&gt;EnsureCreated&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IModel&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;EnsureCreatedAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IModel&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CancellationToken&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cancellationToken&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt;       &lt;span class=&quot;nf&quot;&gt;EnsureDeleted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IModel&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;EnsureDeletedAsync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IModel&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CancellationToken&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cancellationToken&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;EnsureCreated&lt;/strong&gt; ensures that the database/tables/containers needed to store
-the model on the server exists and are write-accessible.
-&lt;strong&gt;EnsureDeleted&lt;/strong&gt; ensures the database/tables/containers are deleted.&lt;/p&gt;
-
-&lt;p&gt;Both methods &lt;em&gt;return true&lt;/em&gt; when the method call changed something on the server —
-e.g. created a new database, deleted a table — and &lt;em&gt;return false&lt;/em&gt; when
-the model has already been created/deleted.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/Taun659.png&quot; alt=&quot;datastorecreator&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;a-namedatastoresourceastoragedatastoresource&quot;&gt;&lt;a name=&quot;datastoresource&quot;&gt;&lt;/a&gt;Storage.DatastoreSource&lt;/h3&gt;
-&lt;p&gt;This class configures Entity Framework to use provider-specific implementations
-of theses classes:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Storage.DataStore&lt;/li&gt;
-  &lt;li&gt;Infrastructure.DbContextOptionsExtension&lt;/li&gt;
-  &lt;li&gt;Storage.DataStoreCreator&lt;/li&gt;
-  &lt;li&gt;Storage.DataStoreConnection&lt;/li&gt;
-  &lt;li&gt;Identity.ValueGeneratorCache &lt;img class=&quot;emoji&quot; title=&quot;:small_blue_diamond:&quot; alt=&quot;:small_blue_diamond:&quot; src=&quot;https://assets.github.com/images/icons/emoji/unicode/1f539.png&quot; height=&quot;20&quot; width=&quot;20&quot; align=&quot;absmiddle&quot; /&gt;&lt;/li&gt;
-  &lt;li&gt;Storage.Database &lt;img class=&quot;emoji&quot; title=&quot;:small_blue_diamond:&quot; alt=&quot;:small_blue_diamond:&quot; src=&quot;https://assets.github.com/images/icons/emoji/unicode/1f539.png&quot; height=&quot;20&quot; width=&quot;20&quot; align=&quot;absmiddle&quot; /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img class=&quot;emoji&quot; title=&quot;:small_blue_diamond:&quot; alt=&quot;:small_blue_diamond:&quot; src=&quot;https://assets.github.com/images/icons/emoji/unicode/1f539.png&quot; height=&quot;20&quot; width=&quot;20&quot; align=&quot;absmiddle&quot; /&gt; These classes are not abstract. A default implementation has been provided.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/nMQM7Dl.png&quot; alt=&quot;Datastoresource&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Because this is fairly straightforward class, we have provided an abstract implementation that makes it 
-easier to use dependency injection.&lt;/p&gt;
-
-&lt;h4 id=&quot;datastoresourcelttdatastore-tdbcontextoptionsextension-tcreator-tconnection-tvaluegeneratorcache-tdatabasegt&quot;&gt;DatastoreSource&amp;lt;TDataStore, TDbContextOptionsExtension, TCreator, TConnection, TValueGeneratorCache, TDatabase&amp;gt;&lt;/h4&gt;
-&lt;p&gt;This generic class requests an implementation of the types classes from ServiceCollection.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/rNucpFG.png&quot; alt=&quot;Datastoresource generic&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;a-nameoptionaloverridea-optional-overrides&quot;&gt;&lt;a name=&quot;optionaloverride&quot;&gt;&lt;/a&gt; Optional Overrides&lt;/h2&gt;
-&lt;p&gt;These classes do not &lt;em&gt;need&lt;/em&gt; to be implemented, but they are a way to extend provider features.&lt;/p&gt;
-
-&lt;h3 id=&quot;infrastructuredatabase&quot;&gt;Infrastructure.Database&lt;/h3&gt;
-&lt;p&gt;This class provides access to APIs custom to the database of the provider.
-This class is best used as a proxy to DatastoreCreator which should contain the
-logic for manipulating the structure of the data store.&lt;/p&gt;
-
-&lt;p&gt;Example: SQLite uses this to provide APIs for creating/deleting a database file.
-In Azure Table Storage, it provides APIs for creating/deleting tables on the server.&lt;/p&gt;
-
-&lt;h3 id=&quot;infrastructurevaluegeneratorcache&quot;&gt;Infrastructure.ValueGeneratorCache&lt;/h3&gt;
-&lt;p&gt;This class is used to control value generators.
-Value generators are used by EF7 to populate fields, such as auto-incremented IDs, that are generated on the server or client.&lt;/p&gt;
-
-&lt;h2 id=&quot;a-nameextensionmethodsarecommended-extension-methods&quot;&gt;&lt;a name=&quot;extensionmethods&quot;&gt;&lt;/a&gt;Recommended Extension Methods&lt;/h2&gt;
-&lt;p&gt;These classes exist in EF’s Core, but users may not know how to directly interact
-with them to configure their application.
-By creating custom extension methods, IntelliSense in Visual Studio will show users
-custom methods to configure the provider.
-IntelliSense works best the extension methods are defined in the namespace of the class they extend.&lt;/p&gt;
-
-&lt;h3 id=&quot;dbcontextoptions&quot;&gt;DbContextOptions&lt;/h3&gt;
-&lt;p&gt;Expose access to your provider within the &lt;em&gt;OnConfiguring&lt;/em&gt; method of DbContext. 
-Your extension method should add your provider-specific implementation of 
-DbContextOptionsExtension to an instance of DbContextOptions.&lt;/p&gt;
-
-&lt;p&gt;&lt;img class=&quot;emoji&quot; title=&quot;:hammer:&quot; alt=&quot;:hammer:&quot; src=&quot;https://assets.github.com/images/icons/emoji/unicode/1f528.png&quot; height=&quot;20&quot; width=&quot;20&quot; align=&quot;absmiddle&quot; /&gt; Power user note: To add a DbContextOptionsExtension to DbContextOptions,
-you must first cast DbContextOptions to IDbContextOptionsExtensions, and then use
-**IDbContextOptionsExtensions.AddOrUpdateExtension&lt;t&gt;()**.
-We require this to keep IntelliSense clean for users, but still expose
-APIs for EF provider developers.&lt;/t&gt;&lt;/p&gt;
-
-&lt;p&gt;Example: This will help users configure a context that connects to Azure Table Storage.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;Microsoft.Data.Entity&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;AtsDbContextExtensions&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DbContextOptions&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;UseAzureTableStorage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DbContextOptions&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                                                            &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;connectionString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IDbContextOptionsExtensions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AddOrUpdateExtension&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AtsOptionsExtension&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;(&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&amp;gt;&lt;/span&gt;
-                    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                        &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ConnectionString&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;connectionString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-                    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;entityservicesbuilder&quot;&gt;EntityServicesBuilder&lt;/h3&gt;
-&lt;p&gt;Expose access to dependency injection configuration. This extension should configure
-DI to use provider-specific implementations.&lt;/p&gt;
-
-&lt;p&gt;Example: Configure DI to use Azure Table Storage’s implementations&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;Microsoft.Framework.DependencyInjection&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;EntityServicesBuilderExtensions&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;EntityServicesBuilder&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;AddAzureTableStorage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;EntityServicesBuilder&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-          &lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ServiceCollection&lt;/span&gt;
-                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AddSingleton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataStoreSource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AtsDataStoreSource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;()&lt;/span&gt;
-                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AddSingleton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AtsQueryFactory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;()&lt;/span&gt;
-                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AddSingleton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TableEntityAdapterFactory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;()&lt;/span&gt;
-                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AddSingleton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AtsValueReaderFactory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;()&lt;/span&gt;
-                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AddScoped&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AtsDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;()&lt;/span&gt;
-                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AddScoped&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AtsDataStore&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;()&lt;/span&gt;
-                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AddScoped&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AtsConnection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;()&lt;/span&gt;
-                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AddScoped&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AtsDataStoreCreator&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;()&lt;/span&gt;
-                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AddScoped&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AtsValueGeneratorCache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;();&lt;/span&gt;
-
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;builder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;storagedatabase&quot;&gt;Storage.Database&lt;/h3&gt;
-&lt;p&gt;Expose the provider-specific database calls with an extension method that
-safely casts Storage.Database to the provider implementation.&lt;/p&gt;
-
-&lt;p&gt;Example: This will light-up the APIs unique to SQL. A user will see this extension method
-listed in IntelliSense when accessing DbContext.Database&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;&lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;Microsoft.Data.Entity&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;RelationalDatabaseExtensions&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RelationalDatabase&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;AsRelational&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Database&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;database&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;relationalDatabase&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;database&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RelationalDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;relationalDatabase&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;InvalidOperationException&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;RelationalDatabase not in use&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;relationalDatabase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h1 id=&quot;third-party-libraries&quot;&gt;Third-Party Libraries&lt;/h1&gt;
-
-&lt;h3 id=&quot;a-namerelinqarelinq&quot;&gt;&lt;a name=&quot;relinq&quot;&gt;&lt;/a&gt;Relinq&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;http://relinq.codeplex.com&quot;&gt;relinq&lt;/a&gt; is a third party library used by Entity Framework to simplify interaction
-with LINQ queries. All LINQ queries against DbSet run through a set of expression
-tree visitors that have been simplified by relinq. A provider may read and/or
-change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query()&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Articles:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;http://chris.eldredge.io/blog/2012/03/29/Getting-Started-With-Relinq/&quot;&gt;Getting Started with Re-linq&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.re-motion.org/blogs/mix/category/re-linq&quot;&gt;Re-linq blog posts&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;■&lt;/p&gt;
-</description>
-        <pubDate>Sat, 19 Jul 2014 17:30:00 -0600</pubDate>
-        <link>http://www.natemcmaster.com/blog/2014/07/19/writing-an-ef7-provider/</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2014/07/19/writing-an-ef7-provider/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Graphs, Trees, and Leonardo da Vinci</title>
-        <description>&lt;p&gt;&lt;a href=&quot;http://www.natemcmaster.com/projects/historyexplorer/&quot;&gt;History Explorer&lt;/a&gt; allows users to explore the relationship between historical people, places, and ideas. The content itself is almost completely verbatim Wikipedia. The more important part is the graphical presentation. &lt;/p&gt;
-
-&lt;p&gt;Ideas, people, and places share a connection. Karinthy theorized that everyone can be connected to everyone in a chain of six links or fewer, or six degrees of separation. Unique ideas, wars, political leaders, books, painting, and music share a similar connection. History explorer attempts to capture and present some of those connections (but only a very minor subset).&lt;/p&gt;
-
-&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
-
-&lt;p&gt;Most college seniors barely survive their last and final history class. I got lucky. My history class allowed me to do something new and innovative. The professor chose to theme his class around &lt;em&gt;creativity&lt;/em&gt;. For the final project, worth a third of our grade, we had to present a “creative work that involves historical content.” This project is the fruit of those open-ended guidelines.&lt;/p&gt;
-
-&lt;h2 id=&quot;technical-details&quot;&gt;Technical Details&lt;/h2&gt;
-&lt;p&gt;This static website relys almost entirely on client-side JavaScript. &lt;a href=&quot;https://github.com/natemcmaster/historyexplorer/tree/build&quot;&gt;The application&lt;/a&gt; relies on &lt;a href=&quot;https://angularjs.org&quot;&gt;AngularJS&lt;/a&gt; and &lt;a href=&quot;http://d3js.org&quot;&gt;D3.js&lt;/a&gt; to organize and present the content. The website is served from GitHub pages, and includes a rather large (900 kb) JSON file to provide the data for the graph. I crafted the JSON using some &lt;a href=&quot;https://github.com/natemcmaster/historyexplorer/tree/master/builder&quot;&gt;Python scripts&lt;/a&gt; and a list of historical terms from the course. The most rigorous part of the project involved matching connections between key terms and choosing images. This took almost as much time as the invention of a good heuristic for arranging the nodes in the graph.&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 02 Jun 2014 12:00:00 -0600</pubDate>
-        <link>http://www.natemcmaster.com/blog/2014/06/02/history-explorer/</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2014/06/02/history-explorer/</guid>
         
         
       </item>

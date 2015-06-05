@@ -4,14 +4,14 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Palestine and Israel</title>
+    <title>Vagrant Recipe for Ubuntu with ASP.NET 5</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Infrequent blog posts about software development, lifehacks, opinion, etc.
 ">
     <meta name="generator" content="Jekyll">
     <meta name="author" content="Nate McMaster" comment="Surprised?">
     <meta http-equiv="Content-Language" content="en">
-    <link rel="canonical" href="http://www.natemcmaster.com/blog/2012/07/palestine-and-israel.html">
+    <link rel="canonical" href="http://www.natemcmaster.com/blog/2015/06/04/vagrant-dnvm/">
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/assets/ga-e3932f73c8c13f1f4ed196916cb93e35.js"></script>
@@ -91,16 +91,56 @@
     <div class="page-content">
       <div class="wrap">
       <header class="post-header">
-  <p class="meta">Blog Post: July 3, 2012</p>
-  <h1>Palestine and Israel</h1>
+  <p class="meta">Blog Post: June 4, 2015</p>
+  <h1>Vagrant Recipe for Ubuntu with ASP.NET 5</h1>
   
 </header>
 
 <article class="post-content">
   
-<div class="css-full-post-content js-full-post-content">
-<p><a href="http://lh3.ggpht.com/-SkVyyuRJc6E/T_NFMFoPmxI/AAAAAAAABTg/C0utZm45Y-M/s1600-h/DSC_2616%25255B4%25255D.jpg"><img style="background-image: none; border-bottom: 0px; border-left: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; margin-left: auto; border-top: 0px; margin-right: auto; border-right: 0px; padding-top: 0px" title="DSC_2616" border="0" alt="DSC_2616" src="http://lh6.ggpht.com/-vkWyd4YB9XM/T_NFRe99BaI/AAAAAAAABTo/UTKmqzBGX9w/DSC_2616_thumb%25255B1%25255D.jpg?imgmax=800" width="904" height="604"></a></p> <p align="center">This sign sits on the dotted line between Israel and the West Bank.</p>
-</div>
+<p><a href="https://www.vagrantup.com/">Vagrant</a> is a command-line utility that makes it easy to setup
+and configure virtual machines. This configuration is controlled with special file called a <strong>Vagrantfile</strong>. This is a small ruby file that controls the config settings for your vm.</p>
+
+<p>If you do not already have Vagrant, follow their <a href="http://docs.vagrantup.com/v2/getting-started/index.html">Getting Started Guide</a> to get setup.</p>
+
+<p>Add this file to the root folder of you project. Running <code>vagrant up</code> will install a VM of Ubuntu 14 and then install all the libraries and runtime config needed to use ASP.NET 5. </p>
+
+<p>When you connect to the VM using <code>vagrant ssh</code>, your project will be accessible in the folder <strong>/vagrant/</strong>.</p>
+
+<p><a href="https://gist.github.com/natemcmaster/9b021e030c3c906bf940">View this code snippet on Gist</a></p>
+
+<p><a href="https://gist.githubusercontent.com/natemcmaster/9b021e030c3c906bf940/raw/bc1fdd9cc6d6d49f969f3a27a1bc6e988b036bf9/Vagrantfile">Raw file</a></p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Copy and paste this into a file name &#39;Vagrantfile&#39;</span>
+
+<span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="c1"># The most common configuration options are documented and commented below.</span>
+  <span class="c1"># For a complete reference, please see the online documentation at</span>
+  <span class="c1"># https://docs.vagrantup.com.</span>
+
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;ubuntu/trusty64&quot;</span>
+
+  <span class="c1"># Enable provisioning with a shell script.</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span> <span class="ss">privileged</span><span class="p">:</span> <span class="kp">false</span><span class="p">,</span> <span class="ss">inline</span><span class="p">:</span> <span class="o">&lt;&lt;-</span><span class="no">SHELL</span>
+<span class="sh">    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF</span>
+<span class="sh">    echo &quot;deb http://download.mono-project.com/repo/debian wheezy main&quot; | sudo tee /etc/apt/sources.list.d/mono-xamarin.list</span>
+<span class="sh">    sudo apt-get update</span>
+<span class="sh">    sudo apt-get install -y mono-complete</span>
+
+<span class="sh">    sudo apt-get install -y unzip automake libtool curl</span>
+
+<span class="sh">    curl -sSL https://github.com/libuv/libuv/archive/v1.4.2.tar.gz | sudo tar zxfv - -C /usr/local/src</span>
+<span class="sh">    cd /usr/local/src/libuv-1.4.2</span>
+<span class="sh">    sudo sh autogen.sh</span>
+<span class="sh">    sudo ./configure</span>
+<span class="sh">    sudo make</span>
+<span class="sh">    sudo make install</span>
+<span class="sh">    sudo rm -rf /usr/local/src/libuv-1.4.2 &amp;&amp; cd ~/</span>
+<span class="sh">    sudo ldconfig</span>
+
+<span class="sh">    curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh &amp;&amp; source ~/.dnx/dnvm/dnvm.sh</span>
+<span class="no">  SHELL</span>
+<span class="k">end</span></code></pre></div>
 
 </article>
 <div class="comments">
