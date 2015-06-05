@@ -14,7 +14,7 @@
     <link rel="canonical" href="http://www.natemcmaster.com/blog/2015/06/04/vagrant-dnvm/">
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/assets/ga-e3932f73c8c13f1f4ed196916cb93e35.js"></script>
+    <script src="/assets/ga-436e6ef9b5e9095cc43c83fbb41822a7.js"></script>
     <script type="text/javascript">
         (function (ga) {
             ga('send', 'pageview');
@@ -22,7 +22,7 @@
     </script>
     <script src="//use.typekit.net/yup5hor.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
-    <link rel="stylesheet" href="/assets/app-93cf29e82ec000d88a9d4c268dd5ad47.css">
+    <link rel="stylesheet" href="/assets/app-0370cfae669ef0a02213bd771b6cc121.css">
 </head>
 
 
@@ -112,40 +112,10 @@ and configure virtual machines. This configuration is controlled with special fi
 
 <p>When you connect to the VM using <code>vagrant ssh</code>, your project will be accessible in the folder <strong>/vagrant/</strong>.</p>
 
-<p><a href="https://gist.github.com/natemcmaster/9b021e030c3c906bf940">View this code snippet on Gist</a></p>
+<p><br /></p>
 
-<p><a href="https://gist.githubusercontent.com/natemcmaster/9b021e030c3c906bf940/raw/bc1fdd9cc6d6d49f969f3a27a1bc6e988b036bf9/Vagrantfile">Raw file</a></p>
+<script src="https://gist.github.com/natemcmaster/9b021e030c3c906bf940.js?file=Vagrantfile"> </script>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Copy and paste this into a file name &#39;Vagrantfile&#39;</span>
-
-<span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
-  <span class="c1"># The most common configuration options are documented and commented below.</span>
-  <span class="c1"># For a complete reference, please see the online documentation at</span>
-  <span class="c1"># https://docs.vagrantup.com.</span>
-
-  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;ubuntu/trusty64&quot;</span>
-
-  <span class="c1"># Enable provisioning with a shell script.</span>
-  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span> <span class="ss">privileged</span><span class="p">:</span> <span class="kp">false</span><span class="p">,</span> <span class="ss">inline</span><span class="p">:</span> <span class="o">&lt;&lt;-</span><span class="no">SHELL</span>
-<span class="sh">    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF</span>
-<span class="sh">    echo &quot;deb http://download.mono-project.com/repo/debian wheezy main&quot; | sudo tee /etc/apt/sources.list.d/mono-xamarin.list</span>
-<span class="sh">    sudo apt-get update</span>
-<span class="sh">    sudo apt-get install -y mono-complete</span>
-
-<span class="sh">    sudo apt-get install -y unzip automake libtool curl</span>
-
-<span class="sh">    curl -sSL https://github.com/libuv/libuv/archive/v1.4.2.tar.gz | sudo tar zxfv - -C /usr/local/src</span>
-<span class="sh">    cd /usr/local/src/libuv-1.4.2</span>
-<span class="sh">    sudo sh autogen.sh</span>
-<span class="sh">    sudo ./configure</span>
-<span class="sh">    sudo make</span>
-<span class="sh">    sudo make install</span>
-<span class="sh">    sudo rm -rf /usr/local/src/libuv-1.4.2 &amp;&amp; cd ~/</span>
-<span class="sh">    sudo ldconfig</span>
-
-<span class="sh">    curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh &amp;&amp; source ~/.dnx/dnvm/dnvm.sh</span>
-<span class="no">  SHELL</span>
-<span class="k">end</span></code></pre></div>
 
 </article>
 <div class="comments">

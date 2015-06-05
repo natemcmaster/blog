@@ -6,8 +6,8 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 04 Jun 2015 21:51:38 -0600</pubDate>
-    <lastBuildDate>Thu, 04 Jun 2015 21:51:38 -0600</lastBuildDate>
+    <pubDate>Thu, 04 Jun 2015 21:56:08 -0700</pubDate>
+    <lastBuildDate>Thu, 04 Jun 2015 21:56:08 -0700</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -21,42 +21,12 @@ and configure virtual machines. This configuration is controlled with special fi
 
 &lt;p&gt;When you connect to the VM using &lt;code&gt;vagrant ssh&lt;/code&gt;, your project will be accessible in the folder &lt;strong&gt;/vagrant/&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://gist.github.com/natemcmaster/9b021e030c3c906bf940&quot;&gt;View this code snippet on Gist&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://gist.githubusercontent.com/natemcmaster/9b021e030c3c906bf940/raw/bc1fdd9cc6d6d49f969f3a27a1bc6e988b036bf9/Vagrantfile&quot;&gt;Raw file&lt;/a&gt;&lt;/p&gt;
+&lt;script src=&quot;https://gist.github.com/natemcmaster/9b021e030c3c906bf940.js?file=Vagrantfile&quot;&gt; &lt;/script&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Copy and paste this into a file name &amp;#39;Vagrantfile&amp;#39;&lt;/span&gt;
-
-&lt;span class=&quot;no&quot;&gt;Vagrant&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;configure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# The most common configuration options are documented and commented below.&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# For a complete reference, please see the online documentation at&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;# https://docs.vagrantup.com.&lt;/span&gt;
-
-  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;box&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;ubuntu/trusty64&amp;quot;&lt;/span&gt;
-
-  &lt;span class=&quot;c1&quot;&gt;# Enable provisioning with a shell script.&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;provision&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;shell&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;privileged&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;inline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;SHELL&lt;/span&gt;
-&lt;span class=&quot;sh&quot;&gt;    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF&lt;/span&gt;
-&lt;span class=&quot;sh&quot;&gt;    echo &amp;quot;deb http://download.mono-project.com/repo/debian wheezy main&amp;quot; | sudo tee /etc/apt/sources.list.d/mono-xamarin.list&lt;/span&gt;
-&lt;span class=&quot;sh&quot;&gt;    sudo apt-get update&lt;/span&gt;
-&lt;span class=&quot;sh&quot;&gt;    sudo apt-get install -y mono-complete&lt;/span&gt;
-
-&lt;span class=&quot;sh&quot;&gt;    sudo apt-get install -y unzip automake libtool curl&lt;/span&gt;
-
-&lt;span class=&quot;sh&quot;&gt;    curl -sSL https://github.com/libuv/libuv/archive/v1.4.2.tar.gz | sudo tar zxfv - -C /usr/local/src&lt;/span&gt;
-&lt;span class=&quot;sh&quot;&gt;    cd /usr/local/src/libuv-1.4.2&lt;/span&gt;
-&lt;span class=&quot;sh&quot;&gt;    sudo sh autogen.sh&lt;/span&gt;
-&lt;span class=&quot;sh&quot;&gt;    sudo ./configure&lt;/span&gt;
-&lt;span class=&quot;sh&quot;&gt;    sudo make&lt;/span&gt;
-&lt;span class=&quot;sh&quot;&gt;    sudo make install&lt;/span&gt;
-&lt;span class=&quot;sh&quot;&gt;    sudo rm -rf /usr/local/src/libuv-1.4.2 &amp;amp;&amp;amp; cd ~/&lt;/span&gt;
-&lt;span class=&quot;sh&quot;&gt;    sudo ldconfig&lt;/span&gt;
-
-&lt;span class=&quot;sh&quot;&gt;    curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh &amp;amp;&amp;amp; source ~/.dnx/dnvm/dnvm.sh&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;  SHELL&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 </description>
-        <pubDate>Thu, 04 Jun 2015 21:13:00 -0600</pubDate>
+        <pubDate>Thu, 04 Jun 2015 20:13:00 -0700</pubDate>
         <link>http://www.natemcmaster.com/blog/2015/06/04/vagrant-dnvm/</link>
         <guid isPermaLink="true">http://www.natemcmaster.com/blog/2015/06/04/vagrant-dnvm/</guid>
         
@@ -67,10 +37,10 @@ and configure virtual machines. This configuration is controlled with special fi
         <title>ASP.NET 5 and .NET Core: Slides</title>
         <description>&lt;p&gt;This presentation covers an overview of what is new from Microsoft’s ASP.NET team. For more information, checkout their official website at &lt;a href=&quot;http://asp.net&quot;&gt;asp.net&lt;/a&gt; or &lt;a href=&quot;http://github.com/aspnet/home&quot;&gt;on GitHub&lt;/a&gt;.  ■&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;/assets/codecamp_slides-0cafbc883faab0c35987917806f2a5bc.pdf&quot; class=&quot;btn btn-primary&quot;&gt;Download slides&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;/assets/codecamp_slides-f26f0f995cba09d41a0c8d6c1dd8fc14.pdf&quot; class=&quot;btn btn-primary&quot;&gt;Download slides&lt;/a&gt;&lt;/p&gt;
 
 </description>
-        <pubDate>Sat, 14 Mar 2015 04:35:00 -0600</pubDate>
+        <pubDate>Sat, 14 Mar 2015 03:35:00 -0700</pubDate>
         <link>http://www.natemcmaster.com/blog/2015/03/14/codecamp-slides/</link>
         <guid isPermaLink="true">http://www.natemcmaster.com/blog/2015/03/14/codecamp-slides/</guid>
         
@@ -115,7 +85,7 @@ brew install kvm
 &lt;h1 id=&quot;beta-4&quot;&gt;Beta 4&lt;/h1&gt;
 &lt;p&gt;K, KRE, KVM, and KLR were all placeholder names. They have all been renamed in beta 4, but are stable as of March 14, 2015.  ■&lt;/p&gt;
 </description>
-        <pubDate>Sat, 14 Mar 2015 03:10:00 -0600</pubDate>
+        <pubDate>Sat, 14 Mar 2015 02:10:00 -0700</pubDate>
         <link>http://www.natemcmaster.com/blog/2015/03/14/installing-aspnet5/</link>
         <guid isPermaLink="true">http://www.natemcmaster.com/blog/2015/03/14/installing-aspnet5/</guid>
         
@@ -154,7 +124,7 @@ brew install kvm
 
 &lt;p&gt;Of course, there are many more packages available, including my favorite color schemes and some useful language-highlighting packages. But these above are the packages I could not code as effectively without. ■&lt;/p&gt;
 </description>
-        <pubDate>Thu, 05 Mar 2015 12:30:00 -0700</pubDate>
+        <pubDate>Thu, 05 Mar 2015 11:30:00 -0800</pubDate>
         <link>http://www.natemcmaster.com/blog/2015/03/05/st3-plugins/</link>
         <guid isPermaLink="true">http://www.natemcmaster.com/blog/2015/03/05/st3-plugins/</guid>
         
@@ -214,7 +184,7 @@ brew install kvm
 
 &lt;p&gt;Happy blogging! ■&lt;/p&gt;
 </description>
-        <pubDate>Sun, 01 Mar 2015 09:00:00 -0700</pubDate>
+        <pubDate>Sun, 01 Mar 2015 08:00:00 -0800</pubDate>
         <link>http://www.natemcmaster.com/blog/2015/03/01/blogging-with-jekyll/</link>
         <guid isPermaLink="true">http://www.natemcmaster.com/blog/2015/03/01/blogging-with-jekyll/</guid>
         
@@ -231,7 +201,7 @@ brew install kvm
 
 &lt;p&gt;&lt;a href=&quot;http://www.vanityfair.com/business/2014/11/satya-nadella-bill-gates-steve-ballmer-microsoft&quot;&gt;The Empire Reboots&lt;/a&gt; from Vanity Fair. ■&lt;/p&gt;
 </description>
-        <pubDate>Wed, 08 Oct 2014 00:00:00 -0600</pubDate>
+        <pubDate>Wed, 08 Oct 2014 00:00:00 -0700</pubDate>
         <link>http://www.natemcmaster.com/blog/2014/10/08/vanity-fair-microsoft-reboot/</link>
         <guid isPermaLink="true">http://www.natemcmaster.com/blog/2014/10/08/vanity-fair-microsoft-reboot/</guid>
         
@@ -268,7 +238,7 @@ With all of these discounts, I will save about &lt;em&gt;$2,700&lt;/em&gt; in mo
   &lt;li&gt;Unreal Engine&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-        <pubDate>Tue, 07 Oct 2014 00:00:00 -0600</pubDate>
+        <pubDate>Tue, 07 Oct 2014 00:00:00 -0700</pubDate>
         <link>http://www.natemcmaster.com/blog/2014/10/07/github-student-pack/</link>
         <guid isPermaLink="true">http://www.natemcmaster.com/blog/2014/10/07/github-student-pack/</guid>
         
@@ -289,7 +259,7 @@ media via Xbox from a personal media server.&lt;/p&gt;
 
 &lt;p&gt;Unfortunately, this app will not be free. I am still looking forward to the expected release of a media player for Xbox One that comes with DLNA support.&lt;/p&gt;
 </description>
-        <pubDate>Mon, 06 Oct 2014 00:00:00 -0600</pubDate>
+        <pubDate>Mon, 06 Oct 2014 00:00:00 -0700</pubDate>
         <link>http://www.natemcmaster.com/blog/2014/10/06/plex-for-xbox/</link>
         <guid isPermaLink="true">http://www.natemcmaster.com/blog/2014/10/06/plex-for-xbox/</guid>
         
@@ -329,7 +299,7 @@ They grilled me on subjects ranging from JavaScript’s “this” to data struc
 &lt;p&gt;Interviewer feedback is funneled into a hiring system. First, Hiring Committee says yes or no. If yes, then Compensation Committee says how much yes.Meanwhile, I will be back home, browsing dusty textbooks trying to find the answer to, “how &lt;em&gt;do&lt;/em&gt; you rotate subtrees in a BST?”  ■&lt;/p&gt;
 
 </description>
-        <pubDate>Sun, 31 Aug 2014 00:00:00 -0600</pubDate>
+        <pubDate>Sun, 31 Aug 2014 00:00:00 -0700</pubDate>
         <link>http://www.natemcmaster.com/blog/2014/08/31/youtube-interview/</link>
         <guid isPermaLink="true">http://www.natemcmaster.com/blog/2014/08/31/youtube-interview/</guid>
         
@@ -602,7 +572,7 @@ change the expression tree it receives in &lt;strong&gt;Storage.Datastore.Query(
 
 &lt;p&gt;■&lt;/p&gt;
 </description>
-        <pubDate>Sat, 19 Jul 2014 17:30:00 -0600</pubDate>
+        <pubDate>Sat, 19 Jul 2014 16:30:00 -0700</pubDate>
         <link>http://www.natemcmaster.com/blog/2014/07/19/writing-an-ef7-provider/</link>
         <guid isPermaLink="true">http://www.natemcmaster.com/blog/2014/07/19/writing-an-ef7-provider/</guid>
         
