@@ -32,7 +32,7 @@ Feel free to write me at hello@natemcmaster.com
             ga('send', 'pageview');
         })(ga);
     </script>
-    <link rel="stylesheet" href="/assets/app-c60d96587989cf103bcb33d5f2dfefca.css">
+    <link rel="stylesheet" href="/assets/app-af4353706c394838c273b1323bdf691a.css">
 </head>
 
 <body>
@@ -104,22 +104,37 @@ Feel free to write me at hello@natemcmaster.com
         
         <div class="posts">
         <div class="post">
-          <span class="post-date">Jun 4, 2015</span>
-          <a class="post-link" href="/blog/2015/06/04/vagrant-dnvm/">
-            <h1>Vagrant Recipe for Ubuntu with ASP.NET 5</h1>
+          <span class="post-date">Jul 9, 2015</span>
+          <a class="post-link" href="/blog/2015/07/09/hacking-asp-net-5/">
+            <h1>Hacking ASP.NET 5 and Mono</h1>
           </a>
+          
+          <h2>Tricks to help you develop ASP.NET 5 applications on OS X and Linux</h2>
           
         
           <div>
             
-          <p><a href="https://www.vagrantup.com/">Vagrant</a> is a command-line utility that makes it easy to setup
-and configure virtual machines. This configuration is controlled with special file called a <strong>Vagrantfile</strong>. This is a small ruby file that controls the config settings for your vm.</p>
+          <p>First, it is important understand what happens when you execute <code>dnx</code>.
+Currently, the command for <code>dnx</code> on Linux and OS X is just a shortcut to <a href="https://github.com/aspnet/dnx/blob/dev/scripts/dnx.sh">this script file</a>.
+If you inspect this 16-line file, you will see that, in most cases, <code>dnx</code> is just an abbreviation for <code>mono $MONO_OPTIONS "$DIR/dnx.mono.managed.dll" "$@"</code></p>
 
 
           
           </div>
           <p class="read-full">
-            <a  href="/blog/2015/06/04/vagrant-dnvm/">Read full post...</a>
+            <a  href="/blog/2015/07/09/hacking-asp-net-5/">Read full post...</a>
+          </p>
+        </div>
+        
+        <div class="post">
+          <span class="post-date">Jun 4, 2015</span>
+          <h3>
+            <a class="post-link" href="/blog/2015/06/04/vagrant-dnvm/">Vagrant Recipe for Ubuntu with ASP.NET 5</a>
+          </h3>
+          <p>
+            
+          <p><a href="https://www.vagrantup.com/">Vagrant</a> is a command-line utility that makes it easy to setup and configure virtual machines. This configuration is controlled...
+          
           </p>
         </div>
         
@@ -143,18 +158,6 @@ and configure virtual machines. This configuration is controlled with special fi
           <p>
             
           Installing VS 2015 and the ASP.NET 5 CLI tools
-          
-          </p>
-        </div>
-        
-        <div class="post">
-          <span class="post-date">Mar 5, 2015</span>
-          <h3>
-            <a class="post-link" href="/blog/2015/03/05/st3-plugins/">My Favorite Sublime Text 3 Plugins</a>
-          </h3>
-          <p>
-            
-          <p><a href="http://www.sublimetext.com/">Sublime Text 3</a> is my favorite text editor and has been for years. One of the best features is...
           
           </p>
         </div>

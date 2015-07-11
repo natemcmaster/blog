@@ -4,14 +4,14 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Sunset over Jerusalem</title>
+    <title>Hacking ASP.NET 5 and Mono</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Infrequent blog posts about software development, lifehacks, opinion, etc.
 ">
     <meta name="generator" content="Jekyll">
     <meta name="author" content="Nate McMaster" comment="Surprised?">
     <meta http-equiv="Content-Language" content="en">
-    <link rel="canonical" href="http://www.natemcmaster.com/blog/2012/08/sunset-over-jerusalem.html">
+    <link rel="canonical" href="http://www.natemcmaster.com/blog/2015/07/09/hacking-asp-net-5/">
     <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro|Roboto+Slab:400,300|Open+Sans:300italic,400italic,600italic,400,600,300" rel="stylesheet" type="text/css">
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
@@ -95,16 +95,49 @@
     <div class="page-content">
       <div class="wrap">
       <header class="post-header">
-  <p class="meta">Blog Post: August 11, 2012</p>
-  <h1>Sunset over Jerusalem</h1>
+  <p class="meta">Blog Post: July 9, 2015</p>
+  <h1>Hacking ASP.NET 5 and Mono</h1>
+  
+    <h2>Tricks to help you develop ASP.NET 5 applications on OS X and Linux</h2>
   
 </header>
 
 <article class="post-content">
   
-<div class="css-full-post-content js-full-post-content">
-<a href="http://lh5.ggpht.com/-MH8-YapbMBc/UCXFQGVj-DI/AAAAAAAABao/YMOV8hYr45I/s1600-h/DSC_4590%25255B3%25255D.jpg"><img style="border-bottom: 0px; border-left: 0px; display: block; float: none; margin-left: auto; border-top: 0px; margin-right: auto; border-right: 0px" title="DSC_4590" border="0" alt="DSC_4590" src="http://lh3.ggpht.com/-JzBN2TWjMS8/UCXFQtefkII/AAAAAAAABaw/cjNVH_FFpps/DSC_4590_thumb%25255B1%25255D.jpg?imgmax=800" width="904" height="604"></a>  <p></p> <p align="center">One of the last few nights at the Jerusalem Center, students observing the colors of dusk.</p>
-</div>
+<p>First, it is important understand what happens when you execute <code>dnx</code>.
+Currently, the command for <code>dnx</code> on Linux and OS X is just a shortcut to <a href="https://github.com/aspnet/dnx/blob/dev/scripts/dnx.sh">this script file</a>.
+If you inspect this 16-line file, you will see that, in most cases, <code>dnx</code> is just an abbreviation for <code>mono $MONO_OPTIONS "$DIR/dnx.mono.managed.dll" "$@"</code></p>
+
+<p>Understanding this enables you to change how DNX runs mono in the following ways.</p>
+
+<h2 id="use-the-monooptions-variable-to-pass-runtime-flags-to-mono">Use the MONO_OPTIONS variable to pass runtime flags to mono</h2>
+
+<p>This is useful if you need to alter the way DNX bootstraps mono. Here are some useful examples.</p>
+
+<h3 id="find-out-which-version-of-mono-dnx-is-using">Find out which version of Mono DNX is using</h3>
+
+<p>Execute <code>MONO_OPTIONS=--version dnx</code></p>
+
+<h3 id="debug-and-get-a-more-detailed-stack-trace">Debug and get a more detailed stack trace</h3>
+<p>Execute <code>MONO_OPTIONS=--debug dnx . run</code></p>
+
+<h2 id="change-the-mono-runtime">Change the mono runtime</h2>
+
+<p>If you have multiple versions of mono installed, it may be useful to change which version mono is using. 
+DNX will <a href="https://github.com/aspnet/dnx/blob/dev/scripts/dnx.sh">first look within the runtime folder</a> for an executable mono. If not, it will use the system default.
+You can override the system default mono by adding a symbolic link into the runtime folder.</p>
+
+<p>For example, I have a custom build of mono in my home directory, but also have a system installation of Mono (so I can use Xamarin Studio).</p>
+
+<p>To override, follow these steps.</p>
+
+<ol>
+  <li>Naviate to the folder containing DNX. <code>dirname `which dnx`</code></li>
+  <li>Add a symbolic link. For example, <code>ln -s /Users/nmcmaster/dev/mono-src/bin/mono ./</code></li>
+</ol>
+
+<p>Now DNX will use <code>/Users/nmcmaster/dev/mono-src/bin/mono</code> instead of <code>/usr/bin/mono</code></p>
+
 
 </article>
 <div class="comments">

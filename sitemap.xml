@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.natemcmaster.com/blog/2015/07/09/hacking-asp-net-5/</loc>
+    <lastmod>2015-07-09T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>http://www.natemcmaster.com/blog/2015/06/04/vagrant-dnvm/</loc>
     <lastmod>2015-06-04T20:13:00-07:00</lastmod>
     <priority>0.8</priority>
@@ -432,49 +437,55 @@
   </url>
   <url>
     <loc>http://www.natemcmaster.com/blog/</loc>
-    <lastmod>2015-06-09T00:17:34-07:00</lastmod>
+    <lastmod>2015-07-10T20:32:57-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://www.natemcmaster.com/projects/</loc>
-    <lastmod>2015-06-09T00:17:34-07:00</lastmod>
+    <lastmod>2015-07-10T20:32:57-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://www.natemcmaster.com/404.html</loc>
-    <lastmod>2015-06-09T00:17:34-07:00</lastmod>
+    <lastmod>2015-07-10T20:32:57-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://www.natemcmaster.com/profile/</loc>
-    <lastmod>2015-06-09T00:17:34-07:00</lastmod>
+    <lastmod>2015-07-10T20:32:57-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://www.natemcmaster.com/blog/archive/</loc>
-    <lastmod>2015-06-09T00:17:34-07:00</lastmod>
+    <lastmod>2015-07-10T20:32:57-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://www.natemcmaster.com/projects/historyexplorer/</loc>
-    <lastmod>2015-06-09T00:17:34-07:00</lastmod>
+    <lastmod>2015-07-10T20:32:57-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://www.natemcmaster.com/</loc>
-    <lastmod>2015-06-09T00:17:34-07:00</lastmod>
+    <lastmod>2015-07-10T20:32:57-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>http://www.natemcmaster.com/resume/</loc>
-    <lastmod>2015-06-09T00:17:34-07:00</lastmod>
+    <lastmod>2015-07-10T20:32:57-07:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>http://www.natemcmaster.com/historyexplorer/</loc>
+    <lastmod>2015-07-10T20:32:57-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
