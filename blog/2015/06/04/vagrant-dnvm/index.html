@@ -15,13 +15,13 @@
     <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro|Roboto+Slab:400,300|Open+Sans:300italic,400italic,600italic,400,600,300" rel="stylesheet" type="text/css">
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/assets/ga-436e6ef9b5e9095cc43c83fbb41822a7.js"></script>
+    <script src="/assets/ga-d0c581bb05eca417d65b4df14b5d5b44.js"></script>
     <script type="text/javascript">
         (function (ga) {
             ga('send', 'pageview');
         })(ga);
     </script>
-    <link rel="stylesheet" href="/assets/app-af4353706c394838c273b1323bdf691a.css">
+    <link rel="stylesheet" href="/assets/app-88cd42ee079d7be4a722d2e43744352c.css">
 </head>
 
 
@@ -107,12 +107,41 @@ and configure virtual machines. This configuration is controlled with special fi
 
 <p>If you do not already have Vagrant, follow their <a href="http://docs.vagrantup.com/v2/getting-started/index.html">Getting Started Guide</a> to get setup.</p>
 
-<p>Add this file to the root folder of you project. Running <code>vagrant up</code> will install a VM of Ubuntu 14 and then install all the libraries and runtime config needed to use ASP.NET 5. </p>
+<p>Add this file to the root folder of you project. Running <code>vagrant up</code> will install a VM of Ubuntu 14 and then install all the libraries and runtime config needed to use ASP.NET 5.</p>
 
 <p>When you connect to the VM using <code>vagrant ssh</code>, your project will be accessible in the folder <strong>/vagrant/</strong>.</p>
 
 <p><br /></p>
 
+<noscript><pre>Vagrant.configure(2) do |config|
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
+  
+  config.vm.box = &quot;ubuntu/trusty64&quot;
+
+  # Enable provisioning with a shell script.
+  config.vm.provision &quot;shell&quot;, privileged: false, inline: &lt;&lt;-SHELL
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+    echo &quot;deb http://download.mono-project.com/repo/debian wheezy main&quot; | sudo tee /etc/apt/sources.list.d/mono-xamarin.list
+    sudo apt-get update
+    sudo apt-get install -y mono-complete
+    
+    sudo apt-get install -y unzip automake libtool curl
+    
+    curl -sSL https://github.com/libuv/libuv/archive/v1.4.2.tar.gz | sudo tar zxfv - -C /usr/local/src
+    cd /usr/local/src/libuv-1.4.2
+    sudo sh autogen.sh
+    sudo ./configure
+    sudo make 
+    sudo make install
+    sudo rm -rf /usr/local/src/libuv-1.4.2 &amp;&amp; cd ~/
+    sudo ldconfig
+    
+    curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh &amp;&amp; source ~/.dnx/dnvm/dnvm.sh
+  SHELL
+end
+</pre></noscript>
 <script src="https://gist.github.com/natemcmaster/9b021e030c3c906bf940.js?file=Vagrantfile"> </script>
 
 

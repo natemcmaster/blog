@@ -6,9 +6,31 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 10 Jul 2015 20:32:57 -0700</pubDate>
-    <lastBuildDate>Fri, 10 Jul 2015 20:32:57 -0700</lastBuildDate>
+    <pubDate>Tue, 25 Aug 2015 14:45:01 -0700</pubDate>
+    <lastBuildDate>Tue, 25 Aug 2015 14:45:01 -0700</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Entity Framework 7 and OS X</title>
+        <description>&lt;p&gt;Back in early July, I recorded a walkthrough with &lt;a href=&quot;https://twitter.com/sethjuarez&quot;&gt;@sethjuarez&lt;/a&gt; on using &lt;a href=&quot;https://github.com/aspnet/entityframework&quot;&gt;Entity Framework 7&lt;/a&gt; and &lt;a href=&quot;https://code.visualstudio.com&quot;&gt;Visual Studio Code&lt;/a&gt;. The video was posted to Channel 9 today.&lt;/p&gt;
+
+&lt;p&gt;For the latest details on EF 7 and OS X, follow this guide: &lt;a href=&quot;http://ef.readthedocs.org/en/latest/getting-started/osx.html&quot;&gt;Getting Started with EF 7 on OS X&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://channel9.msdn.com/Blogs/Seth-Juarez/Entity-Framework-7-Goes-Cross-Platform-with-Nate-McMaster&quot; class=&quot;btn btn-primary&quot;&gt;Watch on Channel 9&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;text-center&quot;&gt;
+&lt;iframe src=&quot;https://channel9.msdn.com/Blogs/Seth-Juarez/Entity-Framework-7-Goes-Cross-Platform-with-Nate-McMaster/player&quot; width=&quot;640&quot; height=&quot;360&quot; allowfullscreen=&quot;&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Tue, 25 Aug 2015 00:00:00 -0700</pubDate>
+        <link>http://www.natemcmaster.com/blog/2015/08/25/ef7-and-osx/</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2015/08/25/ef7-and-osx/</guid>
+        
+        
+      </item>
     
       <item>
         <title>Hacking ASP.NET 5 and Mono</title>
@@ -61,12 +83,41 @@ and configure virtual machines. This configuration is controlled with special fi
 
 &lt;p&gt;If you do not already have Vagrant, follow their &lt;a href=&quot;http://docs.vagrantup.com/v2/getting-started/index.html&quot;&gt;Getting Started Guide&lt;/a&gt; to get setup.&lt;/p&gt;
 
-&lt;p&gt;Add this file to the root folder of you project. Running &lt;code&gt;vagrant up&lt;/code&gt; will install a VM of Ubuntu 14 and then install all the libraries and runtime config needed to use ASP.NET 5. &lt;/p&gt;
+&lt;p&gt;Add this file to the root folder of you project. Running &lt;code&gt;vagrant up&lt;/code&gt; will install a VM of Ubuntu 14 and then install all the libraries and runtime config needed to use ASP.NET 5.&lt;/p&gt;
 
 &lt;p&gt;When you connect to the VM using &lt;code&gt;vagrant ssh&lt;/code&gt;, your project will be accessible in the folder &lt;strong&gt;/vagrant/&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;Vagrant.configure(2) do |config|
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
+  
+  config.vm.box = &amp;quot;ubuntu/trusty64&amp;quot;
+
+  # Enable provisioning with a shell script.
+  config.vm.provision &amp;quot;shell&amp;quot;, privileged: false, inline: &amp;lt;&amp;lt;-SHELL
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+    echo &amp;quot;deb http://download.mono-project.com/repo/debian wheezy main&amp;quot; | sudo tee /etc/apt/sources.list.d/mono-xamarin.list
+    sudo apt-get update
+    sudo apt-get install -y mono-complete
+    
+    sudo apt-get install -y unzip automake libtool curl
+    
+    curl -sSL https://github.com/libuv/libuv/archive/v1.4.2.tar.gz | sudo tar zxfv - -C /usr/local/src
+    cd /usr/local/src/libuv-1.4.2
+    sudo sh autogen.sh
+    sudo ./configure
+    sudo make 
+    sudo make install
+    sudo rm -rf /usr/local/src/libuv-1.4.2 &amp;amp;&amp;amp; cd ~/
+    sudo ldconfig
+    
+    curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh &amp;amp;&amp;amp; source ~/.dnx/dnvm/dnvm.sh
+  SHELL
+end
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/natemcmaster/9b021e030c3c906bf940.js?file=Vagrantfile&quot;&gt; &lt;/script&gt;
 
 </description>
@@ -81,7 +132,7 @@ and configure virtual machines. This configuration is controlled with special fi
         <title>ASP.NET 5 and .NET Core: Slides</title>
         <description>&lt;p&gt;This presentation covers an overview of what is new from Microsoft’s ASP.NET team. For more information, checkout their official website at &lt;a href=&quot;http://asp.net&quot;&gt;asp.net&lt;/a&gt; or &lt;a href=&quot;http://github.com/aspnet/home&quot;&gt;on GitHub&lt;/a&gt;.  ■&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;/assets/codecamp_slides-f26f0f995cba09d41a0c8d6c1dd8fc14.pdf&quot; class=&quot;btn btn-primary&quot;&gt;Download slides&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;/assets/codecamp_slides-5fb02198e288c795aef8be7a91bf440b.pdf&quot; class=&quot;btn btn-primary&quot;&gt;Download slides&lt;/a&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Sat, 14 Mar 2015 03:35:00 -0700</pubDate>
@@ -93,7 +144,7 @@ and configure virtual machines. This configuration is controlled with special fi
     
       <item>
         <title>Installing ASP.NET 5 (beta 3)</title>
-        <description>&lt;p&gt;The easiest, but slowest, way to install ASP.NET 5 is through Visual Studio 2015. &lt;/p&gt;
+        <description>&lt;p&gt;The easiest, but slowest, way to install ASP.NET 5 is through Visual Studio 2015.&lt;/p&gt;
 
 &lt;p&gt;Alternatively, you can install the command line tools by following the instructions below. These are instructions are for the &lt;strong&gt;beta 3&lt;/strong&gt; versions of the tools as posted on &lt;a href=&quot;https://github.com/aspnet/home&quot;&gt;ASP.NET 5 on GitHub&lt;/a&gt;. Beginning with &lt;strong&gt;beta 4&lt;/strong&gt; these will be obsolete.&lt;/p&gt;
 
@@ -113,7 +164,7 @@ and configure virtual machines. This configuration is controlled with special fi
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bat&quot; data-lang=&quot;bat&quot;&gt;&lt;span class=&quot;p&quot;&gt;@&lt;/span&gt;powershell -NoProfile -ExecutionPolicy unrestricted -Command &lt;span class=&quot;s2&quot;&gt;&amp;quot;iex ((new-object net.webclient).DownloadString(&amp;#39;https://raw.githubusercontent.com/aspnet/Home/master/kvminstall.ps1&amp;#39;))&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;os-x&quot;&gt;OS X&lt;/h2&gt;
-&lt;p&gt;You must have &amp;gt;= Mono 3.6.0 installed. &lt;/p&gt;
+&lt;p&gt;You must have &amp;gt;= Mono 3.6.0 installed.&lt;/p&gt;
 
 &lt;p&gt;If you have &lt;a href=&quot;http://brew.sh&quot;&gt;brew&lt;/a&gt;, the following will the correct version of Mono and the KVM. Execute these in the Terminal.&lt;/p&gt;
 
@@ -306,46 +357,6 @@ media via Xbox from a personal media server.&lt;/p&gt;
         <pubDate>Mon, 06 Oct 2014 00:00:00 -0700</pubDate>
         <link>http://www.natemcmaster.com/blog/2014/10/06/plex-for-xbox/</link>
         <guid isPermaLink="true">http://www.natemcmaster.com/blog/2014/10/06/plex-for-xbox/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>A Day at YouTube: Onsite Interviews</title>
-        <description>&lt;p&gt;At Google, onsite interviews vet a candidate’s dev skills and do not focus positions with specific teams or projects. I went hoping to learn who I might work with, what I might work on, and how I can expect to spend my time as a YouTube engineer. I left with no answers to such, a coding headache, and a lingering question, “how &lt;em&gt;do&lt;/em&gt; you rotate subtrees in a BST?”&lt;/p&gt;
-
-&lt;p&gt;I almost wrote a scathing review of how the interviews left me feeling unimpressed and confused, but my recruiter called an hour after and clarified the process: team and project selection comes after a job offer is extended. I wish I had known earlier so I could have curbed my expectations.&lt;/p&gt;
-
-&lt;p&gt;Google paid for my flight and hotel. (Thanks!) I arrived a day in advance, spent free time touring the Bay Area, and had a fretful night of pre-interview nightmares in which I repeatedly forget English, JavaScript, my clothing, or all three.&lt;/p&gt;
-
-&lt;h2 id=&quot;the-coding-interviews&quot;&gt;The Coding Interviews&lt;/h2&gt;
-&lt;p&gt;Within 15 minutes, I was “on trial.” A recruiter greeted me in the lobby of the San Bruno office. We talked pleasantries for a few minutes until my first examiner promptly arrived. My recruiter wished me luck and turned me over to the wolves.&lt;/p&gt;
-
-&lt;p&gt;At YouTube, I interviewed with four engineers, each for 45 minutes. My interviewers cut to the chase, mostly skipping personal questions (with one exception) and dove head-first into programming questions.
-They grilled me on subjects ranging from JavaScript’s “this” to data structure implementations. I had no time to stop and breathe between the interviews. Except for a 45 minute lunch interview, I stayed in a small conference room next to HR.&lt;/p&gt;
-
-&lt;p&gt;The exception I mentioned above was my first inteview. We talked first about my previous experience and work at Microsoft. He seemed genuinely interested in my GitHub profile. The programming gauntlet was easy and only lasted 10 minutes. The rest of the time my interviewer tried to sell me on working for YouTube.&lt;/p&gt;
-
-&lt;p&gt;But as I said before, this was the only exception. The other interviews were exhausting. Like oral exams in high school Spanish, I left convinced of my idiocy and expecting a flunking grade.&lt;/p&gt;
-
-&lt;h2 id=&quot;onsite-impressions-of-google&quot;&gt;Onsite Impressions of Google&lt;/h2&gt;
-&lt;p&gt;The empowering do-cool-things culture at Google is fresh air to the suffocating red tape of some big companies. I, like many engineers, feel most effect and creative when given minimal restrictions. &lt;/p&gt;
-
-&lt;p&gt;That said, Google has flaws, too. I expected Googlers to exhibit enthusiasm for their work. Instead, most seemed to think their work is routine. A few implied that exciting work is done at start-ups, not Google. In addition, the interviews felt fairly canned and impersonal. I hoped to get a sense of who my coworkers may be. Instead, I rehearsed memorized algorithms from college textbooks.&lt;/p&gt;
-
-&lt;h3 id=&quot;san-bruno-office&quot;&gt;San Bruno Office&lt;/h3&gt;
-&lt;p&gt;The San Bruno office has spunk and lots of red. In the lobby, four TV’s were playing a loop of zanny music videos, dancing cats, and DIY instructionals. All chairs, umbrellas, candy jars, slides, and walls were solid red. The lunch is free for all employees, and I suppose they get what they pay for. I had cold rice and bland pesto chicken.&lt;/p&gt;
-
-&lt;h3 id=&quot;googleplex&quot;&gt;Googleplex&lt;/h3&gt;
-&lt;p&gt;I also had time to tour the Googleplex in Mountain View. Unlike San Bruno, they have &lt;em&gt;four&lt;/em&gt; colors in their schema: red, blue, green, and yellow. Employees ride bikes between buildings. There is one soccer field, and some open area behind the building. The glass walls reveal large open work areas where a mix of hypsters, nerds, and few nuts work on laptops.&lt;/p&gt;
-
-&lt;h2 id=&quot;next-steps&quot;&gt;Next steps&lt;/h2&gt;
-&lt;p&gt;Interviewer feedback is funneled into a hiring system. First, Hiring Committee says yes or no. If yes, then Compensation Committee says how much yes.Meanwhile, I will be back home, browsing dusty textbooks trying to find the answer to, “how &lt;em&gt;do&lt;/em&gt; you rotate subtrees in a BST?”  ■&lt;/p&gt;
-
-</description>
-        <pubDate>Sun, 31 Aug 2014 00:00:00 -0700</pubDate>
-        <link>http://www.natemcmaster.com/blog/2014/08/31/youtube-interview/</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2014/08/31/youtube-interview/</guid>
         
         
       </item>
