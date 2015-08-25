@@ -1,9 +1,8 @@
 DIR=./build
 
-.PHONY: publish j_build serve
+.PHONY: publish j_build serve install
 
 j_build:
-	bower install
 	jekyll build
 
 serve:
@@ -15,3 +14,11 @@ publish: j_build
 	git --git-dir=$(DIR)/.git commit -m "Build `date`"
 	git --git-dir=$(DIR)/.git push
 	git add build/
+
+setup:
+	npm install -g bower
+	gem install bundler
+
+install:
+	bundle install
+	bower install
