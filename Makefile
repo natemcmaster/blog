@@ -16,6 +16,7 @@ publish: j_build
 	git add build/
 
 setup:
+	git clone https://github.com/natemcmaster/natemcmaster.github.io build/
 	npm install -g bower
 	gem install bundler
 
