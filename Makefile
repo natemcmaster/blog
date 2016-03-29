@@ -1,5 +1,7 @@
 DIR=./build
 
+default: j_build
+
 .PHONY: publish j_build serve install
 
 j_build:
@@ -16,10 +18,13 @@ publish: j_build
 	git add build/
 
 setup:
-	git clone https://github.com/natemcmaster/natemcmaster.github.io build/
+	git submodule update
 	npm install -g bower
 	gem install bundler
 
 install:
 	bundle install
 	bower install
+
+status:
+	git --git-dir=$(DIR)/.git status
