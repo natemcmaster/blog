@@ -6,8 +6,8 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 29 Mar 2016 08:22:45 -0700</pubDate>
-    <lastBuildDate>Tue, 29 Mar 2016 08:22:45 -0700</lastBuildDate>
+    <pubDate>Mon, 25 Apr 2016 20:48:22 -0700</pubDate>
+    <lastBuildDate>Mon, 25 Apr 2016 20:48:22 -0700</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -204,41 +204,12 @@ and configure virtual machines. This configuration is controlled with special fi
 
 &lt;p&gt;If you do not already have Vagrant, follow their &lt;a href=&quot;http://docs.vagrantup.com/v2/getting-started/index.html&quot;&gt;Getting Started Guide&lt;/a&gt; to get setup.&lt;/p&gt;
 
-&lt;p&gt;Add this file to the root folder of you project. Running &lt;code&gt;vagrant up&lt;/code&gt; will install a VM of Ubuntu 14 and then install all the libraries and runtime config needed to use ASP.NET 5.&lt;/p&gt;
+&lt;p&gt;Add this file to the root folder of you project. Running &lt;code&gt;vagrant up&lt;/code&gt; will install a VM of Ubuntu 14 and then install all the libraries and runtime config needed to use ASP.NET 5. &lt;/p&gt;
 
 &lt;p&gt;When you connect to the VM using &lt;code&gt;vagrant ssh&lt;/code&gt;, your project will be accessible in the folder &lt;strong&gt;/vagrant/&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;noscript&gt;&lt;pre&gt;Vagrant.configure(2) do |config|
-  # The most common configuration options are documented and commented below.
-  # For a complete reference, please see the online documentation at
-  # https://docs.vagrantup.com.
-  
-  config.vm.box = &amp;quot;ubuntu/trusty64&amp;quot;
-
-  # Enable provisioning with a shell script.
-  config.vm.provision &amp;quot;shell&amp;quot;, privileged: false, inline: &amp;lt;&amp;lt;-SHELL
-    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-    echo &amp;quot;deb http://download.mono-project.com/repo/debian wheezy main&amp;quot; | sudo tee /etc/apt/sources.list.d/mono-xamarin.list
-    sudo apt-get update
-    sudo apt-get install -y mono-complete
-    
-    sudo apt-get install -y unzip automake libtool curl
-    
-    curl -sSL https://github.com/libuv/libuv/archive/v1.4.2.tar.gz | sudo tar zxfv - -C /usr/local/src
-    cd /usr/local/src/libuv-1.4.2
-    sudo sh autogen.sh
-    sudo ./configure
-    sudo make 
-    sudo make install
-    sudo rm -rf /usr/local/src/libuv-1.4.2 &amp;amp;&amp;amp; cd ~/
-    sudo ldconfig
-    
-    curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh &amp;amp;&amp;amp; source ~/.dnx/dnvm/dnvm.sh
-  SHELL
-end
-&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/natemcmaster/9b021e030c3c906bf940.js?file=Vagrantfile&quot;&gt; &lt;/script&gt;
 
 </description>
@@ -253,7 +224,7 @@ end
         <title>ASP.NET 5 and .NET Core: Slides</title>
         <description>&lt;p&gt;This presentation covers an overview of what is new from Microsoft’s ASP.NET team. For more information, checkout their official website at &lt;a href=&quot;http://asp.net&quot;&gt;asp.net&lt;/a&gt; or &lt;a href=&quot;http://github.com/aspnet/home&quot;&gt;on GitHub&lt;/a&gt;.  ■&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;/assets/codecamp_slides-5fb02198e288c795aef8be7a91bf440b.pdf&quot; class=&quot;btn btn-primary&quot;&gt;Download slides&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;/assets/codecamp_slides-f26f0f995cba09d41a0c8d6c1dd8fc14.pdf&quot; class=&quot;btn btn-primary&quot;&gt;Download slides&lt;/a&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Sat, 14 Mar 2015 03:35:00 -0700</pubDate>
@@ -265,7 +236,7 @@ end
     
       <item>
         <title>Installing ASP.NET 5 (beta 3)</title>
-        <description>&lt;p&gt;The easiest, but slowest, way to install ASP.NET 5 is through Visual Studio 2015.&lt;/p&gt;
+        <description>&lt;p&gt;The easiest, but slowest, way to install ASP.NET 5 is through Visual Studio 2015. &lt;/p&gt;
 
 &lt;p&gt;Alternatively, you can install the command line tools by following the instructions below. These are instructions are for the &lt;strong&gt;beta 3&lt;/strong&gt; versions of the tools as posted on &lt;a href=&quot;https://github.com/aspnet/home&quot;&gt;ASP.NET 5 on GitHub&lt;/a&gt;. Beginning with &lt;strong&gt;beta 4&lt;/strong&gt; these will be obsolete.&lt;/p&gt;
 
@@ -285,7 +256,7 @@ end
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bat&quot; data-lang=&quot;bat&quot;&gt;&lt;span class=&quot;p&quot;&gt;@&lt;/span&gt;powershell -NoProfile -ExecutionPolicy unrestricted -Command &lt;span class=&quot;s2&quot;&gt;&amp;quot;iex ((new-object net.webclient).DownloadString(&amp;#39;https://raw.githubusercontent.com/aspnet/Home/master/kvminstall.ps1&amp;#39;))&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;os-x&quot;&gt;OS X&lt;/h2&gt;
-&lt;p&gt;You must have &amp;gt;= Mono 3.6.0 installed.&lt;/p&gt;
+&lt;p&gt;You must have &amp;gt;= Mono 3.6.0 installed. &lt;/p&gt;
 
 &lt;p&gt;If you have &lt;a href=&quot;http://brew.sh&quot;&gt;brew&lt;/a&gt;, the following will the correct version of Mono and the KVM. Execute these in the Terminal.&lt;/p&gt;
 
