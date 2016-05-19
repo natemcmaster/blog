@@ -6,8 +6,8 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 19 May 2016 00:58:44 -0700</pubDate>
-    <lastBuildDate>Thu, 19 May 2016 00:58:44 -0700</lastBuildDate>
+    <pubDate>Thu, 19 May 2016 01:12:29 -0700</pubDate>
+    <lastBuildDate>Thu, 19 May 2016 01:12:29 -0700</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -17,13 +17,19 @@
 you have may have noticed that the package includes a folder named “runtimes”.
 What is the folder and how is it used?&lt;/p&gt;
 
+&lt;p&gt;*It’s just a zip file. Unzip it.&lt;/p&gt;
+
+&lt;h3 id=&quot;tldr&quot;&gt;TLDR;&lt;/h3&gt;
+
+&lt;p&gt;Here is the RC2 rid graph:
+&lt;a href=&quot;https://github.com/dotnet/corefx/blob/v1.0.0-rc2/pkg/Microsoft.NETCore.Platforms/runtime.json&quot;&gt;https://github.com/dotnet/corefx/blob/v1.0.0-rc2/pkg/Microsoft.NETCore.Platforms/runtime.json&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
+
 &lt;p&gt;NuGet’s official documentation only comments on runtimes briefly. 
 See &lt;a href=&quot;https://docs.nuget.org/consume/projectjson-format#runtimes&quot;&gt;https://docs.nuget.org/consume/projectjson-format#runtimes&lt;/a&gt;. The documentation
 doesn’t detail how runtimes work in NuGet 3 under the hood. In this post, I’ll share
 some of the internal workings of NuGet 3 and “runtimes”.&lt;/p&gt;
-
-&lt;p&gt;*Pro-tip: on Windows, rename any *.nupkg file to *.zip and you can view the contents
-of this archive directly in File Explorer.&lt;/p&gt;
 
 &lt;h2 id=&quot;what-are-runtimes&quot;&gt;What are “runtimes”?&lt;/h2&gt;
 
@@ -86,9 +92,43 @@ a library that is compatible with Windows 7 should also be compatible with newer
 
 &lt;p&gt;NuGet can import compatible libraries using something called the “RID graph” or “runtime fallback graph”. 
 This is basically a list of all RIDs .NET Core supports, and which RIDs are compatible with each other.
-The graph definition can be found in the &lt;a href=&quot;https://github.com/dotnet/corefx/&quot;&gt;https://github.com/dotnet/corefx/&lt;/a&gt; repo.&lt;/p&gt;
+The graph definition can be found in the &lt;a href=&quot;https://github.com/dotnet/corefx/&quot;&gt;https://github.com/dotnet/corefx/&lt;/a&gt; repo. 
+The RC2 graph is found in this file:&lt;/p&gt;
 
-&lt;p&gt;I included the RID graph used for .NET Core RC2 at the bottom of this post.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/dotnet/corefx/blob/v1.0.0-rc2/pkg/Microsoft.NETCore.Platforms/runtime.json&quot;&gt;https://github.com/dotnet/corefx/blob/v1.0.0-rc2/pkg/Microsoft.NETCore.Platforms/runtime.json&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Here is a snippet from that RID graph:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;quot;runtimes&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;quot;base&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+
+        &lt;span class=&quot;nt&quot;&gt;&amp;quot;any&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;quot;#import&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;base&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+
+        &lt;span class=&quot;nt&quot;&gt;&amp;quot;win&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;quot;#import&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;any&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;quot;win-x86&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;quot;#import&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;win&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;quot;win-x64&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;quot;#import&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;win&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+
+        &lt;span class=&quot;nt&quot;&gt;&amp;quot;win7&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;quot;#import&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;win&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;quot;win7-x86&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;quot;#import&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;win7&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;win-x86&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;quot;win7-x64&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;quot;#import&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;win7&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;win-x64&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;how-is-the-rid-graph-used&quot;&gt;How is the RID graph used?&lt;/h2&gt;
 
@@ -114,12 +154,6 @@ Windows 7, 32 bit, NuGet can trace the RID graph and will fallback to the closes
 
 &lt;p&gt;The NuGet solution for this is to also include a library under the Windows 10 RID. This will override
 the Windows 7 library. NuGet only brings in the closest matching, compatible RID.&lt;/p&gt;
-
-&lt;h2 id=&quot;the-rc2-rid-graph&quot;&gt;The RC2 RID graph&lt;/h2&gt;
-
-&lt;noscript&gt;&lt;pre&gt;400: Invalid request
-&lt;/pre&gt;&lt;/noscript&gt;
-&lt;script src=&quot;https://gist.github.com/3f86d5eb5e4ec3840d630f94fbcb265e.js&quot;&gt; &lt;/script&gt;
 
 </description>
         <pubDate>Thu, 19 May 2016 08:00:00 -0700</pubDate>

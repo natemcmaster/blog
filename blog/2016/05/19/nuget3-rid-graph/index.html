@@ -107,13 +107,19 @@
 you have may have noticed that the package includes a folder named “runtimes”.
 What is the folder and how is it used?</p>
 
+<p>*It’s just a zip file. Unzip it.</p>
+
+<h3 id="tldr">TLDR;</h3>
+
+<p>Here is the RC2 rid graph:
+<a href="https://github.com/dotnet/corefx/blob/v1.0.0-rc2/pkg/Microsoft.NETCore.Platforms/runtime.json">https://github.com/dotnet/corefx/blob/v1.0.0-rc2/pkg/Microsoft.NETCore.Platforms/runtime.json</a></p>
+
+<h2 id="background">Background</h2>
+
 <p>NuGet’s official documentation only comments on runtimes briefly. 
 See <a href="https://docs.nuget.org/consume/projectjson-format#runtimes">https://docs.nuget.org/consume/projectjson-format#runtimes</a>. The documentation
 doesn’t detail how runtimes work in NuGet 3 under the hood. In this post, I’ll share
 some of the internal workings of NuGet 3 and “runtimes”.</p>
-
-<p>*Pro-tip: on Windows, rename any *.nupkg file to *.zip and you can view the contents
-of this archive directly in File Explorer.</p>
 
 <h2 id="what-are-runtimes">What are “runtimes”?</h2>
 
@@ -176,9 +182,43 @@ a library that is compatible with Windows 7 should also be compatible with newer
 
 <p>NuGet can import compatible libraries using something called the “RID graph” or “runtime fallback graph”. 
 This is basically a list of all RIDs .NET Core supports, and which RIDs are compatible with each other.
-The graph definition can be found in the <a href="https://github.com/dotnet/corefx/">https://github.com/dotnet/corefx/</a> repo.</p>
+The graph definition can be found in the <a href="https://github.com/dotnet/corefx/">https://github.com/dotnet/corefx/</a> repo. 
+The RC2 graph is found in this file:</p>
 
-<p>I included the RID graph used for .NET Core RC2 at the bottom of this post.</p>
+<p><a href="https://github.com/dotnet/corefx/blob/v1.0.0-rc2/pkg/Microsoft.NETCore.Platforms/runtime.json">https://github.com/dotnet/corefx/blob/v1.0.0-rc2/pkg/Microsoft.NETCore.Platforms/runtime.json</a></p>
+
+<p>Here is a snippet from that RID graph:</p>
+
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+    <span class="nt">&quot;runtimes&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;base&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="p">},</span>
+
+        <span class="nt">&quot;any&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;#import&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;base&quot;</span> <span class="p">]</span>
+        <span class="p">},</span>
+
+        <span class="nt">&quot;win&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;#import&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;any&quot;</span> <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;win-x86&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;#import&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;win&quot;</span> <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;win-x64&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;#import&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;win&quot;</span> <span class="p">]</span>
+        <span class="p">},</span>
+
+        <span class="nt">&quot;win7&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;#import&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;win&quot;</span> <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;win7-x86&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;#import&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;win7&quot;</span><span class="p">,</span> <span class="s2">&quot;win-x86&quot;</span> <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;win7-x64&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;#import&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;win7&quot;</span><span class="p">,</span> <span class="s2">&quot;win-x64&quot;</span> <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
 
 <h2 id="how-is-the-rid-graph-used">How is the RID graph used?</h2>
 
@@ -204,12 +244,6 @@ Windows 7, 32 bit, NuGet can trace the RID graph and will fallback to the closes
 
 <p>The NuGet solution for this is to also include a library under the Windows 10 RID. This will override
 the Windows 7 library. NuGet only brings in the closest matching, compatible RID.</p>
-
-<h2 id="the-rc2-rid-graph">The RC2 RID graph</h2>
-
-<noscript><pre>400: Invalid request
-</pre></noscript>
-<script src="https://gist.github.com/3f86d5eb5e4ec3840d630f94fbcb265e.js"> </script>
 
 
 </article>
