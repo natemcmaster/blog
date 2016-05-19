@@ -9,13 +9,20 @@ If you have ever cracked open* a NuGet package such as .NET Core's
 you have may have noticed that the package includes a folder named "runtimes".
 What is the folder and how is it used?
 
+*It's just a zip file. Unzip it.
+
+###TLDR;
+
+Here is the RC2 rid graph:
+<https://github.com/dotnet/corefx/blob/v1.0.0-rc2/pkg/Microsoft.NETCore.Platforms/runtime.json>
+
+## Background
+
 NuGet's official documentation only comments on runtimes briefly. 
 See <https://docs.nuget.org/consume/projectjson-format#runtimes>. The documentation
 doesn't detail how runtimes work in NuGet 3 under the hood. In this post, I'll share
 some of the internal workings of NuGet 3 and "runtimes". 
 
-*Pro-tip: on Windows, rename any *.nupkg file to *.zip and you can view the contents
-of this archive directly in File Explorer.
 
 ## What are "runtimes"?
 
@@ -76,9 +83,47 @@ a library that is compatible with Windows 7 should also be compatible with newer
 
 NuGet can import compatible libraries using something called the "RID graph" or "runtime fallback graph". 
 This is basically a list of all RIDs .NET Core supports, and which RIDs are compatible with each other.
-The graph definition can be found in the <https://github.com/dotnet/corefx/> repo.
+The graph definition can be found in the <https://github.com/dotnet/corefx/> repo. 
+The RC2 graph is found in this file: 
 
-I included the RID graph used for .NET Core RC2 at the bottom of this post.
+<https://github.com/dotnet/corefx/blob/v1.0.0-rc2/pkg/Microsoft.NETCore.Platforms/runtime.json>
+
+Here is a snippet from that RID graph:
+
+{% highlight json %}
+
+{
+    "runtimes": {
+        "base": {
+        },
+
+        "any": {
+            "#import": [ "base" ]
+        },
+
+        "win": {
+            "#import": [ "any" ]
+        },
+        "win-x86": {
+            "#import": [ "win" ]
+        },
+        "win-x64": {
+            "#import": [ "win" ]
+        },
+
+        "win7": {
+            "#import": [ "win" ]
+        },
+        "win7-x86": {
+            "#import": [ "win7", "win-x86" ]
+        },
+        "win7-x64": {
+            "#import": [ "win7", "win-x64" ]
+        }
+    }
+}
+
+{% endhighlight %}
 
 ## How is the RID graph used?
 
@@ -107,6 +152,3 @@ For example, what if a library that works for Windows 7 doesn't work for Windows
 The NuGet solution for this is to also include a library under the Windows 10 RID. This will override
 the Windows 7 library. NuGet only brings in the closest matching, compatible RID.
 
-## The RC2 RID graph
-
-{% gist 3f86d5eb5e4ec3840d630f94fbcb265e %}
