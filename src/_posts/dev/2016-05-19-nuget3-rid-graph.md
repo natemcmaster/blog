@@ -22,6 +22,9 @@ of this archive directly in File Explorer.
 In NuGet, "runtimes" is essential synonymous with "operating systems". Don't confuse
 this with how .NET uses the word (e.g. the .NET runtime != NuGet runtimes.)
 
+The .NET Core docs page also include an explanation of this. 
+<http://dotnet.github.io/docs/core-concepts/rid-catalog.html>
+
 ## What is a RID?
 Runtime identifier, or the specific moniker for a specific runtime. It usually includes name, version, and bitness.
 
@@ -65,14 +68,13 @@ This package contains a special file named "runtime.json" which lists dozens of 
  - "win7-x86"
  - "linuxmint.17.3"
  - "ubuntu.15.04-x64"
- - "unix"
- - "any"
- - "base"
  
 ## What is the RID graph?
 
-As you'll noticed, some of the RIDs I listed above aren't actually operating systems. (What is "any"?)
-NuGet will import all compatible libraries using something called the "RID graph" or "runtime fallback graph". 
+The RID graph is a list of "runtimes" that are compatible with each other. For example, in theory
+a library that is compatible with Windows 7 should also be compatible with newer version.
+
+NuGet can import compatible libraries using something called the "RID graph" or "runtime fallback graph". 
 This is basically a list of all RIDs .NET Core supports, and which RIDs are compatible with each other.
 The graph definition can be found in the <https://github.com/dotnet/corefx/> repo.
 
@@ -94,11 +96,16 @@ any
 base
 {% endhighlight %}
 
-
-For example,
-if I use a library that has a library under `runtimes/win/lib/*.dll` and I restore packages for 
+For example, if I use a library that has a library under `runtimes/win/lib/*.dll` and I restore packages for 
 Windows 7, 32 bit, NuGet can trace the RID graph and will fallback to the closest, most compatible RID,
- which in this case will be "win". 
+ which in this case will be "win".
+ 
+## What if my library breaks on newer operating systems?
+
+For example, what if a library that works for Windows 7 doesn't work for Windows 10?
+
+The NuGet solution for this is to also include a library under the Windows 10 RID. This will override
+the Windows 7 library. NuGet only brings in the closest matching, compatible RID.
 
 ## The RC2 RID graph
 
