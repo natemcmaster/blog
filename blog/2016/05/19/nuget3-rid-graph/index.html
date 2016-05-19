@@ -120,6 +120,9 @@ of this archive directly in File Explorer.</p>
 <p>In NuGet, “runtimes” is essential synonymous with “operating systems”. Don’t confuse
 this with how .NET uses the word (e.g. the .NET runtime != NuGet runtimes.)</p>
 
+<p>The .NET Core docs page also include an explanation of this.
+<a href="http://dotnet.github.io/docs/core-concepts/rid-catalog.html">http://dotnet.github.io/docs/core-concepts/rid-catalog.html</a></p>
+
 <h2 id="what-is-a-rid">What is a RID?</h2>
 <p>Runtime identifier, or the specific moniker for a specific runtime. It usually includes name, version, and bitness.</p>
 
@@ -164,15 +167,14 @@ In most cases, this list of runtimes will come from a special package called
   <li>“win7-x86”</li>
   <li>“linuxmint.17.3”</li>
   <li>“ubuntu.15.04-x64”</li>
-  <li>“unix”</li>
-  <li>“any”</li>
-  <li>“base”</li>
 </ul>
 
 <h2 id="what-is-the-rid-graph">What is the RID graph?</h2>
 
-<p>As you’ll noticed, some of the RIDs I listed above aren’t actually operating systems. (What is “any”?)
-NuGet will import all compatible libraries using something called the “RID graph” or “runtime fallback graph”. 
+<p>The RID graph is a list of “runtimes” that are compatible with each other. For example, in theory
+a library that is compatible with Windows 7 should also be compatible with newer version.</p>
+
+<p>NuGet can import compatible libraries using something called the “RID graph” or “runtime fallback graph”. 
 This is basically a list of all RIDs .NET Core supports, and which RIDs are compatible with each other.
 The graph definition can be found in the <a href="https://github.com/dotnet/corefx/">https://github.com/dotnet/corefx/</a> repo.</p>
 
@@ -192,10 +194,16 @@ win
 any
 base</code></pre></div>
 
-<p>For example,
-if I use a library that has a library under <code>runtimes/win/lib/*.dll</code> and I restore packages for 
+<p>For example, if I use a library that has a library under <code>runtimes/win/lib/*.dll</code> and I restore packages for 
 Windows 7, 32 bit, NuGet can trace the RID graph and will fallback to the closest, most compatible RID,
  which in this case will be “win”.</p>
+
+<h2 id="what-if-my-library-breaks-on-newer-operating-systems">What if my library breaks on newer operating systems?</h2>
+
+<p>For example, what if a library that works for Windows 7 doesn’t work for Windows 10?</p>
+
+<p>The NuGet solution for this is to also include a library under the Windows 10 RID. This will override
+the Windows 7 library. NuGet only brings in the closest matching, compatible RID.</p>
 
 <h2 id="the-rc2-rid-graph">The RC2 RID graph</h2>
 
