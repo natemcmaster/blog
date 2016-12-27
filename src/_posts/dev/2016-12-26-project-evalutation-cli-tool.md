@@ -156,6 +156,10 @@ var process = Process.Start(psi);
 process.WaitForExit();
 {% endhighlight %}
 
+**Pro-tip:** "dotnet" executable, i.e. the "muxer", is not guaranteed to be in the system PATH variable.
+You can find the muxer by using `System.AppContext`. 
+[See example implementation on GitHub.](https://github.com/aspnet/DotNetTools/blob/6f1057a7603d3ece343d265e484517ef950ada4f/shared/DotNetMuxer.cs)
+
 ## Step 4. Get target output
 
 The sample above created a target that produced a console message from MSBuild.
