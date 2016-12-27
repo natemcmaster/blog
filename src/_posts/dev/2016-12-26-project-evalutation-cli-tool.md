@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "MSBuild + .NET Core CLI Tool: Getting information about the project"
+title: "MSBuild + .NET Core CLI Tools: Getting information about the project"
 subtitle: Replacing project.json APIs with an MSBuild target
 date: 2016-12-26 6:00 PM
 hero:
@@ -10,7 +10,7 @@ hero:
 ---
 
 The .NET Core CLI 1.0.0 has a feature called "project tools extensions", often called "CLI tools".
-This are project-specific tools that are installed to extend the `dotnet` command with new verbs.
+These are project-specific, command-line tools that extend the `dotnet` command with new verbs.
 For example, users can install `Microsoft.DotNet.Watcher.Tools` to add the `dotnet watch` command.
 This post will cover an advanced topic of how to implement these tools to get information about a 
 user's project.
