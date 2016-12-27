@@ -6,6 +6,7 @@ node_modules
 
 .bundle/
 .idea/
+.vscode/
 
 build/
 .jekyll-assets-cache

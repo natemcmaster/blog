@@ -5,58 +5,46 @@ header: true
 group: navigation
 permalink: /blog/
 ---
+<div class="post-header">
+    <h1>Blog</h1>
+</div>
 <div id="page-blog">
-
   <div class="posts">
-    {% assign fp = site.posts.first %}
+    {% for post in site.posts limit:10 %}
     <div class="post">
-      <span class="post-date">{{ fp.date | date: "%b %-d, %Y" }}</span>
-      <a class="post-link" href="{{ fp.url | prepend: site.baseurl }}">
-        <h1>{{ fp.title }}</h1>
+      <span class="post-date">{{ post.date | date: "%B %-d, %Y" }}</span>
+      <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">
+        <h1 class="post-title">{{ post.title }}</h1>
       </a>
-      {% if fp.subtitle %}
-      <h2>{{ fp.subtitle }}</h2>
+      {% if post.subtitle %}
+      <h2>{{ post.subtitle }}</h2>
       {% endif %}
-{% if fp.hero %}
-      <div class="postimage hero {{fp.hero.classes}}">
-        <a href="{{ fp.url | prepend: site.baseurl }}">
-          {% if fp.hero.asset_path %}
-            <img src="{{fp.hero.asset_path | asset_path}}" alt="{{fp.hero.description}}" />
+{% if post.hero %}
+      <div class="postimage hero {{post.hero.classes}}">
+        <a href="{{ post.url | prepend: site.baseurl }}">
+          {% if post.hero.asset_path %}
+            <img src="{{post.hero.asset_path | asset_path}}" alt="{{post.hero.description}}" />
           {% else %}
-            <img src="{{fp.hero.url}}" alt="{{fp.hero.description}}" />
+            <img src="{{post.hero.url}}" alt="{{post.hero.description}}" />
           {% endif %}
         </a>
       </div>
       {% endif %}
       <div>
-        {% if fp.excerpt %}
-  {{ fp.excerpt }}
+        {% if post.excerpt %}
+  {{ post.excerpt }}
   {% else %}
-  {{ fp.content | truncatewords: 75 }}
+  {{ post.content | truncatewords: 75 }}
   {% endif %}
       </div>
       <p class="read-full">
-        <a  href="{{ fp.url | prepend: site.baseurl }}">Read full post...</a>
-      </p>
-    </div>
-    {% for post in site.posts offset:1 limit:4 %}
-    <div class="post">
-      <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
-      <h3>
-        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-      </h3>
-      <p>
-        {% if post.subtitle %}
-  {{ post.subtitle }}
-  {% elsif post.excerpt %}
-  {{ post.excerpt |truncatewords: 20 }}
-  {% endif %}
+        <a  href="{{ post.url | prepend: site.baseurl }}">Read full post...</a>
       </p>
     </div>
     {% endfor %}
   </div>
   <div>
-    <a href="{{ "/blog/archive" | prepend: site.baseurl }}">See all posts...</a>
+    <h2><a href="{{ "/blog/archive" | prepend: site.baseurl }}">See all posts...</a></h2>
   </div>
 
   <p class="rss-subscribe">

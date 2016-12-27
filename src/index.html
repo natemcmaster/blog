@@ -57,59 +57,42 @@ Feel free to write me at hello@natemcmaster.com
   <div class="page-content">
     <div class="wrap">
       <div id="page-blog">
-        {% assign fp = site.posts.first %}
+        <h2 class="blog-title">Recent Posts</h2>
+        <div class="blog-read-more">
+          <a href="{{ "/blog/" | prepend: site.baseurl }}">See all posts...</a>
+        </div>
         <div class="posts">
+        {% for post in site.posts limit:2 %}
         <div class="post">
-          <span class="post-date">{{ fp.date | date: "%b %-d, %Y" }}</span>
-          <a class="post-link" href="{{ fp.url | prepend: site.baseurl }}">
-            <h1>{{ fp.title }}</h1>
+          <span class="post-date">{{ post.date | date: "%B %-d, %Y" }}</span>
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">
+            <h1 class="font-main">{{ post.title }}</h1>
           </a>
-          {% if fp.subtitle %}
-          <h2>{{ fp.subtitle }}</h2>
+          {% if post.subtitle %}
+          <h2>{{ post.subtitle }}</h2>
           {% endif %}
-        {% if fp.hero %}
-          <div class="postimage hero {{fp.hero.classes}}">
-            <a href="{{ fp.url | prepend: site.baseurl }}">
-              {% if fp.hero.asset_path %}
-                <img src="{{fp.hero.asset_path | asset_path}}" alt="{{fp.hero.description}}" />
+        {% if post.hero %}
+          <div class="postimage hero {{post.hero.classes}}">
+            <a href="{{ post.url | prepend: site.baseurl }}">
+              {% if post.hero.asset_path %}
+                <img src="{{post.hero.asset_path | asset_path}}" alt="{{post.hero.description}}" />
               {% else %}
-                <img src="{{fp.hero.url}}" alt="{{fp.hero.description}}" />
+                <img src="{{post.hero.url}}" alt="{{post.hero.description}}" />
               {% endif %}
             </a>
           </div>
           {% endif %}
           <div>
-            {% if fp.excerpt %}
-          {{ fp.excerpt }}
+            {% if post.excerpt %}
+          {{ post.excerpt }}
           {% else %}
-          {{ fp.content | truncatewords: 75 }}
+          {{ post.content | truncatewords: 75 }}
           {% endif %}
           </div>
-          <p class="read-full">
-            <a  href="{{ fp.url | prepend: site.baseurl }}">Read full post...</a>
-          </p>
         </div>
-        {% for post in site.posts offset:1 limit:3 %}
-        <div class="post">
-          <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
-          <h3>
-            <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-          </h3>
-          <p>
-            {% if post.subtitle %}
-          {{ post.subtitle }}
-          {% elsif post.excerpt %}
-          {{ post.excerpt |truncatewords: 20 }}
-          {% endif %}
-          </p>
-        </div>
-        {% endfor %}
+      {% endfor %}
       </div>
     </div>
-      <div>
-        <a href="{{ "/blog/" | prepend: site.baseurl }}">Read more...</a>
-      </div>
-
     </div>
   </div>
   {% include footer.html %}
