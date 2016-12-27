@@ -11,14 +11,12 @@ serve:
 	@open http://localhost:4000
 	jekyll serve --watch
 
-publish: j_build
-	git --git-dir=$(DIR)/.git add --all
+commit: j_build
+	git --git-dir=$(DIR)/.git add --all build/
 	git --git-dir=$(DIR)/.git commit -m "Build `date`"
-	git --git-dir=$(DIR)/.git push
-	git add build/
 
 setup:
-	git submodule update
+	git clone https://github.com/natemcmaster/natemcmaster.github.io/ -b master build
 	npm install -g bower
 	gem install bundler
 
