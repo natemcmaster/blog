@@ -21,7 +21,7 @@
             ga('send', 'pageview');
         })(ga);
     </script>
-    <link rel="stylesheet" href="/assets/app-88cd42ee079d7be4a722d2e43744352c.css">
+    <link rel="stylesheet" href="/assets/app-527886830577906c6a5cdf7dbf4d8ee9.css">
 </head>
 
 
@@ -282,9 +282,9 @@ DbContextOptionsExtension to an instance of DbContextOptions.</p>
 
 <p><img class="emoji" title=":hammer:" alt=":hammer:" src="https://assets.github.com/images/icons/emoji/unicode/1f528.png" height="20" width="20" align="absmiddle" /> Power user note: To add a DbContextOptionsExtension to DbContextOptions,
 you must first cast DbContextOptions to IDbContextOptionsExtensions, and then use
-**IDbContextOptionsExtensions.AddOrUpdateExtension<t>()**.
+**IDbContextOptionsExtensions.AddOrUpdateExtension<T>()**.
 We require this to keep IntelliSense clean for users, but still expose
-APIs for EF provider developers.</t></p>
+APIs for EF provider developers.</T></p>
 
 <p>Example: This will help users configure a context that connects to Azure Table Storage.</p>
 

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MSBuild + .NET Core CLI Tool: Getting information about the project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Infrequent blog posts about software development, lifehacks, opinion, etc.
+">
+    <meta name="generator" content="Jekyll">
+    <meta name="author" content="Nate McMaster" comment="Surprised?">
+    <meta http-equiv="Content-Language" content="en">
+    <link rel="canonical" href="http://www.natemcmaster.com/blog/2016/12/26/project-evalutation-cli-tool/">
+    <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro|Roboto+Slab:400,300|Open+Sans:300italic,400italic,600italic,400,600,300" rel="stylesheet" type="text/css">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/assets/ga-d0c581bb05eca417d65b4df14b5d5b44.js"></script>
+    <script type="text/javascript">
+        (function (ga) {
+            ga('send', 'pageview');
+        })(ga);
+    </script>
+    <link rel="stylesheet" href="/assets/app-527886830577906c6a5cdf7dbf4d8ee9.css">
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+
+  <div class="wrap">
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon" analytics-on="click" analytics-event="menu_button">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+           viewBox="0 0 18 15" xml:space="preserve">
+          <path fill="white" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0
+            h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="white" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484
+            h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="white" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0
+            c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+      <div class="trigger">
+        
+          <a class="page-link " href="/blog/">
+          Blog
+          </a>
+        
+        
+          <a class="page-link " href="/projects/">
+          Projects
+          </a>
+        
+        
+          
+        
+          <a class="page-link " href="/profile/">
+          About Me
+          </a>
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+    <div class="brand">
+      <div class="brand-img">
+        <a href="/">
+          <img src="//www.gravatar.com/avatar/692c58f37a3704944bd31c4cbcb287e7.png?s=150" class="img-profile"></a>
+      </div>
+      <div class="brand-name">
+        <a class="site-title" href="/">Nate McMaster</a>
+      </div>
+    </div>
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+      <header class="post-header">
+  <p class="meta">Blog Post: December 26, 2016</p>
+  <h1>MSBuild + .NET Core CLI Tool: Getting information about the project</h1>
+  
+    <h2>Replacing project.json APIs with an MSBuild target</h2>
+  
+</header>
+
+<article class="post-content">
+  
+    <p class="postimage hero ">
+      
+      
+      <img src="/assets/dotnet_cli_tool_screenshot-969c58841a7161488e5327c0882f300b.png" alt=""/>
+      
+      
+    </p>
+  
+<p>The .NET Core CLI 1.0.0 has a feature called “project tools extensions”, often called “CLI tools”.
+This are project-specific tools that are installed to extend the <code>dotnet</code> command with new verbs.
+For example, users can install <code>Microsoft.DotNet.Watcher.Tools</code> to add the <code>dotnet watch</code> command.
+This post will cover an advanced topic of how to implement these tools to get information about a 
+user’s project.</p>
+
+<p>For a primer on how to create a tool, see 
+<a href="https://docs.microsoft.com/en-us/dotnet/articles/core/tools/">.NET Core command-line interface tools</a>
+on docs.microsoft.com.</p>
+
+<p>For a primer on MSBuild, see 
+<a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-concepts">MSBuild Concepts</a>
+on docs.microsoft.com.</p>
+
+<p><strong>TL;DR</strong>
+See this example: <a href="https://gist.github.com/natemcmaster/ced86a82f5faeca2d4f81fad2fdc7c04">https://gist.github.com/natemcmaster/ced86a82f5faeca2d4f81fad2fdc7c04</a></p>
+
+<h1 id="learn-by-example">Learn by example</h1>
+
+<p>For the sake of this tutorial, our goal is to create a tool called <code>dotnet-names</code>. When installed,
+a user can invoked <code>dotnet names</code> and the tool will list the assembly name, root namespace, and 
+names of target frameworks in a given project.</p>
+
+<p>Goals:</p>
+
+<ul>
+  <li>Tool must not require the user to add additional dependencies.</li>
+  <li>The tool must support MSBuild for .NET Core projects.</li>
+</ul>
+
+<h3 id="step-0-the-mental-migration-from-projectjson">Step 0. The mental migration from project.json</h3>
+
+<p>Tool authors with existing tools that read the <code>project.json</code> will already be familiar with the
+set of APIs provided in the <code>Microsoft.DotNet.ProjectModel</code> namespace. These APIs allowed a tool
+to read a project.json and discover a list of dependencies, CSharp files, target frameworks, etc.</p>
+
+<p>Migrating from these APIs requires a paradigm shift. The ‘project model’ in the project.json world
+was defined entirely by the API in <code>Microsoft.DotNet.ProjectModel</code>. In an MSBuild project, there
+is no definitive description of project behavior. Instead, MSBuild relies on well-known properties and
+items.</p>
+
+<h2 id="step-1-find-the-msbuild-project">Step 1. Find the MSBuild project</h2>
+
+<p>When a CLI tools begins, <code>Directory.GetCurrentDirectory()</code> will be the directory containing
+the user’s project file. The tool must search this directory for an MSBuild file to target.</p>
+
+<p>One method for this is to search for files ending in <code>*.*proj</code>.</p>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">DotnetNames.Tool</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">Program</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">Main</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">projectFile</span> <span class="p">=</span> <span class="n">Directory</span><span class="p">.</span><span class="n">EnumerateFiles</span><span class="p">(</span>
+                <span class="n">Directory</span><span class="p">.</span><span class="n">GetCurrentDirectory</span><span class="p">(),</span> 
+                <span class="s">&quot;*.*proj&quot;</span><span class="p">)</span>
+                <span class="p">.</span><span class="n">Where</span><span class="p">(</span><span class="n">f</span> <span class="p">=&gt;</span> <span class="p">!</span><span class="n">f</span><span class="p">.</span><span class="n">EndsWith</span><span class="p">(</span><span class="s">&quot;.xproj&quot;</span><span class="p">))</span> <span class="c1">// ignore *.xproj files</span>
+                <span class="p">.</span><span class="n">FirstOrDefault</span><span class="p">();</span>
+            
+            <span class="c1">// ...</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Another approach is to require a command line flag, such as <code>--project</code> to specified the MSBuild project file 
+to be used.</p>
+
+<p>(For an example of a more robust project finder, see dotnet-watch’s <code>MsBuildProjectFinder</code> class.
+<a href="https://github.com/aspnet/DotNetTools/blob/6f1057a7603d3ece343d265e484517ef950ada4f/src/Microsoft.DotNet.Watcher.Tools/Internal/MsBuildProjectFinder.cs">Source for MsBuildProjectFinder on GitHub.</a>)</p>
+
+<h2 id="step-2-injecting-an-msbuild-target">Step 2. Injecting an MSBuild target</h2>
+
+<p><strong>Background</strong></p>
+
+<p>Most MSBuild projects (CSharp, Visual Basic), will invoke an <code>Import</code> that brings in <code>Microsoft.Common.targets</code>.
+Microsoft.Common.targets provides an extensibility point for injecting targets into a file.</p>
+
+<p>You can read the source code for this extensibility point in the Microsoft.Common.targets file. 
+<a href="https://github.com/Microsoft/msbuild/blob/7acd48c077a4d38dcbcb3062c7ea306d10f38e5a/src/XMakeTasks/Microsoft.Common.targets#L116-L127">(Source on GitHub.)</a></p>
+
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;Import</span> <span class="na">Project=</span><span class="s">&quot;$(MSBuildProjectExtensionsPath)$(MSBuildProjectFile).*.targets&quot;</span><span class="nt">&gt;</span></code></pre></div>
+
+<p>By default, <code>MSBuildProjectExtensionsPath</code> will be the <code>obj/</code> folder next to the MSBuild project.</p>
+
+<p>(This step could also be named “abusing MSBuildProjectExtensionsPath”. This extension was originally created
+for package managers, like NuGet.)</p>
+
+<p>Comments in the source code contain this guidance:</p>
+
+<blockquote>
+  <p>Package management systems will create a file at:
+  $(MSBuildProjectExtensionsPath)$(MSBuildProjectFile).&lt;SomethingUnique&gt;.targets</p>
+</blockquote>
+
+<blockquote>
+  <p>Each package management system should use a unique moniker to avoid collisions.  It is a wild-card import so the package
+  management system can write out multiple files but the order of the import is alphabetic because MSBuild sorts the list.</p>
+</blockquote>
+
+<p><strong>Using it</strong></p>
+
+<p>To inject a target, our <code>dotnet-names</code> tool will write a file to match this glob import.</p>
+
+<p>For example, if the tool is running on <code>Web.csproj</code>, the tool would create a file named
+<code>obj/Web.csproj.dotnet-names.targets</code>.</p>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="kt">var</span> <span class="n">targetFileName</span> <span class="p">=</span> <span class="n">Path</span><span class="p">.</span><span class="n">GetFileName</span><span class="p">(</span><span class="n">projectFile</span><span class="p">)</span> <span class="p">+</span> <span class="s">&quot;.dotnet-names.targets&quot;</span><span class="p">;</span>
+<span class="kt">var</span> <span class="n">projectExtPath</span> <span class="p">=</span> <span class="n">Path</span><span class="p">.</span><span class="n">Combine</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="n">GetDirectoryName</span><span class="p">(</span><span class="n">projectFile</span><span class="p">),</span> <span class="s">&quot;obj&quot;</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">targetFile</span> <span class="p">=</span> <span class="n">Path</span><span class="p">.</span><span class="n">Combine</span><span class="p">(</span><span class="n">projectExtPath</span><span class="p">,</span> <span class="n">targetFileName</span><span class="p">);</span>
+
+<span class="n">File</span><span class="p">.</span><span class="n">WriteAllText</span><span class="p">(</span><span class="n">targetFile</span><span class="p">,</span> <span class="s">@&quot;</span>
+<span class="s">  &lt;Project&gt;</span>
+<span class="s">      &lt;Target Name=&quot;&quot;_GetDotNetNames&quot;&quot;&gt;</span>
+<span class="s">         &lt;PropertyGroup&gt;</span>
+<span class="s">            &lt;_DotNetNamesOutput&gt;</span>
+<span class="s">Assembly name: $(AssemblyName)</span>
+<span class="s">Root namespace: $(RootNamespace)</span>
+<span class="s">Target framework: $(TargetFramework)</span>
+<span class="s">            &lt;/_DotNetNamesOutput&gt;</span>
+<span class="s">         &lt;/PropertyGroup&gt;</span>
+<span class="s">         &lt;Message Importance=&quot;&quot;High&quot;&quot; Text=&quot;&quot;$(_DotNetNamesOutput)&quot;&quot; /&gt;</span>
+<span class="s">      &lt;/Target&gt;</span>
+<span class="s">  &lt;/Project&gt;</span>
+<span class="s">&quot;</span><span class="p">);</span></code></pre></div>
+
+<h2 id="step-3-invoke-the-injected-target">Step 3. Invoke the injected target</h2>
+
+<p>Now that the tool has injected the target into the user project, it can be invoked by creating
+a new process that starts MSBuild and invokes this target.</p>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="kt">var</span> <span class="n">psi</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ProcessStartInfo</span>
+<span class="p">{</span>
+    <span class="n">FileName</span> <span class="p">=</span> <span class="s">&quot;dotnet&quot;</span><span class="p">,</span>
+    <span class="n">Arguments</span> <span class="p">=</span> <span class="err">$</span><span class="s">&quot;msbuild \&quot;{projectFile}\&quot; /t:_GetDotNetNames /nologo&quot;</span>
+<span class="p">};</span>
+<span class="kt">var</span> <span class="n">process</span> <span class="p">=</span> <span class="n">Process</span><span class="p">.</span><span class="n">Start</span><span class="p">(</span><span class="n">psi</span><span class="p">);</span>
+<span class="n">process</span><span class="p">.</span><span class="n">WaitForExit</span><span class="p">();</span></code></pre></div>
+
+<h2 id="step-4-get-target-output">Step 4. Get target output</h2>
+
+<p>The sample above created a target that produced a console message from MSBuild.
+At this point, our program simply prints the output to the command line.</p>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ dotnet names
+  
+  Assembly name: My.WebApp
+  Root namespace: My.WebApp
+  Target framework: netcoreapp1.0</code></pre></div>
+
+<p>Most tools will need to something with this information beyond displaying it. As you noticed in Step 2,
+the tool are creates an MSBuild target inside the user’s project. This target can do anything MSBuild can do,
+such as producing a file that our tool can read.</p>
+
+<p>Here is updated code for a target that will produce a file for dotnet-names to read:</p>
+
+<div class="highlight"><pre><code class="language-csharp" data-lang="csharp"><span class="n">File</span><span class="p">.</span><span class="n">WriteAllText</span><span class="p">(</span><span class="n">targetFile</span><span class="p">,</span> 
+<span class="s">@&quot;&lt;Project&gt;</span>
+<span class="s">      &lt;Target Name=&quot;&quot;_GetDotNetNames&quot;&quot;&gt;</span>
+<span class="s">         &lt;ItemGroup&gt;</span>
+<span class="s">            &lt;_DotNetNamesOutput Include=&quot;&quot;AssemblyName: $(AssemblyName)&quot;&quot; /&gt;</span>
+<span class="s">            &lt;_DotNetNamesOutput Include=&quot;&quot;RootNamespace: $(RootNamespace)&quot;&quot; /&gt;</span>
+<span class="s">            &lt;_DotNetNamesOutput Include=&quot;&quot;TargetFramework: $(TargetFramework)&quot;&quot; /&gt;</span>
+<span class="s">         &lt;/ItemGroup&gt;</span>
+<span class="s">         &lt;WriteLinesToFile File=&quot;&quot;$(_DotNetNamesFile)&quot;&quot; Lines=&quot;&quot;@(_DotNetNamesOutput)&quot;&quot; Overwrite=&quot;&quot;true&quot;&quot; /&gt;</span>
+<span class="s">      &lt;/Target&gt;</span>
+<span class="s">  &lt;/Project&gt;&quot;</span><span class="p">);</span>
+
+<span class="kt">var</span> <span class="n">tmpFile</span> <span class="p">=</span> <span class="n">Path</span><span class="p">.</span><span class="n">GetTempFileName</span><span class="p">();</span>
+<span class="kt">var</span> <span class="n">psi</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ProcessStartInfo</span>
+<span class="p">{</span>
+    <span class="n">FileName</span> <span class="p">=</span> <span class="s">&quot;dotnet&quot;</span><span class="p">,</span>
+    <span class="n">Arguments</span> <span class="p">=</span> <span class="err">$</span><span class="s">&quot;msbuild \&quot;{projectFile}\&quot; /t:_GetDotNetNames /nologo \&quot;/p:_DotNetNamesFile={tmpFile}\&quot;&quot;</span>
+<span class="p">};</span>
+<span class="kt">var</span> <span class="n">process</span> <span class="p">=</span> <span class="n">Process</span><span class="p">.</span><span class="n">Start</span><span class="p">(</span><span class="n">psi</span><span class="p">);</span>
+<span class="n">process</span><span class="p">.</span><span class="n">WaitForExit</span><span class="p">();</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">process</span><span class="p">.</span><span class="n">ExitCode</span> <span class="p">!=</span> <span class="m">0</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Console</span><span class="p">.</span><span class="n">Error</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&quot;Invoking MSBuild target failed&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="m">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">var</span> <span class="n">lines</span> <span class="p">=</span> <span class="n">File</span><span class="p">.</span><span class="n">ReadAllLines</span><span class="p">(</span><span class="n">tmpFile</span><span class="p">);</span></code></pre></div>
+
+<p>This target will write a line to the file, one line for each item in the <code>_DotNetNamesOutput</code> item group.
+From here, the tool can parse the serialized file to find information it needs.</p>
+
+<h3 id="altogether">Altogether</h3>
+
+<p>See the end of this blog post for the completed app.</p>
+
+<h2 id="next-steps">Next steps</h2>
+<p>With this foundation, you can enhance the tool to gather even more information about a project.
+Here are some ways to enhance the tool.</p>
+
+<ul>
+  <li>Invoke targets in the build chain. For example, if you want to gather information about dependencies,
+your tool might invoke the target <code>ResolveDependenciesDesignTime</code>, which can identify <code>PackageReferences</code> and <code>ProjectReferences</code>.</li>
+  <li>Handle multi-targeting projects. If the property <code>TargetFrameworks</code> is set, this project is using multiple
+NuGet frameworks. Your tool target may need to invoke MSBuild multiple times internally to gather full information.</li>
+  <li>Force a compile. Invoking the target <code>Build</code> will cause the project to compile.</li>
+</ul>
+
+<h2 id="advanced-examples-of-this-technique">Advanced examples of this technique</h2>
+
+<p>See <a href="https://github.com/aspnet/DotNetTools">https://github.com/aspnet/DotNetTools</a> and <a href="https://github.com/aspnet/EntityFramework.Tools">https://github.com/aspnet/EntityFramework.Tools</a>
+for more examples of the approach explained in this blog post. <code>dotnet-user-secrets</code>, <code>dotnet-ef</code>,
+and <code>dotnet-watch</code> gather information from projects using this approach.</p>
+
+<h3 id="additional-comments">Additional comments</h3>
+
+<h4 id="direct-project-evaluation">Direct project evaluation</h4>
+
+<p>Another way to gather information about a project is to load and execute it
+using MSBuild APIs. Although it may seem like the right approach, my experience with it is that
+MSBuild APIs are difficult to use correctly. Using MSBuild API has enough negative consequences 
+that I do not recommend it. Those negative consequences include:</p>
+
+<ul>
+  <li>Assembly loading issues. You must ensure your tool will likely run into issues loading all of MSBuild’s dependencies.
+See <a href="https://github.com/Microsoft/msbuild/issues/1097">https://github.com/Microsoft/msbuild/issues/1097</a>.</li>
+  <li>Bloat. Reference MSBuild APIs means your tool effectively includes all of MSBuild and its runtime dependencies. This
+increases the disk footprint of your tool.</li>
+  <li>Assembly conflicts. If your tool needs to load an assembly that is also used by MSBuild or its commonly imported extensions,
+it is likely your tool will trample the SDK’s version and cause assembly load errors. Common example: JSON.NET is included
+in the MSBuild SDK because NuGet references it.</li>
+</ul>
+
+<p>But if you still wish to persue this, s simple example of this has already been implemented 
+by Simone Chiaretta in his tool <code>dotnet-prop</code>. See <a href="https://github.com/simonech/dotnet-prop">https://github.com/simonech/dotnet-prop</a>.</p>
+
+<h4 id="modifying-the-project">Modifying the project</h4>
+
+<p>This method demonstrates a read-only approach to working with a project. To manipulate a project file,
+your tool will need to use the MSBuild construction APIs. This is beyond the scope of this blog post.</p>
+
+<h2 id="completed-example">Completed example</h2>
+
+<p>Here is the code for the completed <code>dotnet-names</code> tool.</p>
+
+<noscript><pre>using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Diagnostics;
+
+namespace DotnetNames.Tool
+{
+    class Program
+    {
+        public static int Main()
+        {
+            var projectFile = Directory.EnumerateFiles(
+                Directory.GetCurrentDirectory(),
+                &quot;*.*proj&quot;)
+                .Where(f =&gt; !f.EndsWith(&quot;.xproj&quot;)) // filter xproj files, which are MSBuild meta-projects
+                .FirstOrDefault();
+
+            var targetFileName = Path.GetFileName(projectFile) + &quot;.dotnet-names.targets&quot;;
+            var projectExtPath = Path.Combine(Path.GetDirectoryName(projectFile), &quot;obj&quot;);
+            var targetFile = Path.Combine(projectExtPath, targetFileName);
+
+            File.WriteAllText(targetFile,
+@&quot;&lt;Project&gt;
+      &lt;Target Name=&quot;&quot;_GetDotNetNames&quot;&quot;&gt;
+         &lt;ItemGroup&gt;
+            &lt;_DotNetNamesOutput Include=&quot;&quot;AssemblyName: $(AssemblyName)&quot;&quot; /&gt;
+            &lt;_DotNetNamesOutput Include=&quot;&quot;RootNamespace: $(RootNamespace)&quot;&quot; /&gt;
+            &lt;_DotNetNamesOutput Include=&quot;&quot;TargetFramework: $(TargetFramework)&quot;&quot; /&gt;
+            &lt;_DotNetNamesOutput Include=&quot;&quot;TargetFrameworks: $(TargetFrameworks)&quot;&quot; /&gt;
+         &lt;/ItemGroup&gt;
+         &lt;WriteLinesToFile File=&quot;&quot;$(_DotNetNamesFile)&quot;&quot; Lines=&quot;&quot;@(_DotNetNamesOutput)&quot;&quot; Overwrite=&quot;&quot;true&quot;&quot; /&gt;
+      &lt;/Target&gt;
+  &lt;/Project&gt;&quot;);
+
+            var tmpFile = Path.GetTempFileName();
+            var psi = new ProcessStartInfo
+            {
+                FileName = &quot;dotnet&quot;,
+                Arguments = $&quot;msbuild \&quot;{projectFile}\&quot; /t:_GetDotNetNames /nologo \&quot;/p:_DotNetNamesFile={tmpFile}\&quot;&quot;
+            };
+            var process = Process.Start(psi);
+            process.WaitForExit();
+            if (process.ExitCode != 0)
+            {
+                Console.Error.WriteLine(&quot;Invoking MSBuild target failed&quot;);
+                return 1;
+            }
+
+            var lines = File.ReadAllLines(tmpFile);
+            File.Delete(tmpFile); // cleanup
+
+            var properties = new Dictionary&lt;string, string&gt;(StringComparer.OrdinalIgnoreCase);
+            foreach (var line in lines)
+            {
+                var idx = line.IndexOf(&#39;:&#39;);
+                if (idx &lt;= 0) continue;
+                var name = line.Substring(0, idx)?.Trim();
+                var value = line.Substring(idx + 1)?.Trim();
+                properties.Add(name, value);
+            }
+
+            Console.WriteLine($&quot;Found {properties.Count} properties&quot;);
+            Console.WriteLine($&quot;Assembly name = { properties[&quot;AssemblyName&quot;] }&quot;);
+            Console.WriteLine($&quot;Root namespace = { properties[&quot;RootNamespace&quot;] }&quot;);
+
+            if (properties.TryGetValue(&quot;TargetFramework&quot;, out var framework) 
+                &amp;&amp; !string.IsNullOrEmpty(framework))
+            {
+                Console.WriteLine($&quot;Target framework = {framework}&quot;);
+            }
+
+            if (properties.TryGetValue(&quot;TargetFrameworks&quot;, out var tfms) 
+                &amp;&amp; !string.IsNullOrEmpty(tfms))
+            {
+                Console.WriteLine(&quot;Target frameworks = &quot;);
+                foreach (var tfm in tfms.Split(new[] { &#39;;&#39; }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    Console.WriteLine($&quot;   - {tfm}&quot;);
+                }
+            }
+            
+            return process.ExitCode;
+        }
+    }
+}</pre></noscript>
+<script src="https://gist.github.com/natemcmaster/ced86a82f5faeca2d4f81fad2fdc7c04.js?file=Program.cs"> </script>
+
+
+</article>
+<div class="comments">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'nmblog8'; // required: replace example with your forum shortname
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+</div>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrap">
+
+  <div class="vcard">
+    <h4 class="fn">Nate McMaster</h4>
+  </div>
+
+    <div class="footer-col-1 column">
+      <div>
+        <a href="mailto:" analytics-on="click" analytics-event="email" rel=""></a>
+      </div>
+      <div class="footer-icons">
+          
+            <a href="https://github.com/natemcmaster" analytics-on="click" analytics-event="outbound" analytics-label="github_profile">
+              <span class="icon-github"></span>
+            </a>
+          
+            <a href="https://twitter.com/natemcmaster" analytics-on="click" analytics-event="outbound" analytics-label="twitter_profile">
+              <span class="icon-twitter"></span>
+            </a>
+          
+           <a href="https://www.linkedin.com/in/natemcmaster" analytics-on="click" analytics-event="outbound" analytics-label="linkedin_profile">
+            <span class="icon-linkedin"></span>
+            </a>
+          
+      </div>
+    </div>
+
+
+    <div class="footer-col-3 column">
+      <p class="text">Infrequent blog posts about software development, lifehacks, opinion, etc.
+Disclaimer: Thoughts and opinions are my own.</p>
+    </div>
+
+  </div>
+
+</footer>
+
+
+    </body>
+</html>

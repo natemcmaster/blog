@@ -6,9 +6,349 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 19 May 2016 01:12:29 -0700</pubDate>
-    <lastBuildDate>Thu, 19 May 2016 01:12:29 -0700</lastBuildDate>
+    <pubDate>Mon, 26 Dec 2016 18:40:47 -0800</pubDate>
+    <lastBuildDate>Mon, 26 Dec 2016 18:40:47 -0800</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>MSBuild + .NET Core CLI Tool: Getting information about the project</title>
+        <description>&lt;p&gt;The .NET Core CLI 1.0.0 has a feature called “project tools extensions”, often called “CLI tools”.
+This are project-specific tools that are installed to extend the &lt;code&gt;dotnet&lt;/code&gt; command with new verbs.
+For example, users can install &lt;code&gt;Microsoft.DotNet.Watcher.Tools&lt;/code&gt; to add the &lt;code&gt;dotnet watch&lt;/code&gt; command.
+This post will cover an advanced topic of how to implement these tools to get information about a 
+user’s project.&lt;/p&gt;
+
+&lt;p&gt;For a primer on how to create a tool, see 
+&lt;a href=&quot;https://docs.microsoft.com/en-us/dotnet/articles/core/tools/&quot;&gt;.NET Core command-line interface tools&lt;/a&gt;
+on docs.microsoft.com.&lt;/p&gt;
+
+&lt;p&gt;For a primer on MSBuild, see 
+&lt;a href=&quot;https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-concepts&quot;&gt;MSBuild Concepts&lt;/a&gt;
+on docs.microsoft.com.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt;
+See this example: &lt;a href=&quot;https://gist.github.com/natemcmaster/ced86a82f5faeca2d4f81fad2fdc7c04&quot;&gt;https://gist.github.com/natemcmaster/ced86a82f5faeca2d4f81fad2fdc7c04&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;learn-by-example&quot;&gt;Learn by example&lt;/h1&gt;
+
+&lt;p&gt;For the sake of this tutorial, our goal is to create a tool called &lt;code&gt;dotnet-names&lt;/code&gt;. When installed,
+a user can invoked &lt;code&gt;dotnet names&lt;/code&gt; and the tool will list the assembly name, root namespace, and 
+names of target frameworks in a given project.&lt;/p&gt;
+
+&lt;p&gt;Goals:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Tool must not require the user to add additional dependencies.&lt;/li&gt;
+  &lt;li&gt;The tool must support MSBuild for .NET Core projects.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;step-0-the-mental-migration-from-projectjson&quot;&gt;Step 0. The mental migration from project.json&lt;/h3&gt;
+
+&lt;p&gt;Tool authors with existing tools that read the &lt;code&gt;project.json&lt;/code&gt; will already be familiar with the
+set of APIs provided in the &lt;code&gt;Microsoft.DotNet.ProjectModel&lt;/code&gt; namespace. These APIs allowed a tool
+to read a project.json and discover a list of dependencies, CSharp files, target frameworks, etc.&lt;/p&gt;
+
+&lt;p&gt;Migrating from these APIs requires a paradigm shift. The ‘project model’ in the project.json world
+was defined entirely by the API in &lt;code&gt;Microsoft.DotNet.ProjectModel&lt;/code&gt;. In an MSBuild project, there
+is no definitive description of project behavior. Instead, MSBuild relies on well-known properties and
+items.&lt;/p&gt;
+
+&lt;h2 id=&quot;step-1-find-the-msbuild-project&quot;&gt;Step 1. Find the MSBuild project&lt;/h2&gt;
+
+&lt;p&gt;When a CLI tools begins, &lt;code&gt;Directory.GetCurrentDirectory()&lt;/code&gt; will be the directory containing
+the user’s project file. The tool must search this directory for an MSBuild file to target.&lt;/p&gt;
+
+&lt;p&gt;One method for this is to search for files ending in &lt;code&gt;*.*proj&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;System.IO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;System.Linq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;DotnetNames.Tool&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Program&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;projectFile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Directory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;EnumerateFiles&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;Directory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetCurrentDirectory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; 
+                &lt;span class=&quot;s&quot;&gt;&amp;quot;*.*proj&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Where&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;EndsWith&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;.xproj&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// ignore *.xproj files&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FirstOrDefault&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+            
+            &lt;span class=&quot;c1&quot;&gt;// ...&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Another approach is to require a command line flag, such as &lt;code&gt;--project&lt;/code&gt; to specified the MSBuild project file 
+to be used.&lt;/p&gt;
+
+&lt;p&gt;(For an example of a more robust project finder, see dotnet-watch’s &lt;code&gt;MsBuildProjectFinder&lt;/code&gt; class.
+&lt;a href=&quot;https://github.com/aspnet/DotNetTools/blob/6f1057a7603d3ece343d265e484517ef950ada4f/src/Microsoft.DotNet.Watcher.Tools/Internal/MsBuildProjectFinder.cs&quot;&gt;Source for MsBuildProjectFinder on GitHub.&lt;/a&gt;)&lt;/p&gt;
+
+&lt;h2 id=&quot;step-2-injecting-an-msbuild-target&quot;&gt;Step 2. Injecting an MSBuild target&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Background&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Most MSBuild projects (CSharp, Visual Basic), will invoke an &lt;code&gt;Import&lt;/code&gt; that brings in &lt;code&gt;Microsoft.Common.targets&lt;/code&gt;.
+Microsoft.Common.targets provides an extensibility point for injecting targets into a file.&lt;/p&gt;
+
+&lt;p&gt;You can read the source code for this extensibility point in the Microsoft.Common.targets file. 
+&lt;a href=&quot;https://github.com/Microsoft/msbuild/blob/7acd48c077a4d38dcbcb3062c7ea306d10f38e5a/src/XMakeTasks/Microsoft.Common.targets#L116-L127&quot;&gt;(Source on GitHub.)&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;Import&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Project=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;$(MSBuildProjectExtensionsPath)$(MSBuildProjectFile).*.targets&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;By default, &lt;code&gt;MSBuildProjectExtensionsPath&lt;/code&gt; will be the &lt;code&gt;obj/&lt;/code&gt; folder next to the MSBuild project.&lt;/p&gt;
+
+&lt;p&gt;(This step could also be named “abusing MSBuildProjectExtensionsPath”. This extension was originally created
+for package managers, like NuGet.)&lt;/p&gt;
+
+&lt;p&gt;Comments in the source code contain this guidance:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Package management systems will create a file at:
+  $(MSBuildProjectExtensionsPath)$(MSBuildProjectFile).&amp;lt;SomethingUnique&amp;gt;.targets&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Each package management system should use a unique moniker to avoid collisions.  It is a wild-card import so the package
+  management system can write out multiple files but the order of the import is alphabetic because MSBuild sorts the list.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Using it&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;To inject a target, our &lt;code&gt;dotnet-names&lt;/code&gt; tool will write a file to match this glob import.&lt;/p&gt;
+
+&lt;p&gt;For example, if the tool is running on &lt;code&gt;Web.csproj&lt;/code&gt;, the tool would create a file named
+&lt;code&gt;obj/Web.csproj.dotnet-names.targets&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;targetFileName&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetFileName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;projectFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;.dotnet-names.targets&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;projectExtPath&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetDirectoryName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;projectFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;obj&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;targetFile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;projectExtPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;targetFileName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WriteAllText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;targetFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;@&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;  &amp;lt;Project&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;      &amp;lt;Target Name=&amp;quot;&amp;quot;_GetDotNetNames&amp;quot;&amp;quot;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;         &amp;lt;PropertyGroup&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;            &amp;lt;_DotNetNamesOutput&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;Assembly name: $(AssemblyName)&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;Root namespace: $(RootNamespace)&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;Target framework: $(TargetFramework)&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;            &amp;lt;/_DotNetNamesOutput&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;         &amp;lt;/PropertyGroup&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;         &amp;lt;Message Importance=&amp;quot;&amp;quot;High&amp;quot;&amp;quot; Text=&amp;quot;&amp;quot;$(_DotNetNamesOutput)&amp;quot;&amp;quot; /&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;      &amp;lt;/Target&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;  &amp;lt;/Project&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;step-3-invoke-the-injected-target&quot;&gt;Step 3. Invoke the injected target&lt;/h2&gt;
+
+&lt;p&gt;Now that the tool has injected the target into the user project, it can be invoked by creating
+a new process that starts MSBuild and invokes this target.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;psi&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ProcessStartInfo&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FileName&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;dotnet&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Arguments&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;msbuild \&amp;quot;{projectFile}\&amp;quot; /t:_GetDotNetNames /nologo&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;process&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;psi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WaitForExit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;step-4-get-target-output&quot;&gt;Step 4. Get target output&lt;/h2&gt;
+
+&lt;p&gt;The sample above created a target that produced a console message from MSBuild.
+At this point, our program simply prints the output to the command line.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ dotnet names
+  
+  Assembly name: My.WebApp
+  Root namespace: My.WebApp
+  Target framework: netcoreapp1.0&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Most tools will need to something with this information beyond displaying it. As you noticed in Step 2,
+the tool are creates an MSBuild target inside the user’s project. This target can do anything MSBuild can do,
+such as producing a file that our tool can read.&lt;/p&gt;
+
+&lt;p&gt;Here is updated code for a target that will produce a file for dotnet-names to read:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;n&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WriteAllText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;targetFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+&lt;span class=&quot;s&quot;&gt;@&amp;quot;&amp;lt;Project&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;      &amp;lt;Target Name=&amp;quot;&amp;quot;_GetDotNetNames&amp;quot;&amp;quot;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;         &amp;lt;ItemGroup&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;            &amp;lt;_DotNetNamesOutput Include=&amp;quot;&amp;quot;AssemblyName: $(AssemblyName)&amp;quot;&amp;quot; /&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;            &amp;lt;_DotNetNamesOutput Include=&amp;quot;&amp;quot;RootNamespace: $(RootNamespace)&amp;quot;&amp;quot; /&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;            &amp;lt;_DotNetNamesOutput Include=&amp;quot;&amp;quot;TargetFramework: $(TargetFramework)&amp;quot;&amp;quot; /&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;         &amp;lt;/ItemGroup&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;         &amp;lt;WriteLinesToFile File=&amp;quot;&amp;quot;$(_DotNetNamesFile)&amp;quot;&amp;quot; Lines=&amp;quot;&amp;quot;@(_DotNetNamesOutput)&amp;quot;&amp;quot; Overwrite=&amp;quot;&amp;quot;true&amp;quot;&amp;quot; /&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;      &amp;lt;/Target&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;  &amp;lt;/Project&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tmpFile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetTempFileName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;psi&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ProcessStartInfo&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FileName&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;dotnet&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Arguments&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;msbuild \&amp;quot;{projectFile}\&amp;quot; /t:_GetDotNetNames /nologo \&amp;quot;/p:_DotNetNamesFile={tmpFile}\&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;process&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;psi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WaitForExit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ExitCode&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WriteLine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Invoking MSBuild target failed&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReadAllLines&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tmpFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This target will write a line to the file, one line for each item in the &lt;code&gt;_DotNetNamesOutput&lt;/code&gt; item group.
+From here, the tool can parse the serialized file to find information it needs.&lt;/p&gt;
+
+&lt;h3 id=&quot;altogether&quot;&gt;Altogether&lt;/h3&gt;
+
+&lt;p&gt;See the end of this blog post for the completed app.&lt;/p&gt;
+
+&lt;h2 id=&quot;next-steps&quot;&gt;Next steps&lt;/h2&gt;
+&lt;p&gt;With this foundation, you can enhance the tool to gather even more information about a project.
+Here are some ways to enhance the tool.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Invoke targets in the build chain. For example, if you want to gather information about dependencies,
+your tool might invoke the target &lt;code&gt;ResolveDependenciesDesignTime&lt;/code&gt;, which can identify &lt;code&gt;PackageReferences&lt;/code&gt; and &lt;code&gt;ProjectReferences&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Handle multi-targeting projects. If the property &lt;code&gt;TargetFrameworks&lt;/code&gt; is set, this project is using multiple
+NuGet frameworks. Your tool target may need to invoke MSBuild multiple times internally to gather full information.&lt;/li&gt;
+  &lt;li&gt;Force a compile. Invoking the target &lt;code&gt;Build&lt;/code&gt; will cause the project to compile.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;advanced-examples-of-this-technique&quot;&gt;Advanced examples of this technique&lt;/h2&gt;
+
+&lt;p&gt;See &lt;a href=&quot;https://github.com/aspnet/DotNetTools&quot;&gt;https://github.com/aspnet/DotNetTools&lt;/a&gt; and &lt;a href=&quot;https://github.com/aspnet/EntityFramework.Tools&quot;&gt;https://github.com/aspnet/EntityFramework.Tools&lt;/a&gt;
+for more examples of the approach explained in this blog post. &lt;code&gt;dotnet-user-secrets&lt;/code&gt;, &lt;code&gt;dotnet-ef&lt;/code&gt;,
+and &lt;code&gt;dotnet-watch&lt;/code&gt; gather information from projects using this approach.&lt;/p&gt;
+
+&lt;h3 id=&quot;additional-comments&quot;&gt;Additional comments&lt;/h3&gt;
+
+&lt;h4 id=&quot;direct-project-evaluation&quot;&gt;Direct project evaluation&lt;/h4&gt;
+
+&lt;p&gt;Another way to gather information about a project is to load and execute it
+using MSBuild APIs. Although it may seem like the right approach, my experience with it is that
+MSBuild APIs are difficult to use correctly. Using MSBuild API has enough negative consequences 
+that I do not recommend it. Those negative consequences include:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Assembly loading issues. You must ensure your tool will likely run into issues loading all of MSBuild’s dependencies.
+See &lt;a href=&quot;https://github.com/Microsoft/msbuild/issues/1097&quot;&gt;https://github.com/Microsoft/msbuild/issues/1097&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;Bloat. Reference MSBuild APIs means your tool effectively includes all of MSBuild and its runtime dependencies. This
+increases the disk footprint of your tool.&lt;/li&gt;
+  &lt;li&gt;Assembly conflicts. If your tool needs to load an assembly that is also used by MSBuild or its commonly imported extensions,
+it is likely your tool will trample the SDK’s version and cause assembly load errors. Common example: JSON.NET is included
+in the MSBuild SDK because NuGet references it.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;But if you still wish to persue this, s simple example of this has already been implemented 
+by Simone Chiaretta in his tool &lt;code&gt;dotnet-prop&lt;/code&gt;. See &lt;a href=&quot;https://github.com/simonech/dotnet-prop&quot;&gt;https://github.com/simonech/dotnet-prop&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;modifying-the-project&quot;&gt;Modifying the project&lt;/h4&gt;
+
+&lt;p&gt;This method demonstrates a read-only approach to working with a project. To manipulate a project file,
+your tool will need to use the MSBuild construction APIs. This is beyond the scope of this blog post.&lt;/p&gt;
+
+&lt;h2 id=&quot;completed-example&quot;&gt;Completed example&lt;/h2&gt;
+
+&lt;p&gt;Here is the code for the completed &lt;code&gt;dotnet-names&lt;/code&gt; tool.&lt;/p&gt;
+
+&lt;noscript&gt;&lt;pre&gt;using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Diagnostics;
+
+namespace DotnetNames.Tool
+{
+    class Program
+    {
+        public static int Main()
+        {
+            var projectFile = Directory.EnumerateFiles(
+                Directory.GetCurrentDirectory(),
+                &amp;quot;*.*proj&amp;quot;)
+                .Where(f =&amp;gt; !f.EndsWith(&amp;quot;.xproj&amp;quot;)) // filter xproj files, which are MSBuild meta-projects
+                .FirstOrDefault();
+
+            var targetFileName = Path.GetFileName(projectFile) + &amp;quot;.dotnet-names.targets&amp;quot;;
+            var projectExtPath = Path.Combine(Path.GetDirectoryName(projectFile), &amp;quot;obj&amp;quot;);
+            var targetFile = Path.Combine(projectExtPath, targetFileName);
+
+            File.WriteAllText(targetFile,
+@&amp;quot;&amp;lt;Project&amp;gt;
+      &amp;lt;Target Name=&amp;quot;&amp;quot;_GetDotNetNames&amp;quot;&amp;quot;&amp;gt;
+         &amp;lt;ItemGroup&amp;gt;
+            &amp;lt;_DotNetNamesOutput Include=&amp;quot;&amp;quot;AssemblyName: $(AssemblyName)&amp;quot;&amp;quot; /&amp;gt;
+            &amp;lt;_DotNetNamesOutput Include=&amp;quot;&amp;quot;RootNamespace: $(RootNamespace)&amp;quot;&amp;quot; /&amp;gt;
+            &amp;lt;_DotNetNamesOutput Include=&amp;quot;&amp;quot;TargetFramework: $(TargetFramework)&amp;quot;&amp;quot; /&amp;gt;
+            &amp;lt;_DotNetNamesOutput Include=&amp;quot;&amp;quot;TargetFrameworks: $(TargetFrameworks)&amp;quot;&amp;quot; /&amp;gt;
+         &amp;lt;/ItemGroup&amp;gt;
+         &amp;lt;WriteLinesToFile File=&amp;quot;&amp;quot;$(_DotNetNamesFile)&amp;quot;&amp;quot; Lines=&amp;quot;&amp;quot;@(_DotNetNamesOutput)&amp;quot;&amp;quot; Overwrite=&amp;quot;&amp;quot;true&amp;quot;&amp;quot; /&amp;gt;
+      &amp;lt;/Target&amp;gt;
+  &amp;lt;/Project&amp;gt;&amp;quot;);
+
+            var tmpFile = Path.GetTempFileName();
+            var psi = new ProcessStartInfo
+            {
+                FileName = &amp;quot;dotnet&amp;quot;,
+                Arguments = $&amp;quot;msbuild \&amp;quot;{projectFile}\&amp;quot; /t:_GetDotNetNames /nologo \&amp;quot;/p:_DotNetNamesFile={tmpFile}\&amp;quot;&amp;quot;
+            };
+            var process = Process.Start(psi);
+            process.WaitForExit();
+            if (process.ExitCode != 0)
+            {
+                Console.Error.WriteLine(&amp;quot;Invoking MSBuild target failed&amp;quot;);
+                return 1;
+            }
+
+            var lines = File.ReadAllLines(tmpFile);
+            File.Delete(tmpFile); // cleanup
+
+            var properties = new Dictionary&amp;lt;string, string&amp;gt;(StringComparer.OrdinalIgnoreCase);
+            foreach (var line in lines)
+            {
+                var idx = line.IndexOf(&amp;#39;:&amp;#39;);
+                if (idx &amp;lt;= 0) continue;
+                var name = line.Substring(0, idx)?.Trim();
+                var value = line.Substring(idx + 1)?.Trim();
+                properties.Add(name, value);
+            }
+
+            Console.WriteLine($&amp;quot;Found {properties.Count} properties&amp;quot;);
+            Console.WriteLine($&amp;quot;Assembly name = { properties[&amp;quot;AssemblyName&amp;quot;] }&amp;quot;);
+            Console.WriteLine($&amp;quot;Root namespace = { properties[&amp;quot;RootNamespace&amp;quot;] }&amp;quot;);
+
+            if (properties.TryGetValue(&amp;quot;TargetFramework&amp;quot;, out var framework) 
+                &amp;amp;&amp;amp; !string.IsNullOrEmpty(framework))
+            {
+                Console.WriteLine($&amp;quot;Target framework = {framework}&amp;quot;);
+            }
+
+            if (properties.TryGetValue(&amp;quot;TargetFrameworks&amp;quot;, out var tfms) 
+                &amp;amp;&amp;amp; !string.IsNullOrEmpty(tfms))
+            {
+                Console.WriteLine(&amp;quot;Target frameworks = &amp;quot;);
+                foreach (var tfm in tfms.Split(new[] { &amp;#39;;&amp;#39; }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    Console.WriteLine($&amp;quot;   - {tfm}&amp;quot;);
+                }
+            }
+            
+            return process.ExitCode;
+        }
+    }
+}&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/natemcmaster/ced86a82f5faeca2d4f81fad2fdc7c04.js?file=Program.cs&quot;&gt; &lt;/script&gt;
+
+</description>
+        <pubDate>Mon, 26 Dec 2016 18:00:00 -0800</pubDate>
+        <link>http://www.natemcmaster.com/blog/2016/12/26/project-evalutation-cli-tool/</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2016/12/26/project-evalutation-cli-tool/</guid>
+        
+        
+      </item>
     
       <item>
         <title>NuGet 3: The Runtime ID Graph</title>
@@ -556,23 +896,6 @@ brew install kvm
         <pubDate>Sun, 01 Mar 2015 08:00:00 -0800</pubDate>
         <link>http://www.natemcmaster.com/blog/2015/03/01/blogging-with-jekyll/</link>
         <guid isPermaLink="true">http://www.natemcmaster.com/blog/2015/03/01/blogging-with-jekyll/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>The Empire Reboots</title>
-        <description>&lt;p&gt;Although I have only worked for Microsoft as an intern, there was a noticeable difference between the first summer (Ballmer Dynasty) and the second (Nadella Era). Part of that difference was a more innovative atmosphere among leaders and fellow devs. Can Satya turn around the decline of Microsoft? I have no crystal ball, but his leadership is a step in the right direction.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;(Satya Nadella) looks the part of a modern technology C.E.O., certainly more than Gates does now or than Ballmer ever did. In Apple’s famous 2006 commercial, in which the staid, uninteresting guy is the P.C. and the hip, cool one is the Mac, Nadella would play the Mac. He is fit, with closely cropped hair. He wears black-rimmed glasses and has even been seen in a hoodie. In his short tenure, he has already used a metaphor with overtones of Zen to explain to the troops what he wants (“a team of rowers working together at the highest level”). One of the reasons the board chose him, according to someone familiar with the process, was that he was an “insider who had the best of what an outsider could bring.” He actually talks to people outside the company, from competitors to venture capitalists. This is unusual in a company that people describe as insular. “You talk about the rise and fall of empires or families or anything; being insular is the best way to sort of kill yourself,” says Nadella.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.vanityfair.com/business/2014/11/satya-nadella-bill-gates-steve-ballmer-microsoft&quot;&gt;The Empire Reboots&lt;/a&gt; from Vanity Fair. ■&lt;/p&gt;
-</description>
-        <pubDate>Wed, 08 Oct 2014 00:00:00 -0700</pubDate>
-        <link>http://www.natemcmaster.com/blog/2014/10/08/vanity-fair-microsoft-reboot/</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2014/10/08/vanity-fair-microsoft-reboot/</guid>
         
         
       </item>
