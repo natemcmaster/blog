@@ -6,8 +6,8 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 26 Dec 2016 21:20:09 -0800</pubDate>
-    <lastBuildDate>Mon, 26 Dec 2016 21:20:09 -0800</lastBuildDate>
+    <pubDate>Tue, 27 Dec 2016 07:06:04 -0800</pubDate>
+    <lastBuildDate>Tue, 27 Dec 2016 07:06:04 -0800</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -153,6 +153,10 @@ a new process that starts MSBuild and invokes this target.&lt;/p&gt;
 &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
 &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;process&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;psi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WaitForExit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Pro-tip:&lt;/strong&gt; “dotnet” executable, i.e. the “muxer”, is not guaranteed to be in the system PATH variable.
+You can find the muxer by using &lt;code&gt;System.AppContext&lt;/code&gt;. 
+&lt;a href=&quot;https://github.com/aspnet/DotNetTools/blob/6f1057a7603d3ece343d265e484517ef950ada4f/shared/DotNetMuxer.cs&quot;&gt;See example implementation on GitHub.&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;step-4-get-target-output&quot;&gt;Step 4. Get target output&lt;/h2&gt;
 
