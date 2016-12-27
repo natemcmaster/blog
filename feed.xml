@@ -6,14 +6,14 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 26 Dec 2016 18:40:47 -0800</pubDate>
-    <lastBuildDate>Mon, 26 Dec 2016 18:40:47 -0800</lastBuildDate>
+    <pubDate>Mon, 26 Dec 2016 21:20:09 -0800</pubDate>
+    <lastBuildDate>Mon, 26 Dec 2016 21:20:09 -0800</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
-        <title>MSBuild + .NET Core CLI Tool: Getting information about the project</title>
+        <title>MSBuild + .NET Core CLI Tools: Getting information about the project</title>
         <description>&lt;p&gt;The .NET Core CLI 1.0.0 has a feature called “project tools extensions”, often called “CLI tools”.
-This are project-specific tools that are installed to extend the &lt;code&gt;dotnet&lt;/code&gt; command with new verbs.
+These are project-specific, command-line tools that extend the &lt;code&gt;dotnet&lt;/code&gt; command with new verbs.
 For example, users can install &lt;code&gt;Microsoft.DotNet.Watcher.Tools&lt;/code&gt; to add the &lt;code&gt;dotnet watch&lt;/code&gt; command.
 This post will cover an advanced topic of how to implement these tools to get information about a 
 user’s project.&lt;/p&gt;
