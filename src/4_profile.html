@@ -8,35 +8,42 @@ permalink: /profile/
 <div class="post-header">
     <h1>About Me</h1>
 </div>
-<div class="post-content">
-    <p>
-        {% image selfie_orcas_island.jpg %}
-    </p>
-    <p>If you are interested in <a href="{{ site.baseurl }}/resume/">my résumé</a>, you can also get a <a href="{{ site.baseurl }}/resume/">web</a> and <a href="{% asset_path resume.pdf %}">print</a> version.</p>
-    <h2>@natemcmaster</h2>
-    <p>Feel free to reach out and connect with me on social media</p>
-    {% if site.github_username %}
-    <p>
-        <a href="https://github.com/{{ site.github_username }}">
-            <span class="icon-github"></span>
-            GitHub
-        </a>
-    </p>
-    {% endif %}
-          {% if site.twitter_username %}
-    <p>
-        <a href="https://twitter.com/{{ site.twitter_username }}">
-            <span class="icon-twitter"></span>
-            Twitter
-        </a>
-    </p>
-    {% endif %}
-          {% if site.linkedin_username %}
-    <p>
-        <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}">
-            <span class="icon-linkedin"></span>
-            LinkedIn
-        </a>
-    </p>
-    {% endif %}
+<div class="post-content" id="page-about-me">
+    <div>
+        {% image selfie_orcas_island.jpg id:'img-selfie-orcas' %}
+        <p>
+            My wife, Jenna, and I live in the Pacific Northwest.
+            By profession, I'm a software engineer, which is what my blog and 
+            this website are mostly about.
+        </p>
+    </div>
+    <div id="professional">
+        <h2>@natemcmaster</h2>
+        <p>If you are interested in <a href="{{ site.baseurl }}/resume/">my résumé</a>, you can also get a <a href="{{ site.baseurl }}/resume/">web</a> and <a href="{% asset_path resume.pdf %}">print</a> version.</p>
+        <p>Feel free to reach out and connect with me on social media</p>
+        {% if site.github_username %}
+        <p>
+            <a href="https://github.com/{{ site.github_username }}">
+                <span class="icon-github"></span>
+                GitHub
+            </a>
+        </p>
+        {% endif %}
+            {% if site.twitter_username %}
+        <p>
+            <a href="https://twitter.com/{{ site.twitter_username }}">
+                <span class="icon-twitter"></span>
+                Twitter
+            </a>
+        </p>
+        {% endif %}
+            {% if site.linkedin_username %}
+        <p>
+            <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}">
+                <span class="icon-linkedin"></span>
+                LinkedIn
+            </a>
+        </p>
+        {% endif %}
+    </div>
 </div>
