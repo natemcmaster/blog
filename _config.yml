@@ -22,22 +22,25 @@ sass:
 gems:
     - jekyll-assets
     - jekyll-sitemap
+    - jekyll-gist
     - jemoji
-    - compass
     - jekyll-redirect-from
 assets:
-    cache: true
-    js_compressor: no_mangle_uglifier
-    css_compressor: sass
-    baseurl: /assets/
-    gzip: [ text/css, application/javascript ]
+    cache: build/.asset-cache
+    compress:
+        css: true
+        js: true
+    prefix: "/assets"
+    assets:
+        - "*.pdf"
+        - "*.eot"
+        - "*.ttf"
+        - "*.svg"
+        - "*.woff"
     sources:
-        - _assets/images
-        - _assets/javascripts
-        - _vendors/bootstrap-sass/assets/stylesheets
-        - _assets/stylesheets
-        - _assets/fonts
         - _assets/files
+        - _assets/fonts
+    digest: true
 
 include: [.nojekyll, CNAME]
 

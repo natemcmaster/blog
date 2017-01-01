@@ -1,10 +1,10 @@
 ruby "2.1.5"
 source 'https://rubygems.org'
 gem 'rake'
-gem 'jekyll', '~> 2.0'
+gem 'jekyll'
 gem 'jekyll-assets'
-gem 'compass'
 gem 'jekyll-sitemap'
+gem 'jekyll-gist'
 gem 'uglifier'
 gem 'jemoji'
 gem 'jekyll-redirect-from'

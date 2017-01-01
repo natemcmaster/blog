@@ -5,7 +5,7 @@ default: j_build
 .PHONY: publish j_build serve install
 
 j_build:
-	jekyll build
+	jekyll build --incremental
 
 serve:
 	@open http://localhost:4000
