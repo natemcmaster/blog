@@ -10,6 +10,7 @@ node_modules
 
 build/
 .jekyll-assets-cache
+.jekyll-metadata
 .sass-cache/
 Gemfile.lock
 src/_assets/bower/

@@ -43,4 +43,5 @@ assets:
     digest: true
 
 include: [.nojekyll, CNAME]
+exclude: [bower.json]
 
