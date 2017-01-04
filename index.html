@@ -26,13 +26,13 @@ Feel free to write me at hello@natemcmaster.com
     <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro|Roboto+Slab:400,300|Open+Sans:300italic,400italic,600italic,400,600,300" rel="stylesheet" type="text/css">
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/assets/ga-d0c581bb05eca417d65b4df14b5d5b44.js"></script>
+    <script type="text/javascript" src="/assets/ga-d1faeb94eb25224ec0843d6c613d8cde7f294fd1d5bddd72fd16bbf8cccfe517.js"></script>
     <script type="text/javascript">
         (function (ga) {
             ga('send', 'pageview');
         })(ga);
     </script>
-    <link rel="stylesheet" href="/assets/app-527886830577906c6a5cdf7dbf4d8ee9.css">
+    <link type="text/css" rel="stylesheet" href="/assets/app-80ad1bdf6f437ed16def341f2041cd1fcf25680fdaa7d8fe343f9605178c2c5f.css">
 </head>
 
 <body>
@@ -108,6 +108,36 @@ Feel free to write me at hello@natemcmaster.com
         <div class="posts">
         
         <div class="post">
+          <span class="post-date">January 3, 2017</span>
+          <a class="post-link" href="/blog/2017/01/03/dotnet-watch-msbuild/">
+            <h1 class="font-main">.NET Core command-line file watcher (dotnet watch) for MSBuild</h1>
+          </a>
+          
+          <h2>Basic usage and pro-tips for using dotnet-watch with MSBuild</h2>
+          
+        
+          <div class="postimage hero ">
+            <a href="/blog/2017/01/03/dotnet-watch-msbuild/">
+              
+                <img src="/assets/blog/dotnet-watch-preview-8c6bb24f7370b88793e9714ba60b6632ff07f02227c040fee6e3fb1e45c4e221.png" alt="" />
+              
+            </a>
+          </div>
+          
+          <div>
+            
+          <p>The most recent preview (<a href="https://www.nuget.org/packages/Microsoft.DotNet.Watcher.Tools/1.0.0-msbuild2-final">1.0.0-msbuild2-final</a>)
+of <code class="highlighter-rouge">dotnet-watch</code> supports MSBuild projects, and is the most configurable, extensible version of the tool, yet.
+<code class="highlighter-rouge">dotnet-watch</code> is a file watcher for <code class="highlighter-rouge">dotnet</code> that restarts the specified application when changes in the source code are detected.
+This tool has been available since the days of DNX with support for <em>project.json</em>.
+<code class="highlighter-rouge">dotnet-watch</code> for MSBuild adds new features that were not available in the <em>project.json</em> versions.</p>
+
+
+          
+          </div>
+        </div>
+      
+        <div class="post">
           <span class="post-date">December 26, 2016</span>
           <a class="post-link" href="/blog/2016/12/26/project-evalutation-cli-tool/">
             <h1 class="font-main">MSBuild + .NET Core CLI Tools: Getting information about the project</h1>
@@ -119,7 +149,7 @@ Feel free to write me at hello@natemcmaster.com
           <div class="postimage hero ">
             <a href="/blog/2016/12/26/project-evalutation-cli-tool/">
               
-                <img src="/assets/dotnet_cli_tool_screenshot-969c58841a7161488e5327c0882f300b.png" alt="" />
+                <img src="/assets/dotnet_cli_tool_screenshot-473ebd895649716dae7b94fc375d0cfca5e560be4b5cd10dbd5a187f53c358c8.png" alt="" />
               
             </a>
           </div>
@@ -127,29 +157,10 @@ Feel free to write me at hello@natemcmaster.com
           <div>
             
           <p>The .NET Core CLI 1.0.0 has a feature called “project tools extensions”, often called “CLI tools”.
-These are project-specific, command-line tools that extend the <code>dotnet</code> command with new verbs.
-For example, users can install <code>Microsoft.DotNet.Watcher.Tools</code> to add the <code>dotnet watch</code> command.
+These are project-specific, command-line tools that extend the <code class="highlighter-rouge">dotnet</code> command with new verbs.
+For example, users can install <code class="highlighter-rouge">Microsoft.DotNet.Watcher.Tools</code> to add the <code class="highlighter-rouge">dotnet watch</code> command.
 This post will cover an advanced topic of how to implement these tools to get information about a 
 user’s project.</p>
-
-
-          
-          </div>
-        </div>
-      
-        <div class="post">
-          <span class="post-date">May 19, 2016</span>
-          <a class="post-link" href="/blog/2016/05/19/nuget3-rid-graph/">
-            <h1 class="font-main">NuGet 3: The Runtime ID Graph</h1>
-          </a>
-          
-        
-          <div>
-            
-          <p>If you have ever cracked open* a NuGet package such as .NET Core’s 
-<a href="https://www.nuget.org/packages/System.IO.Compression/">System.IO.Compression</a>,
-you have may have noticed that the package includes a folder named “runtimes”.
-What is the folder and how is it used?</p>
 
 
           

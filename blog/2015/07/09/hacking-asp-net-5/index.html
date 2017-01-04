@@ -15,13 +15,13 @@
     <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro|Roboto+Slab:400,300|Open+Sans:300italic,400italic,600italic,400,600,300" rel="stylesheet" type="text/css">
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/assets/ga-d0c581bb05eca417d65b4df14b5d5b44.js"></script>
+    <script type="text/javascript" src="/assets/ga-d1faeb94eb25224ec0843d6c613d8cde7f294fd1d5bddd72fd16bbf8cccfe517.js"></script>
     <script type="text/javascript">
         (function (ga) {
             ga('send', 'pageview');
         })(ga);
     </script>
-    <link rel="stylesheet" href="/assets/app-527886830577906c6a5cdf7dbf4d8ee9.css">
+    <link type="text/css" rel="stylesheet" href="/assets/app-80ad1bdf6f437ed16def341f2041cd1fcf25680fdaa7d8fe343f9605178c2c5f.css">
 </head>
 
 
@@ -104,22 +104,22 @@
 
 <article class="post-content">
   
-<p>First, it is important understand what happens when you execute <code>dnx</code>.
-Currently, the command for <code>dnx</code> on Linux and OS X is just a shortcut to <a href="https://github.com/aspnet/dnx/blob/dev/scripts/dnx.sh">this script file</a>.
-If you inspect this 16-line file, you will see that, in most cases, <code>dnx</code> is just an abbreviation for <code>mono $MONO_OPTIONS "$DIR/dnx.mono.managed.dll" "$@"</code></p>
+<p>First, it is important understand what happens when you execute <code class="highlighter-rouge">dnx</code>.
+Currently, the command for <code class="highlighter-rouge">dnx</code> on Linux and OS X is just a shortcut to <a href="https://github.com/aspnet/dnx/blob/dev/scripts/dnx.sh">this script file</a>.
+If you inspect this 16-line file, you will see that, in most cases, <code class="highlighter-rouge">dnx</code> is just an abbreviation for <code class="highlighter-rouge">mono $MONO_OPTIONS "$DIR/dnx.mono.managed.dll" "$@"</code></p>
 
 <p>Understanding this enables you to change how DNX runs mono in the following ways.</p>
 
-<h2 id="use-the-monooptions-variable-to-pass-runtime-flags-to-mono">Use the MONO_OPTIONS variable to pass runtime flags to mono</h2>
+<h2 id="use-the-mono_options-variable-to-pass-runtime-flags-to-mono">Use the MONO_OPTIONS variable to pass runtime flags to mono</h2>
 
 <p>This is useful if you need to alter the way DNX bootstraps mono. Here are some useful examples.</p>
 
 <h3 id="find-out-which-version-of-mono-dnx-is-using">Find out which version of Mono DNX is using</h3>
 
-<p>Execute <code>MONO_OPTIONS=--version dnx</code></p>
+<p>Execute <code class="highlighter-rouge">MONO_OPTIONS=--version dnx</code></p>
 
 <h3 id="debug-and-get-a-more-detailed-stack-trace">Debug and get a more detailed stack trace</h3>
-<p>Execute <code>MONO_OPTIONS=--debug dnx . run</code></p>
+<p>Execute <code class="highlighter-rouge">MONO_OPTIONS=--debug dnx . run</code></p>
 
 <h2 id="change-the-mono-runtime">Change the mono runtime</h2>
 
@@ -132,11 +132,11 @@ You can override the system default mono by adding a symbolic link into the runt
 <p>To override, follow these steps.</p>
 
 <ol>
-  <li>Naviate to the folder containing DNX. <code>dirname `which dnx`</code></li>
-  <li>Add a symbolic link. For example, <code>ln -s /Users/nmcmaster/dev/mono-src/bin/mono ./</code></li>
+  <li>Naviate to the folder containing DNX. <code class="highlighter-rouge">dirname `which dnx`</code></li>
+  <li>Add a symbolic link. For example, <code class="highlighter-rouge">ln -s /Users/nmcmaster/dev/mono-src/bin/mono ./</code></li>
 </ol>
 
-<p>Now DNX will use <code>/Users/nmcmaster/dev/mono-src/bin/mono</code> instead of <code>/usr/bin/mono</code></p>
+<p>Now DNX will use <code class="highlighter-rouge">/Users/nmcmaster/dev/mono-src/bin/mono</code> instead of <code class="highlighter-rouge">/usr/bin/mono</code></p>
 
 
 </article>

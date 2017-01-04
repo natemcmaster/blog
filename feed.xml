@@ -6,15 +6,165 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 27 Dec 2016 07:06:04 -0800</pubDate>
-    <lastBuildDate>Tue, 27 Dec 2016 07:06:04 -0800</lastBuildDate>
-    <generator>Jekyll v2.5.3</generator>
+    <pubDate>Wed, 04 Jan 2017 00:42:39 -0800</pubDate>
+    <lastBuildDate>Wed, 04 Jan 2017 00:42:39 -0800</lastBuildDate>
+    <generator>Jekyll v3.3.1</generator>
+    
+      <item>
+        <title>.NET Core command-line file watcher (dotnet watch) for MSBuild</title>
+        <description>&lt;p&gt;The most recent preview (&lt;a href=&quot;https://www.nuget.org/packages/Microsoft.DotNet.Watcher.Tools/1.0.0-msbuild2-final&quot;&gt;1.0.0-msbuild2-final&lt;/a&gt;)
+of &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet-watch&lt;/code&gt; supports MSBuild projects, and is the most configurable, extensible version of the tool, yet.
+&lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet-watch&lt;/code&gt; is a file watcher for &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet&lt;/code&gt; that restarts the specified application when changes in the source code are detected.
+This tool has been available since the days of DNX with support for &lt;em&gt;project.json&lt;/em&gt;.
+&lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet-watch&lt;/code&gt; for MSBuild adds new features that were not available in the &lt;em&gt;project.json&lt;/em&gt; versions.&lt;/p&gt;
+
+&lt;p&gt;See also: &lt;a href=&quot;https://github.com/aspnet/DotNetTools/&quot;&gt;https://github.com/aspnet/DotNetTools/&lt;/a&gt; for more documentation and to report issues.&lt;/p&gt;
+
+&lt;h1 id=&quot;basic-usage&quot;&gt;Basic usage&lt;/h1&gt;
+
+&lt;h2 id=&quot;how-to-install&quot;&gt;How To Install&lt;/h2&gt;
+
+&lt;h3 id=&quot;visual-studio-2017-rc&quot;&gt;Visual Studio 2017 RC&lt;/h3&gt;
+
+&lt;p&gt;&lt;em&gt;Note: soon, the NuGet GUI will be able to install this package, but is broken in the most recent RC.&lt;/em&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Open your .NET Core project in VS 2017 RC.&lt;/li&gt;
+  &lt;li&gt;Right click on the project in &lt;em&gt;Solution Explorer&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;Select “Edit (YourProject).csproj”.&lt;/li&gt;
+  &lt;li&gt;Continue with next section&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;visual-studio-code-or-command-line-users&quot;&gt;Visual Studio Code or command-line users&lt;/h3&gt;
+
+&lt;p&gt;Add &lt;code class=&quot;highlighter-rouge&quot;&gt;Microsoft.DotNet.Watcher.Tools&lt;/code&gt; as a &lt;code class=&quot;highlighter-rouge&quot;&gt;DotNetCliToolReference&lt;/code&gt; to your project by adding this to the csproj file.&lt;/p&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;nt&quot;&gt;&amp;lt;ItemGroup&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;DotNetCliToolReference&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Microsoft.DotNet.Watcher.Tools&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1.0.0-msbuild2-final&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/ItemGroup&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;how-to-use&quot;&gt;How To Use&lt;/h3&gt;
+
+&lt;p&gt;On command line, change directories (&lt;code class=&quot;highlighter-rouge&quot;&gt;cd C:\dev\MyApp&lt;/code&gt;) into the directory containing your project. Then execute &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet watch&lt;/code&gt;. 
+This will show detailed help information and some examples.&lt;/p&gt;
+
+&lt;p&gt;To make dotnet-watch do something, add &lt;code class=&quot;highlighter-rouge&quot;&gt;watch&lt;/code&gt; between &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet&lt;/code&gt; and the command arguments that you want to execute.&lt;/p&gt;
+
+&lt;p&gt;For example, if you want to repeatedly run tests, execute &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet watch test&lt;/code&gt;. Or, if you want to recompile and launch
+your website when a C# file changes, run &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet watch run&lt;/code&gt;. All &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet blah&lt;/code&gt; verbs are supported. (In theory, you could 
+even run &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet watch watch watch run&lt;/code&gt;….but I don’t recommend it.)&lt;/p&gt;
+
+&lt;h1 id=&quot;whats-new&quot;&gt;What’s new&lt;/h1&gt;
+
+&lt;p&gt;dotnet-watch can be configured with settings in the MSBuild project file being watched.&lt;/p&gt;
+
+&lt;h2 id=&quot;customize-which-files-are-watched&quot;&gt;Customize which files are watched&lt;/h2&gt;
+
+&lt;p&gt;By default, dotnet-watch will track all &lt;code class=&quot;highlighter-rouge&quot;&gt;**/*.cs&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;*.csproj&lt;/code&gt;, and &lt;code class=&quot;highlighter-rouge&quot;&gt;**/*.resx&lt;/code&gt; files for changes. 
+Well, kinda. The truth is a little more technical: the default is actually everything in the &lt;strong&gt;Compile&lt;/strong&gt; and &lt;strong&gt;EmbeddedResource&lt;/strong&gt; item groups,
+plus any file added to the &lt;strong&gt;MSBuildProjectFiles&lt;/strong&gt; list….but for most projects, this means all C# files.&lt;/p&gt;
+
+&lt;p&gt;More items can be added to the watchlist by editing the csproj file. Items can be added individually, or by using glob patterns.&lt;/p&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;ItemGroup&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- extends watching group to include *.js files --&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;Watch&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;**\*.js&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Exclude=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;node_modules\**\*;**\*.js.map;obj\**\*;bin\**\*&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ItemGroup&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;opt-out-of-defaults&quot;&gt;Opt-out of defaults&lt;/h2&gt;
+
+&lt;p&gt;dotnet-watch can be configured to ignore its default settings. To ignore specific
+files, add the &lt;code class=&quot;highlighter-rouge&quot;&gt;Watch=&quot;false&quot;&lt;/code&gt; attribute an item’s definition in the csproj file.&lt;/p&gt;
+
+&lt;p&gt;Example:&lt;/p&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;ItemGroup&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- exclude Generated.cs from dotnet-watch --&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;Compile&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Generated.cs&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Watch=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;false&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- exclude Strings.resx from dotnet-watch --&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;EmbeddedResource&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Strings.resx&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Watch=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;false&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- exclude changes in this referenced project --&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;ProjectReference&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;..\ClassLibrary1\ClassLibrary1.csproj&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Watch=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;false&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ItemGroup&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;for-msbuild-ninjas&quot;&gt;For MSBuild ninja’s&lt;/h1&gt;
+
+&lt;h2 id=&quot;the-watch-build&quot;&gt;The ‘watch’ build&lt;/h2&gt;
+
+&lt;p&gt;When dotnet-watch reads a *.csproj to find which files it should watch,
+it actually executes the MSBuild project. It calls a target named &lt;code class=&quot;highlighter-rouge&quot;&gt;GenerateWatchList&lt;/code&gt; 
+in the project. When this target runs, dotnet-watch will set the property &lt;code class=&quot;highlighter-rouge&quot;&gt;DotNetWatchBuild=true&lt;/code&gt;.
+This is similar to how Visual Studio and VS Code execute the csproj with &lt;code class=&quot;highlighter-rouge&quot;&gt;DesignTimeBuild=true&lt;/code&gt;
+to discover files, NuGet references, etc.&lt;/p&gt;
+
+&lt;h2 id=&quot;custom-watch-projects&quot;&gt;Custom ‘watch projects’&lt;/h2&gt;
+
+&lt;p&gt;dotnet-watch is not restricted to C# projects. You can create custom ‘watch’ projects to do your bidding.&lt;/p&gt;
+
+&lt;h3 id=&quot;example-watch-multiple-test-projects&quot;&gt;Example: watch multiple test projects&lt;/h3&gt;
+
+&lt;p&gt;Example: let’s say you have the following project layout:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;test/
+    UnitTests/UnitTests.csproj
+    IntegrationTests/IntegrationTests.csproj
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If you wanted to watch multiple projects, and execute tests on all, you create file like this
+in &lt;code class=&quot;highlighter-rouge&quot;&gt;test/watch.proj&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;Project&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;ToolsVersion=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;15.0&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;ItemGroup&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;TestProjects&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;**\*.csproj&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;Watch&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;**\*.cs&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/ItemGroup&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;Target&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Test&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;MSBuild&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Targets=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;VSTest&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Projects=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;@(TestProjects)&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/Target&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;ItemGroup&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;DotNetCliToolReference&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Microsoft.DotNet.Watcher.Tools&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1.0.0-msbuild3-final&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/ItemGroup&amp;gt;&lt;/span&gt;
+
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;Import&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Project=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;$(MSBuildExtensionsPath)\Microsoft.Common.targets&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Project&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Then execute&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd test\
+dotnet restore watch.proj
+dotnet watch msbuild /t:Test
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This will watch all test projects, and execute VSTest when any file changes.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 03 Jan 2017 22:52:00 -0800</pubDate>
+        <link>http://www.natemcmaster.com/blog/2017/01/03/dotnet-watch-msbuild/</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2017/01/03/dotnet-watch-msbuild/</guid>
+        
+        
+      </item>
     
       <item>
         <title>MSBuild + .NET Core CLI Tools: Getting information about the project</title>
         <description>&lt;p&gt;The .NET Core CLI 1.0.0 has a feature called “project tools extensions”, often called “CLI tools”.
-These are project-specific, command-line tools that extend the &lt;code&gt;dotnet&lt;/code&gt; command with new verbs.
-For example, users can install &lt;code&gt;Microsoft.DotNet.Watcher.Tools&lt;/code&gt; to add the &lt;code&gt;dotnet watch&lt;/code&gt; command.
+These are project-specific, command-line tools that extend the &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet&lt;/code&gt; command with new verbs.
+For example, users can install &lt;code class=&quot;highlighter-rouge&quot;&gt;Microsoft.DotNet.Watcher.Tools&lt;/code&gt; to add the &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet watch&lt;/code&gt; command.
 This post will cover an advanced topic of how to implement these tools to get information about a 
 user’s project.&lt;/p&gt;
 
@@ -31,8 +181,8 @@ See this example: &lt;a href=&quot;https://gist.github.com/natemcmaster/ced86a82
 
 &lt;h1 id=&quot;learn-by-example&quot;&gt;Learn by example&lt;/h1&gt;
 
-&lt;p&gt;For the sake of this tutorial, our goal is to create a tool called &lt;code&gt;dotnet-names&lt;/code&gt;. When installed,
-a user can invoked &lt;code&gt;dotnet names&lt;/code&gt; and the tool will list the assembly name, root namespace, and 
+&lt;p&gt;For the sake of this tutorial, our goal is to create a tool called &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet-names&lt;/code&gt;. When installed,
+a user can invoked &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet names&lt;/code&gt; and the tool will list the assembly name, root namespace, and 
 names of target frameworks in a given project.&lt;/p&gt;
 
 &lt;p&gt;Goals:&lt;/p&gt;
@@ -44,23 +194,23 @@ names of target frameworks in a given project.&lt;/p&gt;
 
 &lt;h3 id=&quot;step-0-the-mental-migration-from-projectjson&quot;&gt;Step 0. The mental migration from project.json&lt;/h3&gt;
 
-&lt;p&gt;Tool authors with existing tools that read the &lt;code&gt;project.json&lt;/code&gt; will already be familiar with the
-set of APIs provided in the &lt;code&gt;Microsoft.DotNet.ProjectModel&lt;/code&gt; namespace. These APIs allowed a tool
+&lt;p&gt;Tool authors with existing tools that read the &lt;code class=&quot;highlighter-rouge&quot;&gt;project.json&lt;/code&gt; will already be familiar with the
+set of APIs provided in the &lt;code class=&quot;highlighter-rouge&quot;&gt;Microsoft.DotNet.ProjectModel&lt;/code&gt; namespace. These APIs allowed a tool
 to read a project.json and discover a list of dependencies, CSharp files, target frameworks, etc.&lt;/p&gt;
 
 &lt;p&gt;Migrating from these APIs requires a paradigm shift. The ‘project model’ in the project.json world
-was defined entirely by the API in &lt;code&gt;Microsoft.DotNet.ProjectModel&lt;/code&gt;. In an MSBuild project, there
+was defined entirely by the API in &lt;code class=&quot;highlighter-rouge&quot;&gt;Microsoft.DotNet.ProjectModel&lt;/code&gt;. In an MSBuild project, there
 is no definitive description of project behavior. Instead, MSBuild relies on well-known properties and
 items.&lt;/p&gt;
 
 &lt;h2 id=&quot;step-1-find-the-msbuild-project&quot;&gt;Step 1. Find the MSBuild project&lt;/h2&gt;
 
-&lt;p&gt;When a CLI tools begins, &lt;code&gt;Directory.GetCurrentDirectory()&lt;/code&gt; will be the directory containing
+&lt;p&gt;When a CLI tools begins, &lt;code class=&quot;highlighter-rouge&quot;&gt;Directory.GetCurrentDirectory()&lt;/code&gt; will be the directory containing
 the user’s project file. The tool must search this directory for an MSBuild file to target.&lt;/p&gt;
 
-&lt;p&gt;One method for this is to search for files ending in &lt;code&gt;*.*proj&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;One method for this is to search for files ending in &lt;code class=&quot;highlighter-rouge&quot;&gt;*.*proj&lt;/code&gt;.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;System.IO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;System.IO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;System.Linq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;DotnetNames.Tool&lt;/span&gt;
@@ -69,36 +219,36 @@ the user’s project file. The tool must search this directory for an MSBuild fi
     &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
         &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;projectFile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Directory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;EnumerateFiles&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;Directory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetCurrentDirectory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; 
-                &lt;span class=&quot;s&quot;&gt;&amp;quot;*.*proj&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Where&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;EndsWith&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;.xproj&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// ignore *.xproj files&lt;/span&gt;
-                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FirstOrDefault&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+            &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;projectFile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Directory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;EnumerateFiles&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;Directory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;GetCurrentDirectory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; 
+                &lt;span class=&quot;s&quot;&gt;&quot;*.*proj&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Where&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;EndsWith&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.xproj&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// ignore *.xproj files
+&lt;/span&gt;                &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;FirstOrDefault&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
             
-            &lt;span class=&quot;c1&quot;&gt;// ...&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;// ...
+&lt;/span&gt;        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;Another approach is to require a command line flag, such as &lt;code&gt;--project&lt;/code&gt; to specified the MSBuild project file 
+&lt;p&gt;Another approach is to require a command line flag, such as &lt;code class=&quot;highlighter-rouge&quot;&gt;--project&lt;/code&gt; to specified the MSBuild project file 
 to be used.&lt;/p&gt;
 
-&lt;p&gt;(For an example of a more robust project finder, see dotnet-watch’s &lt;code&gt;MsBuildProjectFinder&lt;/code&gt; class.
+&lt;p&gt;(For an example of a more robust project finder, see dotnet-watch’s &lt;code class=&quot;highlighter-rouge&quot;&gt;MsBuildProjectFinder&lt;/code&gt; class.
 &lt;a href=&quot;https://github.com/aspnet/DotNetTools/blob/6f1057a7603d3ece343d265e484517ef950ada4f/src/Microsoft.DotNet.Watcher.Tools/Internal/MsBuildProjectFinder.cs&quot;&gt;Source for MsBuildProjectFinder on GitHub.&lt;/a&gt;)&lt;/p&gt;
 
 &lt;h2 id=&quot;step-2-injecting-an-msbuild-target&quot;&gt;Step 2. Injecting an MSBuild target&lt;/h2&gt;
 
 &lt;p&gt;&lt;strong&gt;Background&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Most MSBuild projects (CSharp, Visual Basic), will invoke an &lt;code&gt;Import&lt;/code&gt; that brings in &lt;code&gt;Microsoft.Common.targets&lt;/code&gt;.
+&lt;p&gt;Most MSBuild projects (CSharp, Visual Basic), will invoke an &lt;code class=&quot;highlighter-rouge&quot;&gt;Import&lt;/code&gt; that brings in &lt;code class=&quot;highlighter-rouge&quot;&gt;Microsoft.Common.targets&lt;/code&gt;.
 Microsoft.Common.targets provides an extensibility point for injecting targets into a file.&lt;/p&gt;
 
 &lt;p&gt;You can read the source code for this extensibility point in the Microsoft.Common.targets file. 
 &lt;a href=&quot;https://github.com/Microsoft/msbuild/blob/7acd48c077a4d38dcbcb3062c7ea306d10f38e5a/src/XMakeTasks/Microsoft.Common.targets#L116-L127&quot;&gt;(Source on GitHub.)&lt;/a&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;Import&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Project=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;$(MSBuildProjectExtensionsPath)$(MSBuildProjectFile).*.targets&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;Import&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Project=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;$(MSBuildProjectExtensionsPath)$(MSBuildProjectFile).*.targets&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;By default, &lt;code&gt;MSBuildProjectExtensionsPath&lt;/code&gt; will be the &lt;code&gt;obj/&lt;/code&gt; folder next to the MSBuild project.&lt;/p&gt;
+&lt;p&gt;By default, &lt;code class=&quot;highlighter-rouge&quot;&gt;MSBuildProjectExtensionsPath&lt;/code&gt; will be the &lt;code class=&quot;highlighter-rouge&quot;&gt;obj/&lt;/code&gt; folder next to the MSBuild project.&lt;/p&gt;
 
 &lt;p&gt;(This step could also be named “abusing MSBuildProjectExtensionsPath”. This extension was originally created
 for package managers, like NuGet.)&lt;/p&gt;
@@ -117,45 +267,45 @@ for package managers, like NuGet.)&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Using it&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;To inject a target, our &lt;code&gt;dotnet-names&lt;/code&gt; tool will write a file to match this glob import.&lt;/p&gt;
+&lt;p&gt;To inject a target, our &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet-names&lt;/code&gt; tool will write a file to match this glob import.&lt;/p&gt;
 
-&lt;p&gt;For example, if the tool is running on &lt;code&gt;Web.csproj&lt;/code&gt;, the tool would create a file named
-&lt;code&gt;obj/Web.csproj.dotnet-names.targets&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For example, if the tool is running on &lt;code class=&quot;highlighter-rouge&quot;&gt;Web.csproj&lt;/code&gt;, the tool would create a file named
+&lt;code class=&quot;highlighter-rouge&quot;&gt;obj/Web.csproj.dotnet-names.targets&lt;/code&gt;.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;targetFileName&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetFileName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;projectFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;.dotnet-names.targets&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;projectExtPath&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetDirectoryName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;projectFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;obj&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;targetFile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;projectExtPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;targetFileName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;targetFileName&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;GetFileName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;projectFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;.dotnet-names.targets&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;projectExtPath&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;GetDirectoryName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;projectFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;obj&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;targetFile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Combine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;projectExtPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;targetFileName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WriteAllText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;targetFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;@&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;  &amp;lt;Project&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;      &amp;lt;Target Name=&amp;quot;&amp;quot;_GetDotNetNames&amp;quot;&amp;quot;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;         &amp;lt;PropertyGroup&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;            &amp;lt;_DotNetNamesOutput&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;Assembly name: $(AssemblyName)&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;Root namespace: $(RootNamespace)&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;Target framework: $(TargetFramework)&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;            &amp;lt;/_DotNetNamesOutput&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;         &amp;lt;/PropertyGroup&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;         &amp;lt;Message Importance=&amp;quot;&amp;quot;High&amp;quot;&amp;quot; Text=&amp;quot;&amp;quot;$(_DotNetNamesOutput)&amp;quot;&amp;quot; /&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;      &amp;lt;/Target&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;  &amp;lt;/Project&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;n&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;WriteAllText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;targetFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;
+&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Project&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Target&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_GetDotNetNames&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+         &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PropertyGroup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_DotNetNamesOutput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Assembly&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AssemblyName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Root&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RootNamespace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Target&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;framework&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TargetFramework&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_DotNetNamesOutput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+         &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PropertyGroup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+         &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Message&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Importance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;High&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_DotNetNamesOutput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;/&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Project&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h2 id=&quot;step-3-invoke-the-injected-target&quot;&gt;Step 3. Invoke the injected target&lt;/h2&gt;
 
 &lt;p&gt;Now that the tool has injected the target into the user project, it can be invoked by creating
 a new process that starts MSBuild and invokes this target.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;psi&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ProcessStartInfo&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;psi&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ProcessStartInfo&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FileName&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;dotnet&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Arguments&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;msbuild \&amp;quot;{projectFile}\&amp;quot; /t:_GetDotNetNames /nologo&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FileName&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;dotnet&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Arguments&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;msbuild \&quot;{projectFile}\&quot; /t:_GetDotNetNames /nologo&quot;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;process&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;psi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WaitForExit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;process&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;psi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;WaitForExit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;&lt;strong&gt;Pro-tip:&lt;/strong&gt; “dotnet” executable, i.e. the “muxer”, is not guaranteed to be in the system PATH variable.
-You can find the muxer by using &lt;code&gt;System.AppContext&lt;/code&gt;. 
+You can find the muxer by using &lt;code class=&quot;highlighter-rouge&quot;&gt;System.AppContext&lt;/code&gt;. 
 &lt;a href=&quot;https://github.com/aspnet/DotNetTools/blob/6f1057a7603d3ece343d265e484517ef950ada4f/shared/DotNetMuxer.cs&quot;&gt;See example implementation on GitHub.&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;step-4-get-target-output&quot;&gt;Step 4. Get target output&lt;/h2&gt;
@@ -163,11 +313,11 @@ You can find the muxer by using &lt;code&gt;System.AppContext&lt;/code&gt;.
 &lt;p&gt;The sample above created a target that produced a console message from MSBuild.
 At this point, our program simply prints the output to the command line.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ dotnet names
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ dotnet names
   
   Assembly name: My.WebApp
   Root namespace: My.WebApp
-  Target framework: netcoreapp1.0&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+  Target framework: netcoreapp1.0         &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Most tools will need to something with this information beyond displaying it. As you noticed in Step 2,
 the tool are creates an MSBuild target inside the user’s project. This target can do anything MSBuild can do,
@@ -175,34 +325,34 @@ such as producing a file that our tool can read.&lt;/p&gt;
 
 &lt;p&gt;Here is updated code for a target that will produce a file for dotnet-names to read:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;n&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WriteAllText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;targetFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
-&lt;span class=&quot;s&quot;&gt;@&amp;quot;&amp;lt;Project&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;      &amp;lt;Target Name=&amp;quot;&amp;quot;_GetDotNetNames&amp;quot;&amp;quot;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;         &amp;lt;ItemGroup&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;            &amp;lt;_DotNetNamesOutput Include=&amp;quot;&amp;quot;AssemblyName: $(AssemblyName)&amp;quot;&amp;quot; /&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;            &amp;lt;_DotNetNamesOutput Include=&amp;quot;&amp;quot;RootNamespace: $(RootNamespace)&amp;quot;&amp;quot; /&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;            &amp;lt;_DotNetNamesOutput Include=&amp;quot;&amp;quot;TargetFramework: $(TargetFramework)&amp;quot;&amp;quot; /&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;         &amp;lt;/ItemGroup&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;         &amp;lt;WriteLinesToFile File=&amp;quot;&amp;quot;$(_DotNetNamesFile)&amp;quot;&amp;quot; Lines=&amp;quot;&amp;quot;@(_DotNetNamesOutput)&amp;quot;&amp;quot; Overwrite=&amp;quot;&amp;quot;true&amp;quot;&amp;quot; /&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;      &amp;lt;/Target&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;  &amp;lt;/Project&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tmpFile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetTempFileName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-csharp&quot; data-lang=&quot;csharp&quot;&gt;&lt;span class=&quot;n&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;WriteAllText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;targetFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+&lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;Project&amp;gt;
+&lt;/span&gt;      &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Target&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_GetDotNetNames&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+         &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ItemGroup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_DotNetNamesOutput&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Include&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AssemblyName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AssemblyName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;/&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_DotNetNamesOutput&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Include&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RootNamespace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RootNamespace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;/&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_DotNetNamesOutput&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Include&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TargetFramework&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TargetFramework&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;/&amp;gt;&lt;/span&gt;
+         &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ItemGroup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+         &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WriteLinesToFile&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_DotNetNamesFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Lines&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_DotNetNamesOutput&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Overwrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;/&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Project&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;);
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tmpFile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;GetTempFileName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 &lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;psi&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ProcessStartInfo&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;FileName&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;dotnet&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Arguments&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;msbuild \&amp;quot;{projectFile}\&amp;quot; /t:_GetDotNetNames /nologo \&amp;quot;/p:_DotNetNamesFile={tmpFile}\&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;FileName&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;dotnet&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Arguments&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;msbuild \&quot;{projectFile}\&quot; /t:_GetDotNetNames /nologo \&quot;/p:_DotNetNamesFile={tmpFile}\&quot;&quot;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;process&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;psi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WaitForExit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;process&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;psi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;WaitForExit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ExitCode&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;WriteLine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Invoking MSBuild target failed&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;WriteLine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Invoking MSBuild target failed&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ReadAllLines&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tmpFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;kt&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;ReadAllLines&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tmpFile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;This target will write a line to the file, one line for each item in the &lt;code&gt;_DotNetNamesOutput&lt;/code&gt; item group.
+&lt;p&gt;This target will write a line to the file, one line for each item in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_DotNetNamesOutput&lt;/code&gt; item group.
 From here, the tool can parse the serialized file to find information it needs.&lt;/p&gt;
 
 &lt;h3 id=&quot;altogether&quot;&gt;Altogether&lt;/h3&gt;
@@ -215,17 +365,17 @@ Here are some ways to enhance the tool.&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Invoke targets in the build chain. For example, if you want to gather information about dependencies,
-your tool might invoke the target &lt;code&gt;ResolveDependenciesDesignTime&lt;/code&gt;, which can identify &lt;code&gt;PackageReferences&lt;/code&gt; and &lt;code&gt;ProjectReferences&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;Handle multi-targeting projects. If the property &lt;code&gt;TargetFrameworks&lt;/code&gt; is set, this project is using multiple
+your tool might invoke the target &lt;code class=&quot;highlighter-rouge&quot;&gt;ResolveDependenciesDesignTime&lt;/code&gt;, which can identify &lt;code class=&quot;highlighter-rouge&quot;&gt;PackageReferences&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;ProjectReferences&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Handle multi-targeting projects. If the property &lt;code class=&quot;highlighter-rouge&quot;&gt;TargetFrameworks&lt;/code&gt; is set, this project is using multiple
 NuGet frameworks. Your tool target may need to invoke MSBuild multiple times internally to gather full information.&lt;/li&gt;
-  &lt;li&gt;Force a compile. Invoking the target &lt;code&gt;Build&lt;/code&gt; will cause the project to compile.&lt;/li&gt;
+  &lt;li&gt;Force a compile. Invoking the target &lt;code class=&quot;highlighter-rouge&quot;&gt;Build&lt;/code&gt; will cause the project to compile.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;advanced-examples-of-this-technique&quot;&gt;Advanced examples of this technique&lt;/h2&gt;
 
 &lt;p&gt;See &lt;a href=&quot;https://github.com/aspnet/DotNetTools&quot;&gt;https://github.com/aspnet/DotNetTools&lt;/a&gt; and &lt;a href=&quot;https://github.com/aspnet/EntityFramework.Tools&quot;&gt;https://github.com/aspnet/EntityFramework.Tools&lt;/a&gt;
-for more examples of the approach explained in this blog post. &lt;code&gt;dotnet-user-secrets&lt;/code&gt;, &lt;code&gt;dotnet-ef&lt;/code&gt;,
-and &lt;code&gt;dotnet-watch&lt;/code&gt; gather information from projects using this approach.&lt;/p&gt;
+for more examples of the approach explained in this blog post. &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet-user-secrets&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet-ef&lt;/code&gt;,
+and &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet-watch&lt;/code&gt; gather information from projects using this approach.&lt;/p&gt;
 
 &lt;h3 id=&quot;additional-comments&quot;&gt;Additional comments&lt;/h3&gt;
 
@@ -247,7 +397,7 @@ in the MSBuild SDK because NuGet references it.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;But if you still wish to persue this, s simple example of this has already been implemented 
-by Simone Chiaretta in his tool &lt;code&gt;dotnet-prop&lt;/code&gt;. See &lt;a href=&quot;https://github.com/simonech/dotnet-prop&quot;&gt;https://github.com/simonech/dotnet-prop&lt;/a&gt;.&lt;/p&gt;
+by Simone Chiaretta in his tool &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet-prop&lt;/code&gt;. See &lt;a href=&quot;https://github.com/simonech/dotnet-prop&quot;&gt;https://github.com/simonech/dotnet-prop&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h4 id=&quot;modifying-the-project&quot;&gt;Modifying the project&lt;/h4&gt;
 
@@ -256,7 +406,7 @@ your tool will need to use the MSBuild construction APIs. This is beyond the sco
 
 &lt;h2 id=&quot;completed-example&quot;&gt;Completed example&lt;/h2&gt;
 
-&lt;p&gt;Here is the code for the completed &lt;code&gt;dotnet-names&lt;/code&gt; tool.&lt;/p&gt;
+&lt;p&gt;Here is the code for the completed &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet-names&lt;/code&gt; tool.&lt;/p&gt;
 
 &lt;noscript&gt;&lt;pre&gt;using System;
 using System.Collections.Generic;
@@ -363,7 +513,7 @@ What is the folder and how is it used?&lt;/p&gt;
 
 &lt;p&gt;*It’s just a zip file. Unzip it.&lt;/p&gt;
 
-&lt;h3 id=&quot;tldr&quot;&gt;TLDR;&lt;/h3&gt;
+&lt;p&gt;###TLDR;&lt;/p&gt;
 
 &lt;p&gt;Here is the RC2 rid graph:
 &lt;a href=&quot;https://github.com/dotnet/corefx/blob/v1.0.0-rc2/pkg/Microsoft.NETCore.Platforms/runtime.json&quot;&gt;https://github.com/dotnet/corefx/blob/v1.0.0-rc2/pkg/Microsoft.NETCore.Platforms/runtime.json&lt;/a&gt;&lt;/p&gt;
@@ -402,15 +552,15 @@ System.IO.Compression includes a library design for *nix systems and another for
 
 &lt;p&gt;Managed libraries can be placed in folders that follow this pattern.&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;
-runtimes/{rid}/lib/{tfm}/*.dll
-&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;runtimes/{rid}/lib/{tfm}/*.dll
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;Native libraries (*.dll on Windows, *.so for Linux, *.dylib for OSX) can be included as well.&lt;/p&gt;
 
-&lt;p&gt;&lt;code&gt;
-runtimes/{rid}/native/*.(dll | so | dylib )
-&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;runtimes/{rid}/native/*.(dll | so | dylib )
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;*“tfm” refers to “target framework moniker”. See &lt;a href=&quot;https://docs.nuget.org/create/targetframeworks&quot;&gt;https://docs.nuget.org/create/targetframeworks&lt;/a&gt; for a
 list of available TFMs and to determine which you should use.&lt;/p&gt;
@@ -443,36 +593,36 @@ The RC2 graph is found in this file:&lt;/p&gt;
 
 &lt;p&gt;Here is a snippet from that RID graph:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;runtimes&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;base&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;runtimes&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;base&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;any&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nt&quot;&gt;&amp;quot;#import&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;base&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;any&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;#import&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;base&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;win&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nt&quot;&gt;&amp;quot;#import&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;any&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;win-x86&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nt&quot;&gt;&amp;quot;#import&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;win&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;win-x64&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nt&quot;&gt;&amp;quot;#import&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;win&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;win&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;#import&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;any&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;win-x86&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;#import&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;win&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;win-x64&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;#import&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;win&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;win7&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nt&quot;&gt;&amp;quot;#import&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;win&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;win7-x86&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nt&quot;&gt;&amp;quot;#import&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;win7&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;win-x86&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;win7-x64&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nt&quot;&gt;&amp;quot;#import&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;win7&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;win-x64&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;win7&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;#import&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;win&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;win7-x86&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;#import&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;win7&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;win-x86&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;win7-x64&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;#import&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;win7&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;win-x64&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h2 id=&quot;how-is-the-rid-graph-used&quot;&gt;How is the RID graph used?&lt;/h2&gt;
 
@@ -481,14 +631,14 @@ present in a package, but none with a package that match the exact runtime curre
 it will trace the graph back to the closest compatible system. For example, the list of RID fallbacks
 for Windows 7 32 bit machines are as follows:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;win7-x86
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;win7-x86
 win7
 win-x86
 win
 any
-base&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+base&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;For example, if I use a library that has a library under &lt;code&gt;runtimes/win/lib/*.dll&lt;/code&gt; and I restore packages for 
+&lt;p&gt;For example, if I use a library that has a library under &lt;code class=&quot;highlighter-rouge&quot;&gt;runtimes/win/lib/*.dll&lt;/code&gt; and I restore packages for 
 Windows 7, 32 bit, NuGet can trace the RID graph and will fallback to the closest, most compatible RID,
  which in this case will be “win”.&lt;/p&gt;
 
@@ -520,7 +670,7 @@ some of the options available to projects.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;project.json&lt;/em&gt; defines everything about a .NET Core project. It controls the project’s platform support, references, compilation, and packaging.&lt;/p&gt;
 
-&lt;p&gt;The best way to get a starter template is execute &lt;code&gt;dotnet new&lt;/code&gt; on the command line, or to use Visual Studio. This will create an empty project with a project.json that works for a basic library.&lt;/p&gt;
+&lt;p&gt;The best way to get a starter template is execute &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet new&lt;/code&gt; on the command line, or to use Visual Studio. This will create an empty project with a project.json that works for a basic library.&lt;/p&gt;
 
 &lt;p&gt;For more advanced features of project.json, see &lt;a href=&quot;http://dotnet.github.io/docs/project-model/&quot;&gt;http://dotnet.github.io/docs/project-model/&lt;/a&gt;.&lt;/p&gt;
 
@@ -534,91 +684,91 @@ some of the options available to projects.&lt;/p&gt;
 
 &lt;p&gt;Without configuration, projects are are considered part of a solution if they are in the same file directory with each other.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;solution/&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;    Banana.Library&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;    Banana.Web&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;solution/
+    Banana.Library
+&lt;span class=&quot;err&quot;&gt;    Banana.Web&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h2 id=&quot;with-globaljson&quot;&gt;With global.json&lt;/h2&gt;
 
 &lt;p&gt;A file named &lt;em&gt;global.json&lt;/em&gt; can be used to identify the location of projects&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;&lt;span class=&quot;go&quot;&gt;solution/&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;    global.json&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;solution/
+    global.json
 
-&lt;span class=&quot;go&quot;&gt;    src/&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;        Banana.Library&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;        Banana.Web&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;    test/&lt;/span&gt;
-&lt;span class=&quot;go&quot;&gt;        Banana.Test&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+    src/
+        Banana.Library
+        Banana.Web
+    test/
+&lt;span class=&quot;err&quot;&gt;        Banana.Test&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Contents of &lt;strong&gt;global.json&lt;/strong&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;projects&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;src&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;test&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;projects&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;src&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;test&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h1 id=&quot;examples&quot;&gt;Examples&lt;/h1&gt;
 
 &lt;h2 id=&quot;a-typical-projectjson-for-a-web-project&quot;&gt;A typical project.json for a web project&lt;/h2&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;version&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;0.0.1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Banana.Web&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;version&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0.0.1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Banana.Web&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;compilationOptions&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;emitEntryPoint&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;keyFile&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;../lib.snk&amp;quot;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;compilationOptions&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;emitEntryPoint&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;keyFile&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;../lib.snk&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;dependencies&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;Banana.Library&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;0.0.1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;Microsoft.AspNetCore.Server.Kestrel&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;1.0.0-rc2&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;Microsoft.AspNetCore.Mvc&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;1.0.0-rc2&amp;quot;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;dependencies&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;Banana.Library&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0.0.1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;Microsoft.AspNetCore.Server.Kestrel&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1.0.0-rc2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;Microsoft.AspNetCore.Mvc&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1.0.0-rc2&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;frameworks&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;netcoreapp1.0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nt&quot;&gt;&amp;quot;dependencies&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;nt&quot;&gt;&amp;quot;Microsoft.NetCore.App&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                    &lt;span class=&quot;nt&quot;&gt;&amp;quot;type&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;platform&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-                    &lt;span class=&quot;nt&quot;&gt;&amp;quot;version&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;1.0.0-rc2&amp;quot;&lt;/span&gt;
-                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;frameworks&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;netcoreapp1.0&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;dependencies&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;Microsoft.NetCore.App&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;type&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;platform&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;version&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1.0.0-rc2&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;tools&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;dotnet-razor-tooling&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;1.0.0-rc2&amp;quot;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;tools&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;dotnet-razor-tooling&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1.0.0-rc2&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h2 id=&quot;a-typical-projectjson-for-a-library&quot;&gt;A typical project.json for a library&lt;/h2&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;version&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;0.0.1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Banana.Library&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;version&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0.0.1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Banana.Library&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;compilationOptions&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;xmlDoc&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;keyFile&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;../lib.snk&amp;quot;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;compilationOptions&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;xmlDoc&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;keyFile&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;../lib.snk&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;dependencies&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;Newtonsoft.Json&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;8.0.1&amp;quot;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;dependencies&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;Newtonsoft.Json&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;8.0.1&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;frameworks&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;netstandard1.3&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;nt&quot;&gt;&amp;quot;dependencies&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;nt&quot;&gt;&amp;quot;NETStandard.Library&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;1.0.0-rc2&amp;quot;&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;frameworks&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;netstandard1.3&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;dependencies&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+                &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;NETStandard.Library&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1.0.0-rc2&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+            &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 
-    &lt;span class=&quot;nt&quot;&gt;&amp;quot;scripts&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nt&quot;&gt;&amp;quot;prepublish&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;gen.cmd&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;scripts&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;prepublish&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;gen.cmd&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 </description>
         <pubDate>Tue, 29 Mar 2016 08:00:00 -0700</pubDate>
@@ -652,22 +802,22 @@ some of the options available to projects.&lt;/p&gt;
     
       <item>
         <title>Hacking ASP.NET 5 and Mono</title>
-        <description>&lt;p&gt;First, it is important understand what happens when you execute &lt;code&gt;dnx&lt;/code&gt;.
-Currently, the command for &lt;code&gt;dnx&lt;/code&gt; on Linux and OS X is just a shortcut to &lt;a href=&quot;https://github.com/aspnet/dnx/blob/dev/scripts/dnx.sh&quot;&gt;this script file&lt;/a&gt;.
-If you inspect this 16-line file, you will see that, in most cases, &lt;code&gt;dnx&lt;/code&gt; is just an abbreviation for &lt;code&gt;mono $MONO_OPTIONS &quot;$DIR/dnx.mono.managed.dll&quot; &quot;$@&quot;&lt;/code&gt;&lt;/p&gt;
+        <description>&lt;p&gt;First, it is important understand what happens when you execute &lt;code class=&quot;highlighter-rouge&quot;&gt;dnx&lt;/code&gt;.
+Currently, the command for &lt;code class=&quot;highlighter-rouge&quot;&gt;dnx&lt;/code&gt; on Linux and OS X is just a shortcut to &lt;a href=&quot;https://github.com/aspnet/dnx/blob/dev/scripts/dnx.sh&quot;&gt;this script file&lt;/a&gt;.
+If you inspect this 16-line file, you will see that, in most cases, &lt;code class=&quot;highlighter-rouge&quot;&gt;dnx&lt;/code&gt; is just an abbreviation for &lt;code class=&quot;highlighter-rouge&quot;&gt;mono $MONO_OPTIONS &quot;$DIR/dnx.mono.managed.dll&quot; &quot;$@&quot;&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;Understanding this enables you to change how DNX runs mono in the following ways.&lt;/p&gt;
 
-&lt;h2 id=&quot;use-the-monooptions-variable-to-pass-runtime-flags-to-mono&quot;&gt;Use the MONO_OPTIONS variable to pass runtime flags to mono&lt;/h2&gt;
+&lt;h2 id=&quot;use-the-mono_options-variable-to-pass-runtime-flags-to-mono&quot;&gt;Use the MONO_OPTIONS variable to pass runtime flags to mono&lt;/h2&gt;
 
 &lt;p&gt;This is useful if you need to alter the way DNX bootstraps mono. Here are some useful examples.&lt;/p&gt;
 
 &lt;h3 id=&quot;find-out-which-version-of-mono-dnx-is-using&quot;&gt;Find out which version of Mono DNX is using&lt;/h3&gt;
 
-&lt;p&gt;Execute &lt;code&gt;MONO_OPTIONS=--version dnx&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Execute &lt;code class=&quot;highlighter-rouge&quot;&gt;MONO_OPTIONS=--version dnx&lt;/code&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;debug-and-get-a-more-detailed-stack-trace&quot;&gt;Debug and get a more detailed stack trace&lt;/h3&gt;
-&lt;p&gt;Execute &lt;code&gt;MONO_OPTIONS=--debug dnx . run&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Execute &lt;code class=&quot;highlighter-rouge&quot;&gt;MONO_OPTIONS=--debug dnx . run&lt;/code&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;change-the-mono-runtime&quot;&gt;Change the mono runtime&lt;/h2&gt;
 
@@ -680,11 +830,11 @@ You can override the system default mono by adding a symbolic link into the runt
 &lt;p&gt;To override, follow these steps.&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;Naviate to the folder containing DNX. &lt;code&gt;dirname `which dnx`&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Add a symbolic link. For example, &lt;code&gt;ln -s /Users/nmcmaster/dev/mono-src/bin/mono ./&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Naviate to the folder containing DNX. &lt;code class=&quot;highlighter-rouge&quot;&gt;dirname `which dnx`&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Add a symbolic link. For example, &lt;code class=&quot;highlighter-rouge&quot;&gt;ln -s /Users/nmcmaster/dev/mono-src/bin/mono ./&lt;/code&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;Now DNX will use &lt;code&gt;/Users/nmcmaster/dev/mono-src/bin/mono&lt;/code&gt; instead of &lt;code&gt;/usr/bin/mono&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Now DNX will use &lt;code class=&quot;highlighter-rouge&quot;&gt;/Users/nmcmaster/dev/mono-src/bin/mono&lt;/code&gt; instead of &lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/bin/mono&lt;/code&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Thu, 09 Jul 2015 00:00:00 -0700</pubDate>
@@ -701,9 +851,9 @@ and configure virtual machines. This configuration is controlled with special fi
 
 &lt;p&gt;If you do not already have Vagrant, follow their &lt;a href=&quot;http://docs.vagrantup.com/v2/getting-started/index.html&quot;&gt;Getting Started Guide&lt;/a&gt; to get setup.&lt;/p&gt;
 
-&lt;p&gt;Add this file to the root folder of you project. Running &lt;code&gt;vagrant up&lt;/code&gt; will install a VM of Ubuntu 14 and then install all the libraries and runtime config needed to use ASP.NET 5.&lt;/p&gt;
+&lt;p&gt;Add this file to the root folder of you project. Running &lt;code class=&quot;highlighter-rouge&quot;&gt;vagrant up&lt;/code&gt; will install a VM of Ubuntu 14 and then install all the libraries and runtime config needed to use ASP.NET 5.&lt;/p&gt;
 
-&lt;p&gt;When you connect to the VM using &lt;code&gt;vagrant ssh&lt;/code&gt;, your project will be accessible in the folder &lt;strong&gt;/vagrant/&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;When you connect to the VM using &lt;code class=&quot;highlighter-rouge&quot;&gt;vagrant ssh&lt;/code&gt;, your project will be accessible in the folder &lt;strong&gt;/vagrant/&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -750,7 +900,7 @@ end
         <title>ASP.NET 5 and .NET Core: Slides</title>
         <description>&lt;p&gt;This presentation covers an overview of what is new from Microsoft’s ASP.NET team. For more information, checkout their official website at &lt;a href=&quot;http://asp.net&quot;&gt;asp.net&lt;/a&gt; or &lt;a href=&quot;http://github.com/aspnet/home&quot;&gt;on GitHub&lt;/a&gt;.  ■&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;/assets/codecamp_slides-5fb02198e288c795aef8be7a91bf440b.pdf&quot; class=&quot;btn btn-primary&quot;&gt;Download slides&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;/assets/codecamp_slides-33a0ff72926e10f7c2ce9a870a7c8f2d09d849ac9e97f3c18b1b341bb6bd7d3e.pdf&quot; class=&quot;btn btn-primary&quot;&gt;Download slides&lt;/a&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Sat, 14 Mar 2015 03:35:00 -0700</pubDate>
@@ -779,21 +929,21 @@ end
 &lt;h2 id=&quot;windows&quot;&gt;Windows&lt;/h2&gt;
 &lt;p&gt;Execute the following in &lt;em&gt;Command Prompt&lt;/em&gt; (cmd.exe)&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bat&quot; data-lang=&quot;bat&quot;&gt;&lt;span class=&quot;p&quot;&gt;@&lt;/span&gt;powershell -NoProfile -ExecutionPolicy unrestricted -Command &lt;span class=&quot;s2&quot;&gt;&amp;quot;iex ((new-object net.webclient).DownloadString(&amp;#39;https://raw.githubusercontent.com/aspnet/Home/master/kvminstall.ps1&amp;#39;))&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bat&quot; data-lang=&quot;bat&quot;&gt;@powershell -NoProfile -ExecutionPolicy unrestricted -Command &quot;iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/aspnet/Home/master/kvminstall.ps1'))&quot;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h2 id=&quot;os-x&quot;&gt;OS X&lt;/h2&gt;
 &lt;p&gt;You must have &amp;gt;= Mono 3.6.0 installed.&lt;/p&gt;
 
 &lt;p&gt;If you have &lt;a href=&quot;http://brew.sh&quot;&gt;brew&lt;/a&gt;, the following will the correct version of Mono and the KVM. Execute these in the Terminal.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;brew tap aspnet/k
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;brew tap aspnet/k
 brew install kvm
-&lt;span class=&quot;nb&quot;&gt;source &lt;/span&gt;kvm.sh&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class=&quot;nb&quot;&gt;source &lt;/span&gt;kvm.sh&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h2 id=&quot;linux&quot;&gt;Linux&lt;/h2&gt;
 &lt;p&gt;You must have Mono 3.4.1 or greater installed. Execute these on the command line.&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;curl -sSL https://raw.githubusercontent.com/aspnet/Home/master/kvminstall.sh &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; sh &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.k/kvm/kvm.sh&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;curl -sSL https://raw.githubusercontent.com/aspnet/Home/master/kvminstall.sh | sh &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.k/kvm/kvm.sh&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h1 id=&quot;beta-4&quot;&gt;Beta 4&lt;/h1&gt;
 &lt;p&gt;K, KRE, KVM, and KLR were all placeholder names. They have all been renamed in beta 4, but are stable as of March 14, 2015.  ■&lt;/p&gt;
@@ -809,30 +959,30 @@ brew install kvm
         <title>My Favorite Sublime Text 3 Plugins</title>
         <description>&lt;p&gt;&lt;a href=&quot;http://www.sublimetext.com/&quot;&gt;Sublime Text 3&lt;/a&gt; is my favorite text editor and has been for years. One of the best features is its extensibility. There are thousands of packages available. To install them, checkout &lt;a href=&quot;https://packagecontrol.io&quot;&gt;packagecontrol.io&lt;/a&gt;. Here are my favorite Sublime Text 3 plugins.&lt;/p&gt;
 
-&lt;h2 id=&quot;jsformathttpspackagecontroliopackagesjsformat&quot;&gt;1. &lt;a href=&quot;https://packagecontrol.io/packages/JsFormat&quot;&gt;JsFormat&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;1-jsformat&quot;&gt;1. &lt;a href=&quot;https://packagecontrol.io/packages/JsFormat&quot;&gt;JsFormat&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;If you write JavaScript as much as I do, it’s handy to quickly and easily format your code. This plugin adds a new shortcut, Ctrl+Alt+F to format your code.&lt;/p&gt;
 
-&lt;h2 id=&quot;theme---el-capitanhttpspackagecontroliopackagestheme20-20el20capitan&quot;&gt;2. &lt;a href=&quot;https://packagecontrol.io/packages/Theme%20-%20El%20Capitan&quot;&gt;Theme - El Capitan&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;2-theme---el-capitan&quot;&gt;2. &lt;a href=&quot;https://packagecontrol.io/packages/Theme%20-%20El%20Capitan&quot;&gt;Theme - El Capitan&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;This theme makes ST3 feel at home in Os X Yosemite.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;https://packagecontrol.io/readmes/img/501ed397b43071998ece2f048086d9d32863673d.png&quot; alt=&quot;El Capitan Screenshot&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;package-controlhttppackagecontrolio&quot;&gt;3. &lt;a href=&quot;http://packagecontrol.io&quot;&gt;Package Control&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;3-package-control&quot;&gt;3. &lt;a href=&quot;http://packagecontrol.io&quot;&gt;Package Control&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Install packages from the Command Palette.&lt;/p&gt;
 
-&lt;h2 id=&quot;taghttpspackagecontroliopackagestag&quot;&gt;4. &lt;a href=&quot;https://packagecontrol.io/packages/Tag&quot;&gt;Tag&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;4-tag&quot;&gt;4. &lt;a href=&quot;https://packagecontrol.io/packages/Tag&quot;&gt;Tag&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Helps quick (and correctly) format your HTML and XML documents.&lt;/p&gt;
 
-&lt;h2 id=&quot;select-quotedhttpspackagecontroliopackagesselect20quoted&quot;&gt;5. &lt;a href=&quot;https://packagecontrol.io/packages/Select%20Quoted&quot;&gt;Select Quoted&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;5-select-quoted&quot;&gt;5. &lt;a href=&quot;https://packagecontrol.io/packages/Select%20Quoted&quot;&gt;Select Quoted&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;This little nugget of a package adds on simple, but frequently useful keyboard shortcut: Cmd+’ for “Expand Selection To Quoted”&lt;/p&gt;
 
-&lt;h2 id=&quot;sublime-code-intelhttpspackagecontroliopackagessublimecodeintel&quot;&gt;6. &lt;a href=&quot;https://packagecontrol.io/packages/SublimeCodeIntel&quot;&gt;Sublime Code Intel&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;6-sublime-code-intel&quot;&gt;6. &lt;a href=&quot;https://packagecontrol.io/packages/SublimeCodeIntel&quot;&gt;Sublime Code Intel&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;It doesn’t always work well, but when it does, it is one of the better auto-complete engines for Python and NodeJS.&lt;/p&gt;
 
-&lt;h2 id=&quot;sidebar-enhancementshttpspackagecontroliopackagessidebarenhancements&quot;&gt;7. &lt;a href=&quot;https://packagecontrol.io/packages/SideBarEnhancements&quot;&gt;Sidebar Enhancements&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;7-sidebar-enhancements&quot;&gt;7. &lt;a href=&quot;https://packagecontrol.io/packages/SideBarEnhancements&quot;&gt;Sidebar Enhancements&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;No Sublime Text installation is complete without these enhancements. Frankly, these should come default in Sublime. Fortunately, @titeando was nice enought to build it for us.&lt;/p&gt;
 
-&lt;h2 id=&quot;sassbeautifyhttpspackagecontroliopackagessassbeautify&quot;&gt;8. &lt;a href=&quot;https://packagecontrol.io/packages/SassBeautify&quot;&gt;SassBeautify&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&quot;8-sassbeautify&quot;&gt;8. &lt;a href=&quot;https://packagecontrol.io/packages/SassBeautify&quot;&gt;SassBeautify&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;And finally, SassBeautify. If this package only formatted SASS it wouldn’t be in the my list. But this adds a crucial feature. SassBeautify can convert easily between CSS, SCSS, and SASS from the Command Palette. This has come in especially handy when taking someone elses clunky CSS and attempting to slim it down to SASS.&lt;/p&gt;
 
 &lt;p&gt;Of course, there are many more packages available, including my favorite color schemes and some useful language-highlighting packages. But these above are the packages I could not code as effectively without. ■&lt;/p&gt;
@@ -840,66 +990,6 @@ brew install kvm
         <pubDate>Thu, 05 Mar 2015 11:30:00 -0800</pubDate>
         <link>http://www.natemcmaster.com/blog/2015/03/05/st3-plugins/</link>
         <guid isPermaLink="true">http://www.natemcmaster.com/blog/2015/03/05/st3-plugins/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Blogging with Jekyll and GitHub Pages</title>
-        <description>&lt;p&gt;I host this blog for free. I don’t worry about hosting plans, bandwidth, or others common website concerns. How? To get this setup, you will need to be a little proficient with these tools:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Git&lt;/li&gt;
-  &lt;li&gt;The command line&lt;/li&gt;
-  &lt;li&gt;Markdown or HTML&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;free-hosting-thanks-to-pagesgithubcomhttppagesgithubcom&quot;&gt;Free Hosting (thanks to &lt;a href=&quot;http://pages.github.com&quot;&gt;pages.github.com&lt;/a&gt;)&lt;/h2&gt;
-
-&lt;p&gt;GitHub provides a way for developers to post free webpages. This requires a little bit of hacking, but it is not too difficult. Their instructions are so simple, that rather than duplicate them here, I will just point you to their website.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://pages.github.com/&quot;&gt;Setup free hosting with GitHub Pages&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;generating-pages-with-jekyll&quot;&gt;Generating Pages with Jekyll&lt;/h2&gt;
-&lt;p&gt;GitHub pages requires that you serve static content only. For those update their blogs infrequently and don’t need a complicated web service, static content works just fine. This blog is generated using &lt;a href=&quot;http://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;, which is a light framework written in Ruby for generating content.&lt;/p&gt;
-
-&lt;p&gt;Jekyll is setup to generated blogs&lt;/p&gt;
-
-&lt;h2 id=&quot;customizing-jekyll&quot;&gt;Customizing Jekyll&lt;/h2&gt;
-&lt;p&gt;By default, GitHub will run Jekyll when you push your content and generate the HTML for you. Jekyll supports &lt;a href=&quot;http://jekyllrb.com/docs/plugins/#available-plugins&quot;&gt;some powerful plugins&lt;/a&gt;, but to run these you must commit the generated content to your GitHub branch instead of the Jekyll code.&lt;/p&gt;
-
-&lt;h2 id=&quot;my-setup&quot;&gt;My setup&lt;/h2&gt;
-&lt;p&gt;For this blog, I have setup a separate folder within my project where Jekyll builds the content. This folder is configured as a git submodule for the same repo as the parent project.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ini&quot; data-lang=&quot;ini&quot;&gt;&lt;span class=&quot;k&quot;&gt;[submodule &amp;quot;build&amp;quot;]&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;build&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;    url = git@github.com:natemcmaster/natemcmaster.github.io.git&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;    branch = master&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;I added a simple &lt;strong&gt;Makefile&lt;/strong&gt; to simplify the build and publishing process.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-make&quot; data-lang=&quot;make&quot;&gt;&lt;span class=&quot;nv&quot;&gt;DIR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;./build
-
-&lt;span class=&quot;nf&quot;&gt;.PHONY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;publish&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j_build&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;serve&lt;/span&gt;
-
-&lt;span class=&quot;nf&quot;&gt;j_build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
-    jekyll build
-
-&lt;span class=&quot;nf&quot;&gt;serve&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
-    @open http://localhost:4000
-    jekyll serve --watch
-
-&lt;span class=&quot;nf&quot;&gt;publish&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j_build&lt;/span&gt;
-    git --git-dir&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;DIR&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;/.git add --all
-    git --git-dir&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;DIR&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;/.git commit -m &lt;span class=&quot;s2&quot;&gt;&amp;quot;Build `date`&amp;quot;&lt;/span&gt;
-    git --git-dir&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;DIR&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;/.git push
-    git add build/&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Happy blogging! ■&lt;/p&gt;
-</description>
-        <pubDate>Sun, 01 Mar 2015 08:00:00 -0800</pubDate>
-        <link>http://www.natemcmaster.com/blog/2015/03/01/blogging-with-jekyll/</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2015/03/01/blogging-with-jekyll/</guid>
         
         
       </item>

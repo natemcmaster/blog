@@ -15,13 +15,13 @@
     <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro|Roboto+Slab:400,300|Open+Sans:300italic,400italic,600italic,400,600,300" rel="stylesheet" type="text/css">
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/assets/ga-d0c581bb05eca417d65b4df14b5d5b44.js"></script>
+    <script type="text/javascript" src="/assets/ga-d1faeb94eb25224ec0843d6c613d8cde7f294fd1d5bddd72fd16bbf8cccfe517.js"></script>
     <script type="text/javascript">
         (function (ga) {
             ga('send', 'pageview');
         })(ga);
     </script>
-    <link rel="stylesheet" href="/assets/app-527886830577906c6a5cdf7dbf4d8ee9.css">
+    <link type="text/css" rel="stylesheet" href="/assets/app-80ad1bdf6f437ed16def341f2041cd1fcf25680fdaa7d8fe343f9605178c2c5f.css">
 </head>
 
 
@@ -109,7 +109,7 @@ What is the folder and how is it used?</p>
 
 <p>*It’s just a zip file. Unzip it.</p>
 
-<h3 id="tldr">TLDR;</h3>
+<p>###TLDR;</p>
 
 <p>Here is the RC2 rid graph:
 <a href="https://github.com/dotnet/corefx/blob/v1.0.0-rc2/pkg/Microsoft.NETCore.Platforms/runtime.json">https://github.com/dotnet/corefx/blob/v1.0.0-rc2/pkg/Microsoft.NETCore.Platforms/runtime.json</a></p>
@@ -148,15 +148,15 @@ System.IO.Compression includes a library design for *nix systems and another for
 
 <p>Managed libraries can be placed in folders that follow this pattern.</p>
 
-<p><code>
-runtimes/{rid}/lib/{tfm}/*.dll
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>runtimes/{rid}/lib/{tfm}/*.dll
+</code></pre>
+</div>
 
 <p>Native libraries (*.dll on Windows, *.so for Linux, *.dylib for OSX) can be included as well.</p>
 
-<p><code>
-runtimes/{rid}/native/*.(dll | so | dylib )
-</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>runtimes/{rid}/native/*.(dll | so | dylib )
+</code></pre>
+</div>
 
 <p>*“tfm” refers to “target framework moniker”. See <a href="https://docs.nuget.org/create/targetframeworks">https://docs.nuget.org/create/targetframeworks</a> for a
 list of available TFMs and to determine which you should use.</p>
@@ -189,36 +189,36 @@ The RC2 graph is found in this file:</p>
 
 <p>Here is a snippet from that RID graph:</p>
 
-<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
-    <span class="nt">&quot;runtimes&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;base&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="p">},</span>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+    </span><span class="nt">"runtimes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"base"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="p">},</span><span class="w">
 
-        <span class="nt">&quot;any&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;#import&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;base&quot;</span> <span class="p">]</span>
-        <span class="p">},</span>
+        </span><span class="nt">"any"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"#import"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"base"</span><span class="w"> </span><span class="p">]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
 
-        <span class="nt">&quot;win&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;#import&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;any&quot;</span> <span class="p">]</span>
-        <span class="p">},</span>
-        <span class="nt">&quot;win-x86&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;#import&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;win&quot;</span> <span class="p">]</span>
-        <span class="p">},</span>
-        <span class="nt">&quot;win-x64&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;#import&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;win&quot;</span> <span class="p">]</span>
-        <span class="p">},</span>
+        </span><span class="nt">"win"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"#import"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"any"</span><span class="w"> </span><span class="p">]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"win-x86"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"#import"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"win"</span><span class="w"> </span><span class="p">]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"win-x64"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"#import"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"win"</span><span class="w"> </span><span class="p">]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
 
-        <span class="nt">&quot;win7&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;#import&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;win&quot;</span> <span class="p">]</span>
-        <span class="p">},</span>
-        <span class="nt">&quot;win7-x86&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;#import&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;win7&quot;</span><span class="p">,</span> <span class="s2">&quot;win-x86&quot;</span> <span class="p">]</span>
-        <span class="p">},</span>
-        <span class="nt">&quot;win7-x64&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="nt">&quot;#import&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;win7&quot;</span><span class="p">,</span> <span class="s2">&quot;win-x64&quot;</span> <span class="p">]</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre></div>
+        </span><span class="nt">"win7"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"#import"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"win"</span><span class="w"> </span><span class="p">]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"win7-x86"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"#import"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"win7"</span><span class="p">,</span><span class="w"> </span><span class="s2">"win-x86"</span><span class="w"> </span><span class="p">]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"win7-x64"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"#import"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"win7"</span><span class="p">,</span><span class="w"> </span><span class="s2">"win-x64"</span><span class="w"> </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
 
 <h2 id="how-is-the-rid-graph-used">How is the RID graph used?</h2>
 
@@ -227,14 +227,14 @@ present in a package, but none with a package that match the exact runtime curre
 it will trace the graph back to the closest compatible system. For example, the list of RID fallbacks
 for Windows 7 32 bit machines are as follows:</p>
 
-<div class="highlight"><pre><code class="language-text" data-lang="text">win7-x86
+<figure class="highlight"><pre><code class="language-text" data-lang="text">win7-x86
 win7
 win-x86
 win
 any
-base</code></pre></div>
+base</code></pre></figure>
 
-<p>For example, if I use a library that has a library under <code>runtimes/win/lib/*.dll</code> and I restore packages for 
+<p>For example, if I use a library that has a library under <code class="highlighter-rouge">runtimes/win/lib/*.dll</code> and I restore packages for 
 Windows 7, 32 bit, NuGet can trace the RID graph and will fallback to the closest, most compatible RID,
  which in this case will be “win”.</p>
 
