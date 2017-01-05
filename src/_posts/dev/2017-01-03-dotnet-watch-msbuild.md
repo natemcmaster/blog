@@ -90,7 +90,7 @@ Example:
 </ItemGroup>
 ```
 
-# For MSBuild ninja's
+# For MSBuild ninjas
 
 ## The 'watch' build
 
