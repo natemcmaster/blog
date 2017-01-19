@@ -527,3 +527,43 @@ Except for "Content", most item groups require explicitly adding `Pack="true"` t
 be included in the package. By default, this will be but in the 'content' folder
 in a package. `PackagePath="%(Identity)"` is a short way of setting package path
 to the project-relative file path.
+
+# testRunner
+
+## xunit
+
+```json
+{
+  "testRunner": "xunit",
+  "dependencies": {
+    "dotnet-test-xunit": "<any>"
+  }
+}
+```
+
+```xml
+<ItemGroup>
+  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-*" />
+  <PackageReference Include="xunit" Version="2.2.0-*" />
+  <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0-*" />
+</ItemGroup>
+```
+
+## mstest
+
+```json
+{
+  "testRunner": "mstest",
+  "dependencies": {
+    "dotnet-test-mstest": "<any>"
+  }
+}
+```
+
+```xml
+<ItemGroup>
+  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-*" />
+  <PackageReference Include="MSTest.TestAdapter" Version="1.0.0-*" />
+  <PackageReference Include="MSTest.TestFramework" Version="1.0.0-*" />
+</ItemGroup>
+```
