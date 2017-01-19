@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Project.json to MSBuild conversion guide</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Infrequent blog posts about software development, lifehacks, opinion, etc.
+">
+    <meta name="generator" content="Jekyll">
+    <meta name="author" content="Nate McMaster" comment="Surprised?">
+    <meta http-equiv="Content-Language" content="en">
+    <link rel="canonical" href="http://www.natemcmaster.com/blog/2017/01/19/project-json-to-csproj/">
+    <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro|Roboto+Slab:400,300|Open+Sans:300italic,400italic,600italic,400,600,300" rel="stylesheet" type="text/css">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="/assets/ga-d1faeb94eb25224ec0843d6c613d8cde7f294fd1d5bddd72fd16bbf8cccfe517.js"></script>
+    <script type="text/javascript">
+        (function (ga) {
+            ga('send', 'pageview');
+        })(ga);
+    </script>
+    <link type="text/css" rel="stylesheet" href="/assets/app-80ad1bdf6f437ed16def341f2041cd1fcf25680fdaa7d8fe343f9605178c2c5f.css">
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+
+  <div class="wrap">
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon" analytics-on="click" analytics-event="menu_button">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+           viewBox="0 0 18 15" xml:space="preserve">
+          <path fill="white" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0
+            h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="white" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484
+            h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="white" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0
+            c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+      <div class="trigger">
+        
+          <a class="page-link " href="/blog/">
+          Blog
+          </a>
+        
+        
+          <a class="page-link " href="/projects/">
+          Projects
+          </a>
+        
+        
+          
+        
+          <a class="page-link " href="/profile/">
+          About Me
+          </a>
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+    <div class="brand">
+      <div class="brand-img">
+        <a href="/">
+          <img src="//www.gravatar.com/avatar/692c58f37a3704944bd31c4cbcb287e7.png?s=150" class="img-profile"></a>
+      </div>
+      <div class="brand-name">
+        <a class="site-title" href="/">Nate McMaster</a>
+      </div>
+    </div>
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+      <header class="post-header">
+  <p class="meta">Blog Post: January 19, 2017</p>
+  <h1>Project.json to MSBuild conversion guide</h1>
+  
+</header>
+
+<article class="post-content">
+  
+<p>If you been given the unenviable task of migrating your .NET Core project from ‘project.json’
+to MSBuild (csproj), you are likely to find your muscle memory disrupted and the
+documentation lacking. Automated upgrades in Visual Studio and .NET Core CLI may
+auto-generate a csproj file for you, but they won’t tell you how to do things you
+already know how to do in project.json. Here is the most exhaustive list I can create
+of all the project.json knobs as they exist in Microsoft.NET.Sdk.</p>
+
+<p>Missing something? Post your question in comment section below and I will update this post.</p>
+
+<p>For all examples below, assume the XML is inside this root node:</p>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;Project</span> <span class="na">Sdk=</span><span class="s">"Microsoft.NET.Sdk"</span> <span class="na">ToolsVersion=</span><span class="s">"15.0"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/Project&gt;</span>
+</code></pre>
+</div>
+
+<h1 id="common-top-level-properties">Common top-level properties</h1>
+
+<h2 id="name">name</h2>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MyProjectName"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Not supported. In csproj, this is determined by the filename, e.g. <code class="highlighter-rouge">MyProjectName.csproj</code>.</p>
+
+<h2 id="version">version</h2>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0-alpha-*"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;PropertyGroup&gt;</span>
+  <span class="nt">&lt;VersionPrefix&gt;</span>1.0.0<span class="nt">&lt;/VersionPrefix&gt;</span>
+  <span class="nt">&lt;VersionSuffix&gt;</span>alpha<span class="nt">&lt;/VersionSuffix&gt;</span>
+<span class="nt">&lt;/PropertyGroup&gt;</span>
+</code></pre>
+</div>
+
+<p>You can also use <code class="highlighter-rouge">Version</code>, but this may override version settings during packaging.</p>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;PropertyGroup&gt;</span>
+  <span class="nt">&lt;Version&gt;</span>1.0.0-alpha<span class="nt">&lt;/Version&gt;</span>
+<span class="nt">&lt;/PropertyGroup&gt;</span>
+</code></pre>
+</div>
+
+<h2 id="other-common-root-level-options">Other common root-level options</h2>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"authors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Anne"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Bob"</span><span class="w"> </span><span class="p">],</span><span class="w">
+  </span><span class="nt">"company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Contoso"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en-US"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My library"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This is my library.\r\nAnd it's really great!"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"copyright"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Nugetizer 3000"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"userSecretsId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xyz123"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;PropertyGroup&gt;</span>
+  <span class="nt">&lt;Authors&gt;</span>Anne;Bob<span class="nt">&lt;Authors&gt;</span>
+  <span class="nt">&lt;Company&gt;</span>Contoso<span class="nt">&lt;Company&gt;</span>
+  <span class="nt">&lt;NeutralLanguage&gt;</span>en-US<span class="nt">&lt;/NeutralLanguage&gt;</span>
+  <span class="nt">&lt;AssemblyTitle&gt;</span>My library<span class="nt">&lt;/AssemblyTitle&gt;</span>
+  <span class="nt">&lt;Description&gt;</span>This is my library.
+And it's really great!<span class="nt">&lt;/Description&gt;</span>
+  <span class="nt">&lt;Copyright&gt;</span>Nugetizer 3000<span class="nt">&lt;/Copyright&gt;</span>
+  <span class="nt">&lt;UserSecretsId&gt;</span>xyz123<span class="nt">&lt;/UserSecretsId&gt;</span>
+<span class="nt">&lt;/PropertyGroup&gt;</span>
+</code></pre>
+</div>
+
+<h1 id="frameworks">frameworks</h1>
+
+<h2 id="one-frameworks">One frameworks</h2>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"frameworks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"netcoreapp1.0"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;PropertyGroup&gt;</span>
+  <span class="nt">&lt;TargetFramework&gt;</span>netcoreapp1.0<span class="nt">&lt;/TargetFramework&gt;</span>
+<span class="nt">&lt;/PropertyGroup&gt;</span>
+</code></pre>
+</div>
+
+<h2 id="multiple-frameworks">Multiple frameworks</h2>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"frameworks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"netcoreapp1.0"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"net451"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;PropertyGroup&gt;</span>
+  <span class="nt">&lt;TargetFrameworks&gt;</span>netcoreapp1.0;net451<span class="nt">&lt;/TargetFrameworks&gt;</span>
+<span class="nt">&lt;/PropertyGroup&gt;</span>
+</code></pre>
+</div>
+
+<h1 id="dependencies">dependencies</h1>
+
+<p>NB: If the dependency is a <strong>project</strong>, not a package the format is different. See
+the section below on <a href="#dependency-type">dependency types</a></p>
+
+<h2 id="top-level">Top-level</h2>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"dependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"Microsoft.AspNetCore"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.1.0"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;ItemGroup&gt;</span>
+  <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"Microsoft.AspNetCore"</span> <span class="na">Version=</span><span class="s">"1.1.0"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/ItemGroup&gt;</span>
+</code></pre>
+</div>
+
+<h2 id="per-framework">Per-framework</h2>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"framework"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"net451"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"dependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"System.Collections.Immutable"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.3.1"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"netstandard1.5"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"dependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"Newtonsoft.Json"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9.0.1"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;ItemGroup</span> <span class="na">Condition=</span><span class="s">"'$(TargetFramework)'=='net451'"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"System.Collections.Immutable"</span> <span class="na">Version=</span><span class="s">"1.3.1"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/ItemGroup&gt;</span>
+
+<span class="nt">&lt;ItemGroup</span> <span class="na">Condition=</span><span class="s">"'$(TargetFramework)'=='netstandard1.5'"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"Newtonsoft.Json"</span> <span class="na">Version=</span><span class="s">"9.0.1"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/ItemGroup&gt;</span>
+</code></pre>
+</div>
+
+<h2 id="imports">imports</h2>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"dependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"YamlDotNet"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4.0.1-pre309"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"frameworks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"netcoreapp1.0"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"imports"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"dnxcore50"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"dotnet"</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;PropertyGroup&gt;</span>
+  <span class="nt">&lt;PackageTargetFallback&gt;</span>dnxcore50;dotnet<span class="nt">&lt;/PackageTargetFallback&gt;</span>
+<span class="nt">&lt;/PropertyGroup&gt;</span>
+<span class="nt">&lt;ItemGroup&gt;</span>
+  <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"YamlDotNet"</span> <span class="na">Version=</span><span class="s">"4.0.1-pre309"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/ItemGroup&gt;</span>
+</code></pre>
+</div>
+
+<h2 id="dependency-type">dependency type</h2>
+
+<h3 id="type-project">type: project</h3>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"dependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"MyOtherProject"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0-*"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"AnotherProject"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"project"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;ItemGroup&gt;</span>
+  <span class="nt">&lt;ProjectReference</span> <span class="na">Include=</span><span class="s">"..\MyOtherProject\MyOtherProject.csproj"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;ProjectReference</span> <span class="na">Include=</span><span class="s">"..\AnotherProject\AnotherProject.csproj"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/ItemGroup&gt;</span>
+</code></pre>
+</div>
+
+<p>NB: this will break the way that <code class="highlighter-rouge">dotnet pack --version-suffix $suffix</code> determines the 
+dependency version of a project reference.</p>
+
+<h3 id="type-build">type: build</h3>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"dependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"Microsoft.EntityFrameworkCore.Design"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.1.0"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"build"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;ItemGroup&gt;</span>
+  <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"Microsoft.EntityFrameworkCore.Design"</span> <span class="na">Version=</span><span class="s">"1.1.0"</span> <span class="na">PrivateAssets=</span><span class="s">"All"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/ItemGroup&gt;</span>
+</code></pre>
+</div>
+
+<h3 id="type-platform">type: platform</h3>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"dependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"Microsoft.NETCore.App"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.1.0"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"platform"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>There is no equivalent in csproj. Microsoft.NET.Sdk automagically knows about Microsoft.NETCore.App.</p>
+
+<h1 id="runtimes">runtimes</h1>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"runtimes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"win7-x64"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"osx.10.11-x64"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"ubuntu.16.04-x64"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;PropertyGroup&gt;</span>
+  <span class="nt">&lt;RuntimeIdentifiers&gt;</span>win7-x64;osx.10-11-x64;ubuntu.16.04-x64<span class="nt">&lt;/RuntimeIdentifiers&gt;</span>
+<span class="nt">&lt;/PropertyGroup&gt;</span>
+</code></pre>
+</div>
+
+<h2 id="standalone-apps-self-contained-deployment">Standalone apps (self-contained deployment)</h2>
+<p>In project.json, defining a ‘runtimes’ section mean the app was standalone during
+build and publish.
+In MSBuild, all projects are ‘portable’ during build, but can be published as
+standalone.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dotnet publish --framework netcoreapp1.0 /p:RuntimeIdentifier=osx.10.11-x64
+</code></pre>
+</div>
+
+<h1 id="tools">tools</h1>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"tools"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"Microsoft.EntityFrameworkCore.Tools.DotNet"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0-*"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;ItemGroup&gt;</span>
+  <span class="nt">&lt;DotNetCliToolReference</span> <span class="na">Include=</span><span class="s">"Microsoft.EntityFrameworkCore.Tools.DotNet"</span> <span class="na">Version=</span><span class="s">"1.0.0"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/ItemGroup&gt;</span>
+</code></pre>
+</div>
+
+<p>NB: “imports” on tools are no longer supported in csproj. Tools that need imports will not work with
+the new Microsoft.NET.Sdk.</p>
+
+<h1 id="buildoptions">buildOptions</h1>
+
+<p>See also <a href="#files">Files</a>.</p>
+
+<h2 id="emitentrypoint">emitEntryPoint</h2>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"buildOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"emitEntryPoint"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;PropertyGroup&gt;</span>
+  <span class="nt">&lt;OutputType&gt;</span>Exe<span class="nt">&lt;/OutputType&gt;</span>
+<span class="nt">&lt;/PropertyGroup&gt;</span>
+</code></pre>
+</div>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"buildOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"emitEntryPoint"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;PropertyGroup&gt;</span>
+  <span class="nt">&lt;OutputType&gt;</span>Library<span class="nt">&lt;/OutputType&gt;</span>
+  <span class="c">&lt;!-- or, omit altogether. It defaults to 'Library' --&gt;</span>
+<span class="nt">&lt;/PropertyGroup&gt;</span>
+</code></pre>
+</div>
+
+<h2 id="keyfile">keyFile</h2>
+<p>This one gets special mention because it expands to three properties in MSBuild.</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"buildOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"keyFile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MyKey.snk"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;PropertyGroup&gt;</span>
+  <span class="nt">&lt;AssemblyOriginatorKeyFile&gt;</span>MyKey.snk<span class="nt">&lt;/AssemblyOriginatorKeyFile&gt;</span>
+  <span class="nt">&lt;SignAssembly&gt;</span>true<span class="nt">&lt;/SignAssembly&gt;</span>
+  <span class="nt">&lt;PublicSign</span> <span class="na">Condition=</span><span class="s">"'$(OS)' != 'Windows_NT'"</span><span class="nt">&gt;</span>true<span class="nt">&lt;/PublicSign&gt;</span>
+<span class="nt">&lt;/PropertyGroup&gt;</span>
+</code></pre>
+</div>
+
+<h2 id="other-common-build-options">Other common build options</h2>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"buildOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"warningsAsErrors"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"nowarn"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"CS0168"</span><span class="p">,</span><span class="w"> </span><span class="s2">"CS0219"</span><span class="p">],</span><span class="w">
+    </span><span class="nt">"xmlDoc"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"preserveCompilationContext"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"outputName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Different.AssemblyName"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"debugType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"portable"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"allowUnsafe"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"define"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"TEST"</span><span class="p">,</span><span class="w"> </span><span class="s2">"OTHERCONDITION"</span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;PropertyGroup&gt;</span>
+  <span class="nt">&lt;WarningsAsErrors&gt;</span>true<span class="nt">&lt;/WarningsAsErrors&gt;</span>
+  <span class="nt">&lt;NoWarn&gt;</span>$(NoWarn);CS0168;CS0219<span class="nt">&lt;/NoWarn&gt;</span>
+  <span class="nt">&lt;GenerateDocumentationFile&gt;</span>true<span class="nt">&lt;/GenerateDocumentationFile&gt;</span>
+  <span class="nt">&lt;PreserveCompliationContext&gt;</span>true<span class="nt">&lt;/PreserveCompliationContext&gt;</span>
+  <span class="nt">&lt;AssemblyName&gt;</span>Different.AssemblyName<span class="nt">&lt;/AssemblyName&gt;</span>
+  <span class="nt">&lt;DebugType&gt;</span>portable<span class="nt">&lt;/DebugType&gt;</span>
+  <span class="nt">&lt;AllowUnsafeBlocks&gt;</span>true<span class="nt">&lt;/AllowUnsafeBlocks&gt;</span>
+  <span class="nt">&lt;DefineConstants&gt;</span>$(DefineConstants);TEST;OTHERCONDITION<span class="nt">&lt;/DefineConstants&gt;</span>
+<span class="nt">&lt;/PropertyGroup&gt;</span>
+</code></pre>
+</div>
+
+<h1 id="packoptions">packOptions</h1>
+
+<p>See also <a href="#files">Files</a>.</p>
+
+<h2 id="common-pack-options">Common pack options</h2>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"packOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"summary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A bundle of cats"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"hyperscale"</span><span class="p">,</span><span class="w"> </span><span class="s2">"cats"</span><span class="p">],</span><span class="w">
+    </span><span class="nt">"owners"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Nate"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Jenna"</span><span class="w"> </span><span class="p">],</span><span class="w">
+    </span><span class="nt">"releaseNotes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Version 1.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"iconUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://icons.com/awesomeness.png"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"projectUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://github.com/natemcmaster"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"licenseUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.apache.org/licenses/LICENSE-2.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"requireLicenseAcceptance"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"repository"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"git"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://github.com/natemcmaster/natemcmaster.github.io"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;PropertyGroup&gt;</span>
+  <span class="nt">&lt;Summary&gt;</span>A bundle of cats<span class="nt">&lt;/Summary&gt;</span>
+  <span class="nt">&lt;PackageTags&gt;</span>hyperscale;cats<span class="nt">&lt;/PackageTags&gt;</span>
+  <span class="nt">&lt;PackageReleaseNotes&gt;</span>Version 1.0<span class="nt">&lt;/PackageReleaseNotes&gt;</span>
+  <span class="nt">&lt;PackageIconUrl&gt;</span>https://icons.com/awesomeness.png<span class="nt">&lt;/PackageIconUrl&gt;</span>
+  <span class="nt">&lt;PackageProjectUrl&gt;</span>https://github.com/natemcmaster<span class="nt">&lt;/PackageProjectUrl&gt;</span>
+  <span class="nt">&lt;PackageLicenseUrl&gt;</span>https://www.apache.org/licenses/LICENSE-2.0<span class="nt">&lt;/PackageLicenseUrl&gt;</span>
+  <span class="nt">&lt;PackageRequireLicenseAcceptance&gt;</span>false<span class="nt">&lt;/PackageRequireLicenseAcceptance&gt;</span>
+  <span class="nt">&lt;RepositoryType&gt;</span>git<span class="nt">&lt;/RepositoryType&gt;</span>
+  <span class="nt">&lt;RepositoryUrl&gt;</span>https://github.com/natemcmaster/natemcmaster.github.io<span class="nt">&lt;/RepositoryUrl&gt;</span>
+  <span class="c">&lt;!-- regrettably, 'owners' does not translate to MSBuild. --&gt;</span>
+<span class="nt">&lt;/PropertyGroup&gt;</span>
+</code></pre>
+</div>
+
+<h1 id="scripts">scripts</h1>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"scripts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"precompile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"generateCode.cmd"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"postpublish"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"obfuscate.cmd"</span><span class="p">,</span><span class="w"> </span><span class="s2">"removeTempFiles.cmd"</span><span class="w"> </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Their equivalent in MSBuild are targets.</p>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;Target</span> <span class="na">Name=</span><span class="s">"MyPreCompileTarget"</span> <span class="na">BeforeTargets=</span><span class="s">"Build"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;Exec</span> <span class="na">Command=</span><span class="s">"generateCode.cmd"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/Target&gt;</span>
+
+<span class="nt">&lt;Target</span> <span class="na">Name=</span><span class="s">"MyPostCompileTarget"</span> <span class="na">AfterTargets=</span><span class="s">"Publish"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;Exec</span> <span class="na">Command=</span><span class="s">"obfuscate.cmd"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;Exec</span> <span class="na">Command=</span><span class="s">"removeTempFiles.cmd"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/Target&gt;</span>
+</code></pre>
+</div>
+
+<h1 id="runtimeoptions">runtimeOptions</h1>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"runtimeOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"configProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"System.GC.Server"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>All settings in this group should be placed into a file in the project folder called
+<code class="highlighter-rouge">runtimeconfig.template.json</code>, with options lifted to root object.</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"configProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"System.GC.Server"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h1 id="shared">shared</h1>
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"shared"</span><span class="p">:</span><span class="w"> </span><span class="s2">"shared/**/*.cs"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Not supported in csproj. You must instead create a ‘contentFiles’ package. See <a href="https://docs.nuget.org">https://docs.nuget.org</a> for more info.</p>
+
+<h1 id="files">files</h1>
+
+<p>In project.json, build and pack could be extended to compile and embed from different folders.
+In MSBuild, this is done using items. Here is a common conversion:</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"buildOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"compile"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"copyToOutput"</span><span class="p">:</span><span class="w"> </span><span class="s2">"notes.txt"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"include"</span><span class="p">:</span><span class="w"> </span><span class="s2">"../Shared/*.cs"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"exclude"</span><span class="p">:</span><span class="w"> </span><span class="s2">"../Shared/Not/*.cs"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"embed"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"include"</span><span class="p">:</span><span class="w"> </span><span class="s2">"../Shared/*.resx"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"packOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"include"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Views/"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"mappings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"some/path/in/project.txt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"in/package.txt"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"publishOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"include"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"files/"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"publishnotes.txt"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;ItemGroup&gt;</span>
+  <span class="nt">&lt;Compile</span> <span class="na">Include=</span><span class="s">"..\Shared\*.cs"</span> <span class="na">Exclude=</span><span class="s">"..\Shared\Not\*.cs"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;EmbeddedResource</span> <span class="na">Include=</span><span class="s">"..\Shared\*.resx"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;Content</span> <span class="na">Include=</span><span class="s">"Views\**\*"</span> <span class="na">PackagePath=</span><span class="s">"%(Identity)"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;None</span> <span class="na">Include=</span><span class="s">"some/path/in/project.txt"</span> <span class="na">Pack=</span><span class="s">"true"</span> <span class="na">PackagePath=</span><span class="s">"in/package.txt"</span> <span class="nt">/&gt;</span>
+  
+  <span class="nt">&lt;None</span> <span class="na">Include=</span><span class="s">"notes.txt"</span> <span class="na">CopyToOutputDirectory=</span><span class="s">"Always"</span> <span class="nt">/&gt;</span>
+  <span class="c">&lt;!-- CopyToOutputDirectory = { Always, PreserveNewest, Never } --&gt;</span>
+
+  <span class="nt">&lt;Content</span> <span class="na">Include=</span><span class="s">"files\**\*"</span> <span class="na">CopyToPublishDirectory=</span><span class="s">"PreserveNewest"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;None</span> <span class="na">Include=</span><span class="s">"publishnotes.txt"</span> <span class="na">CopyToPublishDirectory=</span><span class="s">"Always"</span> <span class="nt">/&gt;</span>
+  <span class="c">&lt;!-- CopyToPublishDirectory = { Always, PreserveNewest, Never } --&gt;</span>
+<span class="nt">&lt;/ItemGroup&gt;</span>
+</code></pre>
+</div>
+
+<p>NB: many of default globbing patterns are added automatically by Microsoft.NET.Sdk
+and Microsoft.NET.Sdk.Web.</p>
+
+<p>All MSBuild ItemGroup’s support ‘Include’, ‘Exclude’, and ‘Remove’.</p>
+
+<p>Package layout inside the nupkg can be modified with <code class="highlighter-rouge">PackagePath="path"</code>.</p>
+
+<p>Except for “Content”, most item groups require explicitly adding <code class="highlighter-rouge">Pack="true"</code> to 
+be included in the package. By default, this will be but in the ‘content’ folder
+in a package. <code class="highlighter-rouge">PackagePath="%(Identity)"</code> is a short way of setting package path
+to the project-relative file path.</p>
+
+</article>
+<div class="comments">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'nmblog8'; // required: replace example with your forum shortname
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+</div>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrap">
+
+  <div class="vcard">
+    <h4 class="fn">Nate McMaster</h4>
+  </div>
+
+    <div class="footer-col-1 column">
+      <div>
+        <a href="mailto:" analytics-on="click" analytics-event="email" rel=""></a>
+      </div>
+      <div class="footer-icons">
+          
+            <a href="https://github.com/natemcmaster" analytics-on="click" analytics-event="outbound" analytics-label="github_profile">
+              <span class="icon-github"></span>
+            </a>
+          
+            <a href="https://twitter.com/natemcmaster" analytics-on="click" analytics-event="outbound" analytics-label="twitter_profile">
+              <span class="icon-twitter"></span>
+            </a>
+          
+           <a href="https://www.linkedin.com/in/natemcmaster" analytics-on="click" analytics-event="outbound" analytics-label="linkedin_profile">
+            <span class="icon-linkedin"></span>
+            </a>
+          
+      </div>
+    </div>
+
+
+    <div class="footer-col-3 column">
+      <p class="text">Infrequent blog posts about software development, lifehacks, opinion, etc.
+Disclaimer: Thoughts and opinions are my own.</p>
+    </div>
+
+  </div>
+
+</footer>
+
+
+    </body>
+</html>
