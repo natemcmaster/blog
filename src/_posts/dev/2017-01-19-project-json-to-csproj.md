@@ -13,6 +13,37 @@ of all the project.json knobs as they exist in Microsoft.NET.Sdk.
 
 Missing something? Post your question in comment section below and I will update this post.
 
+# dotnet migrate
+
+[.NET Core CLI RC3 Downloads](https://github.com/dotnet/core/blob/master/release-notes/rc3-download.md)
+
+(As of January 2017) the latest .NET Core CLI is the RC3 release.
+This is required to use the MSBuild-based .NET Core SDK.
+The RC3 version of dotnet includes a new command, `dotnet migrate`. This command will attempt
+to automatically convert all _project.json_ projects to MSBuild.
+
+For help on usage, execute `dotnet migrate --help`.
+
+Tip: if you get an error, "No executable found matching command "dotnet-migrate"", check that:
+
+1. If you have a global.json file in the current or parent directires, ensure it does not set the
+   "sdk" version set to an older version.
+1. The RC3 version is installed. Run `dotnet --info` to see which version you are using.
+
+## Visual Studio 2017 RC
+
+[Visual Studio 2017 RC Downloads](https://www.visualstudio.com/vs/visual-studio-2017-rc/)
+
+The same auto-upgrade feature of dotnet-migrate is available in Visual Studio 2017.
+When attempting to open a Visual Studio
+solution that has "xproj" projects in it, VS will convert from project.json to the new MSBuild format.
+(xproj was a VS wrapper for project.json).
+
+# csproj
+
+The new format, *.csproj, is an XML based format. Below are examples of how to 
+configure a .NET Core, .NET Standard, or .NET Framework project using the new Microsoft.NET.Sdk. 
+
 For all examples below, assume the XML is inside this root node:
 
 ```xml
