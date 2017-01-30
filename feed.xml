@@ -6,8 +6,8 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 19 Jan 2017 09:10:43 -0800</pubDate>
-    <lastBuildDate>Thu, 19 Jan 2017 09:10:43 -0800</lastBuildDate>
+    <pubDate>Sun, 29 Jan 2017 22:00:59 -0800</pubDate>
+    <lastBuildDate>Sun, 29 Jan 2017 22:00:59 -0800</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
     
       <item>
@@ -20,6 +20,39 @@ already know how to do in project.json. Here is the most exhaustive list I can c
 of all the project.json knobs as they exist in Microsoft.NET.Sdk.&lt;/p&gt;
 
 &lt;p&gt;Missing something? Post your question in comment section below and I will update this post.&lt;/p&gt;
+
+&lt;h1 id=&quot;dotnet-migrate&quot;&gt;dotnet migrate&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/dotnet/core/blob/master/release-notes/rc3-download.md&quot;&gt;.NET Core CLI RC3 Downloads&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;(As of January 2017) the latest .NET Core CLI is the RC3 release.
+This is required to use the MSBuild-based .NET Core SDK.
+The RC3 version of dotnet includes a new command, &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet migrate&lt;/code&gt;. This command will attempt
+to automatically convert all &lt;em&gt;project.json&lt;/em&gt; projects to MSBuild.&lt;/p&gt;
+
+&lt;p&gt;For help on usage, execute &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet migrate --help&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Tip: if you get an error, “No executable found matching command “dotnet-migrate””, check that:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;If you have a global.json file in the current or parent directires, ensure it does not set the
+“sdk” version set to an older version.&lt;/li&gt;
+  &lt;li&gt;The RC3 version is installed. Run &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet --info&lt;/code&gt; to see which version you are using.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;visual-studio-2017-rc&quot;&gt;Visual Studio 2017 RC&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.visualstudio.com/vs/visual-studio-2017-rc/&quot;&gt;Visual Studio 2017 RC Downloads&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The same auto-upgrade feature of dotnet-migrate is available in Visual Studio 2017.
+When attempting to open a Visual Studio
+solution that has “xproj” projects in it, VS will convert from project.json to the new MSBuild format.
+(xproj was a VS wrapper for project.json).&lt;/p&gt;
+
+&lt;h1 id=&quot;csproj&quot;&gt;csproj&lt;/h1&gt;
+
+&lt;p&gt;The new format, *.csproj, is an XML based format. Below are examples of how to 
+configure a .NET Core, .NET Standard, or .NET Framework project using the new Microsoft.NET.Sdk.&lt;/p&gt;
 
 &lt;p&gt;For all examples below, assume the XML is inside this root node:&lt;/p&gt;
 

@@ -111,6 +111,39 @@ of all the project.json knobs as they exist in Microsoft.NET.Sdk.</p>
 
 <p>Missing something? Post your question in comment section below and I will update this post.</p>
 
+<h1 id="dotnet-migrate">dotnet migrate</h1>
+
+<p><a href="https://github.com/dotnet/core/blob/master/release-notes/rc3-download.md">.NET Core CLI RC3 Downloads</a></p>
+
+<p>(As of January 2017) the latest .NET Core CLI is the RC3 release.
+This is required to use the MSBuild-based .NET Core SDK.
+The RC3 version of dotnet includes a new command, <code class="highlighter-rouge">dotnet migrate</code>. This command will attempt
+to automatically convert all <em>project.json</em> projects to MSBuild.</p>
+
+<p>For help on usage, execute <code class="highlighter-rouge">dotnet migrate --help</code>.</p>
+
+<p>Tip: if you get an error, “No executable found matching command “dotnet-migrate””, check that:</p>
+
+<ol>
+  <li>If you have a global.json file in the current or parent directires, ensure it does not set the
+“sdk” version set to an older version.</li>
+  <li>The RC3 version is installed. Run <code class="highlighter-rouge">dotnet --info</code> to see which version you are using.</li>
+</ol>
+
+<h2 id="visual-studio-2017-rc">Visual Studio 2017 RC</h2>
+
+<p><a href="https://www.visualstudio.com/vs/visual-studio-2017-rc/">Visual Studio 2017 RC Downloads</a></p>
+
+<p>The same auto-upgrade feature of dotnet-migrate is available in Visual Studio 2017.
+When attempting to open a Visual Studio
+solution that has “xproj” projects in it, VS will convert from project.json to the new MSBuild format.
+(xproj was a VS wrapper for project.json).</p>
+
+<h1 id="csproj">csproj</h1>
+
+<p>The new format, *.csproj, is an XML based format. Below are examples of how to 
+configure a .NET Core, .NET Standard, or .NET Framework project using the new Microsoft.NET.Sdk.</p>
+
 <p>For all examples below, assume the XML is inside this root node:</p>
 
 <div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;Project</span> <span class="na">Sdk=</span><span class="s">"Microsoft.NET.Sdk"</span> <span class="na">ToolsVersion=</span><span class="s">"15.0"</span><span class="nt">&gt;</span>
