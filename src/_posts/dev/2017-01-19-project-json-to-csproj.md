@@ -391,7 +391,7 @@ This one gets special mention because it expands to three properties in MSBuild.
 
 ```xml
 <PropertyGroup>
-  <WarningsAsErrors>true</WarningsAsErrors>
+  <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   <NoWarn>$(NoWarn);CS0168;CS0219</NoWarn>
   <GenerateDocumentationFile>true</GenerateDocumentationFile>
   <PreserveCompliationContext>true</PreserveCompliationContext>
