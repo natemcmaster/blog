@@ -104,9 +104,9 @@
 
 <article class="post-content">
   
-<p>This upgrade is not just a matter changing JSON vs XML. It’s really about learning and using a fundamentally 
-different technology: MSBuild. Regardless of how big or small your project.json project is, you are likely to 
-run into some subtle and, perhaps, mildly bewildering changes in how the build systme compares to project.json.
+<p>This upgrade is not only a matter changing JSON vs XML: it’s about learning and using a fundamentally 
+different technology, MSBuild. Regardless of how big or small your .NET Core project is, you are likely to 
+run into some subtle, big, and bewildering changes to how your build system as you convert.
 Here is a collection of obvious and not-so-obvious caveats to the MSBuild conversion process.</p>
 
 <p>This is a follow up to 
@@ -210,13 +210,13 @@ Here’s how various CI’s handle .trx files.</p>
 
 <p>The working directory of .NET Core tests is not the project directory. Any test that relies on
 <code class="highlighter-rouge">Directory.GetCurrentDirectory()</code> (even implicitly as in <code class="highlighter-rouge">File.ReadAllText("log.txt")</code>) will fail
-after upgrading. You can workaround by using <code class="highlighter-rouge">System.AppContext.BaseDirectory</code>, which is the 
+after upgrading. You can work around it by using <code class="highlighter-rouge">System.AppContext.BaseDirectory</code>, which is the 
 “bin/Debug/netcoreapp1.0/” folder. On .NET Framework, use <code class="highlighter-rouge">AppDomain.CurrentDomain.BaseDirectory</code>.</p>
 
 <p><strong>AppDomains</strong></p>
 
 <p>Most tests using <code class="highlighter-rouge">AppDomain.CreateDomain</code> will fail unless you also specify <code class="highlighter-rouge">AppDomainSetup.ApplicationBase</code>.
-It’s still unclear if this is a side affect of the working directory issue, but basically</p>
+It’s still unclear if this is a side effect of the working directory issue, but basically</p>
 
 <h1 id="the-re-architected-build-system">The re-architected build system</h1>
 
@@ -255,7 +255,7 @@ MSBuild-sugar.</p>
 <p>These commands allow you to mix <strong>dotnet.exe</strong> and <strong>MSBuild.exe</strong> command line flags by
 adding dotnet-cli flags first and MSBuild flags last.</p>
 
-<p>For example these are also equivalent</p>
+<p>For example, these are also equivalent</p>
 <div class="highlighter-rouge">
 <pre class="highlight"><code>dotnet build --framework netcoreapp1.0
 dotnet build /p:TargetFramework=netcoreapp1.0
@@ -271,7 +271,7 @@ dotnet build /p:TargetFramework=netcoreapp1.0
 </code></pre>
 </div>
 
-<p>Installling a new version of dotnet.exe was just a matter up updating what was inside C:\Program Files\dotnet.</p>
+<p>Installing a new version of dotnet.exe was just a matter up updating what was inside C:\Program Files\dotnet.</p>
 
 <p><strong>The Caveat 1 <img class="emoji" title=":warning:" alt=":warning:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></strong></p>
 
@@ -292,7 +292,7 @@ C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\
 
 <p><strong>On the bright side <img class="emoji" title=":partly_sunny:" alt=":partly_sunny:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26c5.png" height="20" width="20" align="absmiddle"></strong></p>
 
-<p>This means you don’t actually need dotnet.exe to build things.</p>
+<p>This means you don’t need dotnet.exe to build things.</p>
 
 <p>From the Visual Studio Developer Command Prompt, these are *usually equivalent</p>
 
@@ -312,9 +312,9 @@ update Visual Studio to get updates.</p>
 
 <p><strong>This one is all Caveat <img class="emoji" title=":warning:" alt=":warning:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26a0.png" height="20" width="20" align="absmiddle"></strong></p>
 
-<p>dotnet-msbuild and MSBuild.exe may look they same, but they are not.</p>
+<p>dotnet-msbuild and MSBuild.exe may look the same, but they are not.</p>
 
-<h2 id="built-in-tagets">Built-in tagets</h2>
+<h2 id="built-in-targets">Built-in targets</h2>
 
 <p>They do not have the same set of build-in targets.</p>
 
@@ -330,7 +330,7 @@ update Visual Studio to get updates.</p>
 <p>This has big implications for those writing MSBuild tasks. To make your task work in both places,
 you must cross-compile for task assembly or target netstandard1.3.</p>
 
-<p>It also means that it is is possible to hit a bug building with “dotnet.exe”, but it will work fine with MSBuild.exe</p>
+<p>It also means that it is possible to hit a bug building with “dotnet.exe”, but it will work fine with MSBuild.exe</p>
 
 <h1 id="changes-in-dotnet-command-line-syntax">Changes in dotnet command line syntax</h1>
 
@@ -372,7 +372,7 @@ dotnet build Project.sln
 
 <p><strong>On the bright side <img class="emoji" title=":partly_sunny:" alt=":partly_sunny:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/26c5.png" height="20" width="20" align="absmiddle"></strong></p>
 
-<p>dotnet build actually supports solution files.</p>
+<p>dotnet build supports solution files.</p>
 
 <h2 id="global-verbose-flag">Global verbose flag</h2>
 
