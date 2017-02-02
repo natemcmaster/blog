@@ -5,9 +5,9 @@ subtitle: To convert is to change form, function, or beliefs. There will lots of
 date: Feb. 1, 2017
 ---
 
-This upgrade is not just a matter changing JSON vs XML. It’s really about learning and using a fundamentally 
-different technology: MSBuild. Regardless of how big or small your project.json project is, you are likely to 
-run into some subtle and, perhaps, mildly bewildering changes in how the build systme compares to project.json.
+This upgrade is not only a matter changing JSON vs XML: it’s about learning and using a fundamentally 
+different technology, MSBuild. Regardless of how big or small your .NET Core project is, you are likely to 
+run into some subtle, big, and bewildering changes to how your build system as you convert.
 Here is a collection of obvious and not-so-obvious caveats to the MSBuild conversion process. 
 
 This is a follow up to 
@@ -104,13 +104,13 @@ Can't be done, as far as I know.
 
 The working directory of .NET Core tests is not the project directory. Any test that relies on
 `Directory.GetCurrentDirectory()` (even implicitly as in `File.ReadAllText("log.txt")`) will fail
-after upgrading. You can workaround by using `System.AppContext.BaseDirectory`, which is the 
+after upgrading. You can work around it by using `System.AppContext.BaseDirectory`, which is the 
 "bin/Debug/netcoreapp1.0/" folder. On .NET Framework, use `AppDomain.CurrentDomain.BaseDirectory`. 
 
 **AppDomains**
 
 Most tests using `AppDomain.CreateDomain` will fail unless you also specify `AppDomainSetup.ApplicationBase`.
-It's still unclear if this is a side affect of the working directory issue, but basically
+It's still unclear if this is a side effect of the working directory issue, but basically
 
 
 # The re-architected build system
@@ -147,7 +147,7 @@ MSBuild-sugar.
 These commands allow you to mix **dotnet.exe** and **MSBuild.exe** command line flags by
 adding dotnet-cli flags first and MSBuild flags last.
 
-For example these are also equivalent
+For example, these are also equivalent
 ```
 dotnet build --framework netcoreapp1.0
 dotnet build /p:TargetFramework=netcoreapp1.0
@@ -160,7 +160,7 @@ With project.json projects, Visual Studio 2015 used so start a new shell execute
 
     Visual Studio Build => C:\Program Files\dotnet\dotnet.exe
 
-Installling a new version of dotnet.exe was just a matter up updating what was inside C:\Program Files\dotnet\.
+Installing a new version of dotnet.exe was just a matter up updating what was inside C:\Program Files\dotnet\.
 
 **The Caveat 1 :warning:**
 
@@ -175,7 +175,7 @@ VS 2017 has and entire duplicate of the MSBuild targets. You must upgrade _both_
 
 **On the bright side :partly_sunny:**
 
-This means you don't actually need dotnet.exe to build things.
+This means you don't need dotnet.exe to build things.
 
 From the Visual Studio Developer Command Prompt, these are *usually equivalent
 
@@ -195,9 +195,9 @@ update Visual Studio to get updates.
 
 **This one is all Caveat :warning:**
 
-dotnet-msbuild and MSBuild.exe may look they same, but they are not.
+dotnet-msbuild and MSBuild.exe may look the same, but they are not.
 
-## Built-in tagets
+## Built-in targets
 
 They do not have the same set of build-in targets.
 
@@ -213,7 +213,7 @@ dotnet msbuild runs on .NET Core, MSBuild.exe runs on .NET Framework
 This has big implications for those writing MSBuild tasks. To make your task work in both places,
 you must cross-compile for task assembly or target netstandard1.3.
 
-It also means that it is is possible to hit a bug building with "dotnet.exe", but it will work fine with MSBuild.exe
+It also means that it is possible to hit a bug building with "dotnet.exe", but it will work fine with MSBuild.exe
 
 
 
@@ -251,7 +251,7 @@ You can only call 'dotnet build' on one file.
 
 **On the bright side :partly_sunny:**
 
-dotnet build actually supports solution files.
+dotnet build supports solution files.
 
 ## Global verbose flag
 
