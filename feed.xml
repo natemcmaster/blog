@@ -6,9 +6,328 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 29 Jan 2017 22:00:59 -0800</pubDate>
-    <lastBuildDate>Sun, 29 Jan 2017 22:00:59 -0800</lastBuildDate>
+    <pubDate>Wed, 01 Feb 2017 22:44:17 -0800</pubDate>
+    <lastBuildDate>Wed, 01 Feb 2017 22:44:17 -0800</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
+    
+      <item>
+        <title>Part 2 - Caveats of project.json to MSBuild conversion</title>
+        <description>&lt;p&gt;This upgrade is not just a matter changing JSON vs XML. It’s really about learning and using a fundamentally 
+different technology: MSBuild. Regardless of how big or small your project.json project is, you are likely to 
+run into some subtle and, perhaps, mildly bewildering changes in how the build systme compares to project.json.
+Here is a collection of obvious and not-so-obvious caveats to the MSBuild conversion process.&lt;/p&gt;
+
+&lt;p&gt;This is a follow up to 
+&lt;strong&gt;&lt;a href=&quot;/blog/2017/01/19/project-json-to-csproj/&quot;&gt;Project.json to MSBuild conversion guide&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;no-projectjson-in-vs-2017&quot;&gt;No project.json in VS 2017&lt;/h1&gt;
+
+&lt;p&gt;And also, no .NET Core csproj for VS 2015. This means you &lt;strong&gt;must&lt;/strong&gt; upgrade to csproj to build .NET Core projects in VS 2017,
+and you &lt;strong&gt;must not&lt;/strong&gt; upgrade to csproj if you only have VS 2015.&lt;/p&gt;
+
+&lt;p&gt;Also, even on command-line only (shout-out to MacBook .NET devs), you can’t reference csproj &amp;lt;=&amp;gt; project.json.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;On the bright side :partly_sunny:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;VS Code rocks. With the C# extension (as of 1.6.0), you can do either project.json or csproj.&lt;/p&gt;
+
+&lt;h1 id=&quot;globaljson-is-not-completely-dead&quot;&gt;global.json is not completely dead&lt;/h1&gt;
+
+&lt;p&gt;.NET Core CLI RC3 and newer still support “global.json”.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;The Caveat :warning:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The CLI only uses one property, sdk &amp;gt; version.&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;sdk&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;version&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1.0.0-rc3-004350&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The “projects” property is ignored.&lt;/p&gt;
+
+&lt;h1 id=&quot;net-core-cli-tools&quot;&gt;.NET Core CLI tools&lt;/h1&gt;
+
+&lt;p&gt;Most .NET Core CLI tools in existence require project.json.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;The Caveat :warning:&lt;/strong&gt; At the time of writing, only a handful have been ported to support csproj.
+All of them will still install, but they won’t work correctly.&lt;/p&gt;
+
+&lt;p&gt;Before:&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;tools&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;Microsoft.DotNet.Watcher.Tools&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1.0.0-preview2-final&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;Microsoft.AspNetCore.Server.IISIntegration.Tools&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1.0.0-preview2-final&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;After:&lt;/p&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- works :) --&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;DotNetCliToolReference&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Microsoft.DotNet.Watcher.Tools&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1.0.0&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;&amp;lt;!-- doesn't :( --&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;DotNetCliToolReference&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Microsoft.AspNetCore.Server.IISIntegration.Tools&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1.0.0-preview2-final&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;side-note-about-microsoftaspnetcoreserveriisintegrationtools&quot;&gt;Side note: about Microsoft.AspNetCore.Server.IISIntegration.Tools…&lt;/h3&gt;
+
+&lt;p&gt;I was the one &lt;a href=&quot;https://github.com/aspnet/IISIntegration/pull/259&quot;&gt;who deleted Microsoft.AspNetCore.Server.IISIntegration.Tools&lt;/a&gt;.
+Don’t worry, you don’t need it in MSBuild.
+Its functionality is replaced by using ‘Microsoft.NET.Sdk.Web’.&lt;/p&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;Project&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Sdk=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Microsoft.NET.Sdk.Web&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Project&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;dotnet-test-xunit&quot;&gt;dotnet-test-xunit&lt;/h1&gt;
+
+&lt;p&gt;The new “dotnet-test” is fundamentally different, and dotnet-test-xunit is dead.&lt;/p&gt;
+
+&lt;p&gt;After converting several dozen repos, I have found that mostly things still work, with a few exceptions.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;CI test reporting&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;dotnet-test-xunit automatically lit up tests on AppVeyor.com and TeamCity.&lt;/p&gt;
+
+&lt;p&gt;To replace this, you must instead call &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet test --logger:trx&lt;/code&gt;. This produces an XML file.
+Here’s how various CI’s handle .trx files.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.appveyor.com/docs/running-tests/#uploading-xml-test-results&quot;&gt;AppVeyor - uploading xml files&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://confluence.jetbrains.com/display/TCD9/XML+Report+Processing&quot;&gt;TeamCity - xml report processing&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;VSTS - use &lt;a href=&quot;https://www.visualstudio.com/en-us/docs/build/steps/test/publish-test-results&quot;&gt;“VSTS Publish Test Results Task”&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Filtering tests by trait&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Can’t be done, as far as I know.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Working directory (RC3 only, should be fixed for RTM)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The working directory of .NET Core tests is not the project directory. Any test that relies on
+&lt;code class=&quot;highlighter-rouge&quot;&gt;Directory.GetCurrentDirectory()&lt;/code&gt; (even implicitly as in &lt;code class=&quot;highlighter-rouge&quot;&gt;File.ReadAllText(&quot;log.txt&quot;)&lt;/code&gt;) will fail
+after upgrading. You can workaround by using &lt;code class=&quot;highlighter-rouge&quot;&gt;System.AppContext.BaseDirectory&lt;/code&gt;, which is the 
+“bin/Debug/netcoreapp1.0/” folder. On .NET Framework, use &lt;code class=&quot;highlighter-rouge&quot;&gt;AppDomain.CurrentDomain.BaseDirectory&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;AppDomains&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Most tests using &lt;code class=&quot;highlighter-rouge&quot;&gt;AppDomain.CreateDomain&lt;/code&gt; will fail unless you also specify &lt;code class=&quot;highlighter-rouge&quot;&gt;AppDomainSetup.ApplicationBase&lt;/code&gt;.
+It’s still unclear if this is a side affect of the working directory issue, but basically&lt;/p&gt;
+
+&lt;h1 id=&quot;the-re-architected-build-system&quot;&gt;The re-architected build system&lt;/h1&gt;
+
+&lt;p&gt;The new .NET Core SDK is fundamentally re-architected. 
+If you primarily use “dotnet restore” and “dotnet build”, you may not notice this at first.&lt;/p&gt;
+
+&lt;p&gt;With project.json, “dotnet.exe” was the foundation of how a project was compiled and run.
+With the new SDK, the “csproj” flavor, the foundation is now MSBuild. Many “dotnet” subcommands
+are command-line sugar for MSBuild equivalents.&lt;/p&gt;
+
+&lt;p&gt;Examples of equivalent commands:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dotnet restore
+dotnet msbuild /nologo /t:Restore
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dotnet build --framework netcoreapp1.0 --verbosity detailed
+dotnet msbuild /nologo /t:Build /p:TargetFramework=netcoreapp1.0 /verbosity:detailed
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dotnet test --no-build
+dotnet msbuild /nologo /t:VSTest /p:VSTestNoBuild=true 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Notice I said “most”. Not all. “dotnet-migrate” and “dotnet-add” to name a few are not simply
+MSBuild-sugar.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;The Caveat :warning:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;These commands allow you to mix &lt;strong&gt;dotnet.exe&lt;/strong&gt; and &lt;strong&gt;MSBuild.exe&lt;/strong&gt; command line flags by
+adding dotnet-cli flags first and MSBuild flags last.&lt;/p&gt;
+
+&lt;p&gt;For example these are also equivalent&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dotnet build --framework netcoreapp1.0
+dotnet build /p:TargetFramework=netcoreapp1.0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;visual-studio-vs-dotnetexe&quot;&gt;Visual Studio vs “dotnet.exe”&lt;/h1&gt;
+
+&lt;p&gt;With project.json projects, Visual Studio 2015 used so start a new shell execute of “dotnet.exe”&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Visual Studio Build =&amp;gt; C:\Program Files\dotnet\dotnet.exe
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Installling a new version of dotnet.exe was just a matter up updating what was inside C:\Program Files\dotnet.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;The Caveat 1 :warning:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Visual Studio 2017 does &lt;em&gt;not&lt;/em&gt; shell execute dotnet.exe.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Visual Studio Build =&amp;gt; C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;VS 2017 has and entire duplicate of the MSBuild targets. You must upgrade &lt;em&gt;both&lt;/em&gt; places to get updates.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;C:\Program Files\dotnet\sdk\1.0.0-rc3-004350\Microsoft.CSharp.targets
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\Microsoft.CSharp.targets
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;On the bright side :partly_sunny:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This means you don’t actually need dotnet.exe to build things.&lt;/p&gt;
+
+&lt;p&gt;From the Visual Studio Developer Command Prompt, these are *usually equivalent&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dotnet build
+dotnet msbuild /t:Build
+MSBuild.exe /t:Build
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;The Caveat 2 :warning:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;I said *usually. If you install a download a new version of dotnet.exe, Visual Studio will not use it. You must also
+update Visual Studio to get updates.&lt;/p&gt;
+
+&lt;h1 id=&quot;msbuildexe-vs-dotnet-msbuild&quot;&gt;MSBuild.exe vs dotnet msbuild&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;This one is all Caveat :warning:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;dotnet-msbuild and MSBuild.exe may look they same, but they are not.&lt;/p&gt;
+
+&lt;h2 id=&quot;built-in-tagets&quot;&gt;Built-in tagets&lt;/h2&gt;
+
+&lt;p&gt;They do not have the same set of build-in targets.&lt;/p&gt;
+
+&lt;p&gt;MSBuild.exe can build Xamarin, UWP, TypeScript, Docker projects, (classic) .NET Framework,
+:drumroll: Microsoft.NET.Sdk projects.&lt;/p&gt;
+
+&lt;p&gt;dotnet msbuild (for now) can only build Microsoft.NET.Sdk projects.&lt;/p&gt;
+
+&lt;h2 id=&quot;under-the-hood-runtime&quot;&gt;Under-the-hood runtime&lt;/h2&gt;
+
+&lt;p&gt;dotnet msbuild runs on .NET Core, MSBuild.exe runs on .NET Framework&lt;/p&gt;
+
+&lt;p&gt;This has big implications for those writing MSBuild tasks. To make your task work in both places,
+you must cross-compile for task assembly or target netstandard1.3.&lt;/p&gt;
+
+&lt;p&gt;It also means that it is is possible to hit a bug building with “dotnet.exe”, but it will work fine with MSBuild.exe&lt;/p&gt;
+
+&lt;h1 id=&quot;changes-in-dotnet-command-line-syntax&quot;&gt;Changes in dotnet command line syntax&lt;/h1&gt;
+
+&lt;p&gt;Here are just a few examples of changes to dotnet commands.&lt;/p&gt;
+
+&lt;h2 id=&quot;recursive-dotnet-restore&quot;&gt;Recursive dotnet-restore&lt;/h2&gt;
+
+&lt;p&gt;In preview 2, executing “dotnet restore” used to recursively search for any file in all subdirectories
+named ‘project.json’.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;The Caveat :warning:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;dotnet restore only searches the current directory for a file ending in &lt;em&gt;.sln or *.&lt;/em&gt;proj
+and restores that.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;On the bright side :partly_sunny:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;dotnet restore will include the transitive closure of all projects referenced from your 
+solution or project file. That didn’t work with project.json.&lt;/p&gt;
+
+&lt;h2 id=&quot;globs&quot;&gt;Globs&lt;/h2&gt;
+
+&lt;p&gt;In preview 2, some commands, like dotnet-build supported globs.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dotnet build src/*/project.json
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;The Caveat :warning:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;You can only call ‘dotnet build’ on one file.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dotnet build App.csproj
+dotnet build Project.sln
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;On the bright side :partly_sunny:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;dotnet build actually supports solution files.&lt;/p&gt;
+
+&lt;h2 id=&quot;global-verbose-flag&quot;&gt;Global verbose flag&lt;/h2&gt;
+
+&lt;p&gt;In preview 2, you could prepend &lt;code class=&quot;highlighter-rouge&quot;&gt;--verbose&lt;/code&gt; to all subcommands.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dotnet --verbose subcommand
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;The Caveat :warning:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This flag no longer works and will cause an error.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;On the bright side :partly_sunny:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;There are all many levels of verbosity.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dotnet build --verbosity (value)     
+Allowed values are: q[uiet] m[inimal] n[ormal] d[etailed] diag[nostic]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;dotnet-test&quot;&gt;dotnet-test&lt;/h2&gt;
+
+&lt;p&gt;In preview 2, test frameworks, like dotnet-test-xunit, controlled dotnet-test syntax.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dotnet test -method NameSpace.Class.Method
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;The Caveat :warning:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Now, all test framework must use the same syntax which is determined by VSTest…and IMO it’s not as easy to use.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dotnet test --filter FullyQualifiedName=NameSpace.Class.Method
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;This upgrade is not just a matter of JSON vs XML. It’s really about MSBuild.&lt;/p&gt;
+
+&lt;p&gt;MSBuild is an ‘old’ technology (i.e. invented before I went to college). This means
+it is a veteran, fully-featured build technology.
+It is the backbone of Visual Studio.
+It has features project.json never had, such as file logging, parallel builds, incremental builds,
+and distributing custom-build steps via NuGet.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;The Caveat&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;It may be old, but it’s probably new to you.&lt;/p&gt;
+
+&lt;p&gt;Don’t worry, you’ll pick it up. Cheers,&lt;/p&gt;
+
+&lt;p&gt;Nate.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 01 Feb 2017 00:00:00 -0800</pubDate>
+        <link>http://www.natemcmaster.com/blog/2017/02/01/project-json-to-csproj-part2/</link>
+        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2017/02/01/project-json-to-csproj-part2/</guid>
+        
+        
+      </item>
     
       <item>
         <title>Project.json to MSBuild conversion guide</title>
@@ -18,6 +337,8 @@ documentation lacking. Automated upgrades in Visual Studio and .NET Core CLI may
 auto-generate a csproj file for you, but they won’t tell you how to do things you
 already know how to do in project.json. Here is the most exhaustive list I can create
 of all the project.json knobs as they exist in Microsoft.NET.Sdk.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;See also: &lt;a href=&quot;/blog/2017/02/01/project-json-to-csproj-part2/&quot;&gt;Part 2 - Caveats of project.json to MSBuild conversion&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Missing something? Post your question in comment section below and I will update this post.&lt;/p&gt;
 
@@ -605,6 +926,9 @@ to the project-relative file path.&lt;/p&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/ItemGroup&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
+&lt;p&gt;For more details, checkout
+&lt;strong&gt;&lt;a href=&quot;/blog/2017/02/01/project-json-to-csproj-part2/&quot;&gt;Part 2 - Caveats of project.json to MSBuild conversion&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 </description>
         <pubDate>Thu, 19 Jan 2017 00:00:00 -0800</pubDate>
         <link>http://www.natemcmaster.com/blog/2017/01/19/project-json-to-csproj/</link>
@@ -1509,51 +1833,6 @@ end
         <pubDate>Sat, 14 Mar 2015 03:35:00 -0700</pubDate>
         <link>http://www.natemcmaster.com/blog/2015/03/14/codecamp-slides/</link>
         <guid isPermaLink="true">http://www.natemcmaster.com/blog/2015/03/14/codecamp-slides/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Installing ASP.NET 5 (beta 3)</title>
-        <description>&lt;p&gt;The easiest, but slowest, way to install ASP.NET 5 is through Visual Studio 2015.&lt;/p&gt;
-
-&lt;p&gt;Alternatively, you can install the command line tools by following the instructions below. These are instructions are for the &lt;strong&gt;beta 3&lt;/strong&gt; versions of the tools as posted on &lt;a href=&quot;https://github.com/aspnet/home&quot;&gt;ASP.NET 5 on GitHub&lt;/a&gt;. Beginning with &lt;strong&gt;beta 4&lt;/strong&gt; these will be obsolete.&lt;/p&gt;
-
-&lt;h1 id=&quot;visual-studio-2015&quot;&gt;Visual Studio 2015&lt;/h1&gt;
-
-&lt;p&gt;Go here download a free copy of &lt;strong&gt;Visual Studio 2015 CTP&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;a class=&quot;btn btn-primary&quot; href=&quot;https://www.visualstudio.com/downloads/visual-studio-2015-ctp-vs&quot;&gt;Download Visual Studio 2015 CTP 6&lt;/a&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;command-line-tools&quot;&gt;Command Line Tools&lt;/h1&gt;
-
-&lt;p&gt;These instructions are found in more complete form on the &lt;a href=&quot;https://github.com/aspnet/home&quot;&gt;ASP.NET 5 Home&lt;/a&gt; GitHub repository.&lt;/p&gt;
-
-&lt;h2 id=&quot;windows&quot;&gt;Windows&lt;/h2&gt;
-&lt;p&gt;Execute the following in &lt;em&gt;Command Prompt&lt;/em&gt; (cmd.exe)&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bat&quot; data-lang=&quot;bat&quot;&gt;@powershell -NoProfile -ExecutionPolicy unrestricted -Command &quot;iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/aspnet/Home/master/kvminstall.ps1'))&quot;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h2 id=&quot;os-x&quot;&gt;OS X&lt;/h2&gt;
-&lt;p&gt;You must have &amp;gt;= Mono 3.6.0 installed.&lt;/p&gt;
-
-&lt;p&gt;If you have &lt;a href=&quot;http://brew.sh&quot;&gt;brew&lt;/a&gt;, the following will the correct version of Mono and the KVM. Execute these in the Terminal.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;brew tap aspnet/k
-brew install kvm
-&lt;span class=&quot;nb&quot;&gt;source &lt;/span&gt;kvm.sh&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h2 id=&quot;linux&quot;&gt;Linux&lt;/h2&gt;
-&lt;p&gt;You must have Mono 3.4.1 or greater installed. Execute these on the command line.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;curl -sSL https://raw.githubusercontent.com/aspnet/Home/master/kvminstall.sh | sh &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.k/kvm/kvm.sh&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h1 id=&quot;beta-4&quot;&gt;Beta 4&lt;/h1&gt;
-&lt;p&gt;K, KRE, KVM, and KLR were all placeholder names. They have all been renamed in beta 4, but are stable as of March 14, 2015.  ■&lt;/p&gt;
-</description>
-        <pubDate>Sat, 14 Mar 2015 02:10:00 -0700</pubDate>
-        <link>http://www.natemcmaster.com/blog/2015/03/14/installing-aspnet5/</link>
-        <guid isPermaLink="true">http://www.natemcmaster.com/blog/2015/03/14/installing-aspnet5/</guid>
         
         
       </item>
