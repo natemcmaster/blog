@@ -228,7 +228,7 @@ named 'project.json'.
 
 **The Caveat :warning:**
 
-dotnet restore only searches the current directory for a file ending in *.sln or *.*proj
+dotnet restore only searches the current directory for a file ending in \*.sln or \*.\*proj
 and restores that.
 
 **On the bright side :partly_sunny:**
