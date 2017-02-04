@@ -300,7 +300,7 @@ In MSBuild, all projects are 'portable' during build, but can be published as
 standalone.
 
 ```
-dotnet publish --framework netcoreapp1.0 /p:RuntimeIdentifier=osx.10.11-x64
+dotnet publish --framework netcoreapp1.0 --runtime osx.10.11-x64
 ```
 
 # tools
