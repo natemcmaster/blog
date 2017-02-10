@@ -17,11 +17,11 @@ Missing something? Post your question in comment section below and I will update
 
 # dotnet migrate
 
-[.NET Core CLI RC3 Downloads](https://github.com/dotnet/core/blob/master/release-notes/rc3-download.md)
+[.NET Core CLI RC4 Downloads](https://github.com/dotnet/core/blob/master/release-notes/rc4-download.md)
 
-(As of January 2017) the latest .NET Core CLI is the RC3 release.
+(As of February 2017) the latest .NET Core CLI is the RC4 release.
 This is required to use the MSBuild-based .NET Core SDK.
-The RC3 version of dotnet includes a new command, `dotnet migrate`. This command will attempt
+The RC4 version of dotnet includes a new command, `dotnet migrate`. This command will attempt
 to automatically convert all _project.json_ projects to MSBuild.
 
 For help on usage, execute `dotnet migrate --help`.
@@ -30,7 +30,7 @@ Tip: if you get an error, "No executable found matching command "dotnet-migrate"
 
 1. If you have a global.json file in the current or parent directires, ensure it does not set the
    "sdk" version set to an older version.
-1. The RC3 version is installed. Run `dotnet --info` to see which version you are using.
+1. The RC4 version is installed. Run `dotnet --info` to see which version you are using.
 
 ## Visual Studio 2017 RC
 
@@ -475,22 +475,32 @@ Their equivalent in MSBuild are targets.
 {
   "runtimeOptions": {
     "configProperties": {
-      "System.GC.Server": true
+      "System.GC.Server": true,
+      "System.GC.Concurrent": true,
+      "System.GC.RetainVM": true,
+      "System.Threading.ThreadPool.MinThreads": 10,
+      "System.Threading.ThreadPool.MaxThreads": 100
     }
   }
 }
 ```
 
-All settings in this group should be placed into a file in the project folder called
-`runtimeconfig.template.json`, with options lifted to root object.
-
-```json
-{
-  "configProperties": {
-    "System.GC.Server": true
-  }
-}
+```xml
+<PropertyGroup>
+  <ServerGarbageCollection>true</ServerGarbageCollection>
+  <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
+  <RetainVMGarbageCollection>true</RetainVMGarbageCollection>
+  <!-- I'm not suggesting these settings...just showing usage ;) -->
+  <ThreadPoolMinThreads>10</ThreadPoolMinThreads>
+  <ThreadPoolMaxThreads>100</ThreadPoolMaxThreads>
+</ProeprtyGroup>
 ```
+
+**Tip:** If you are working on a web project, specifying `<Project Sdk="Microsoft.NET.Sdk.Web">`
+will automatically default ServerGarbageCollection to true. 
+
+See [CoreCLR configuration](https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/clr-configuration-knobs.md)
+for information on these settings.
 
 # shared
 ```json
