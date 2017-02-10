@@ -115,11 +115,11 @@ of all the project.json knobs as they exist in Microsoft.NET.Sdk.</p>
 
 <h1 id="dotnet-migrate">dotnet migrate</h1>
 
-<p><a href="https://github.com/dotnet/core/blob/master/release-notes/rc3-download.md">.NET Core CLI RC3 Downloads</a></p>
+<p><a href="https://github.com/dotnet/core/blob/master/release-notes/rc4-download.md">.NET Core CLI RC4 Downloads</a></p>
 
-<p>(As of January 2017) the latest .NET Core CLI is the RC3 release.
+<p>(As of February 2017) the latest .NET Core CLI is the RC4 release.
 This is required to use the MSBuild-based .NET Core SDK.
-The RC3 version of dotnet includes a new command, <code class="highlighter-rouge">dotnet migrate</code>. This command will attempt
+The RC4 version of dotnet includes a new command, <code class="highlighter-rouge">dotnet migrate</code>. This command will attempt
 to automatically convert all <em>project.json</em> projects to MSBuild.</p>
 
 <p>For help on usage, execute <code class="highlighter-rouge">dotnet migrate --help</code>.</p>
@@ -129,7 +129,7 @@ to automatically convert all <em>project.json</em> projects to MSBuild.</p>
 <ol>
   <li>If you have a global.json file in the current or parent directires, ensure it does not set the
 “sdk” version set to an older version.</li>
-  <li>The RC3 version is installed. Run <code class="highlighter-rouge">dotnet --info</code> to see which version you are using.</li>
+  <li>The RC4 version is installed. Run <code class="highlighter-rouge">dotnet --info</code> to see which version you are using.</li>
 </ol>
 
 <h2 id="visual-studio-2017-rc">Visual Studio 2017 RC</h2>
@@ -571,23 +571,33 @@ the new Microsoft.NET.Sdk.</p>
 <div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
   </span><span class="nt">"runtimeOptions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nt">"configProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nt">"System.GC.Server"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+      </span><span class="nt">"System.GC.Server"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"System.GC.Concurrent"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"System.GC.RetainVM"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"System.Threading.ThreadPool.MinThreads"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"System.Threading.ThreadPool.MaxThreads"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 </div>
 
-<p>All settings in this group should be placed into a file in the project folder called
-<code class="highlighter-rouge">runtimeconfig.template.json</code>, with options lifted to root object.</p>
-
-<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nt">"configProperties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"System.GC.Server"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;PropertyGroup&gt;</span>
+  <span class="nt">&lt;ServerGarbageCollection&gt;</span>true<span class="nt">&lt;/ServerGarbageCollection&gt;</span>
+  <span class="nt">&lt;ConcurrentGarbageCollection&gt;</span>true<span class="nt">&lt;/ConcurrentGarbageCollection&gt;</span>
+  <span class="nt">&lt;RetainVMGarbageCollection&gt;</span>true<span class="nt">&lt;/RetainVMGarbageCollection&gt;</span>
+  <span class="c">&lt;!-- I'm not suggesting these settings...just showing usage ;) --&gt;</span>
+  <span class="nt">&lt;ThreadPoolMinThreads&gt;</span>10<span class="nt">&lt;/ThreadPoolMinThreads&gt;</span>
+  <span class="nt">&lt;ThreadPoolMaxThreads&gt;</span>100<span class="nt">&lt;/ThreadPoolMaxThreads&gt;</span>
+<span class="nt">&lt;/ProeprtyGroup&gt;</span>
+</code></pre>
 </div>
+
+<p><strong>Tip:</strong> If you are working on a web project, specifying <code class="highlighter-rouge">&lt;Project Sdk="Microsoft.NET.Sdk.Web"&gt;</code>
+will automatically default ServerGarbageCollection to true.</p>
+
+<p>See <a href="https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/clr-configuration-knobs.md">CoreCLR configuration</a>
+for information on these settings.</p>
 
 <h1 id="shared">shared</h1>
 <div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
