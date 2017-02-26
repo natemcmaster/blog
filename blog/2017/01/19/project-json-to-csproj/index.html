@@ -109,6 +109,8 @@ auto-generate a csproj file for you, but they won’t tell you how to do things 
 already know how to do in project.json. Here is the most exhaustive list I can create
 of all the project.json knobs as they exist in Microsoft.NET.Sdk.</p>
 
+<p><strong>Update: this has been made part of official Microsoft documentation. <a href="https://docs.microsoft.com/en-us/dotnet/articles/core/tools/project-json-to-csproj">project.json and csproj comparison</a></strong></p>
+  
 <p><strong>See also: <a href="/blog/2017/02/01/project-json-to-csproj-part2/">Part 2 - Caveats of project.json to MSBuild conversion</a></strong></p>
 
 <p>Missing something? Post your question in comment section below and I will update this post.</p>
@@ -393,7 +395,7 @@ dependency version of a project reference.</p>
 </div>
 
 <h2 id="standalone-apps-self-contained-deployment">Standalone apps (self-contained deployment)</h2>
-<p>In project.json, defining a ‘runtimes’ section mean the app was standalone during
+<p>In project.json, defining a ‘runtimes’ section means the app was standalone during
 build and publish.
 In MSBuild, all projects are ‘portable’ during build, but can be published as
 standalone.</p>
@@ -528,7 +530,7 @@ the new Microsoft.NET.Sdk.</p>
 </div>
 
 <div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;PropertyGroup&gt;</span>
-  <span class="nt">&lt;Summary&gt;</span>A bundle of cats<span class="nt">&lt;/Summary&gt;</span>
+  <span class="nt">&lt;Description&gt;</span>A bundle of cats<span class="nt">&lt;/Description&gt;</span>
   <span class="nt">&lt;PackageTags&gt;</span>hyperscale;cats<span class="nt">&lt;/PackageTags&gt;</span>
   <span class="nt">&lt;PackageReleaseNotes&gt;</span>Version 1.0<span class="nt">&lt;/PackageReleaseNotes&gt;</span>
   <span class="nt">&lt;PackageIconUrl&gt;</span>https://icons.com/awesomeness.png<span class="nt">&lt;/PackageIconUrl&gt;</span>
@@ -537,6 +539,7 @@ the new Microsoft.NET.Sdk.</p>
   <span class="nt">&lt;PackageRequireLicenseAcceptance&gt;</span>false<span class="nt">&lt;/PackageRequireLicenseAcceptance&gt;</span>
   <span class="nt">&lt;RepositoryType&gt;</span>git<span class="nt">&lt;/RepositoryType&gt;</span>
   <span class="nt">&lt;RepositoryUrl&gt;</span>https://github.com/natemcmaster/natemcmaster.github.io<span class="nt">&lt;/RepositoryUrl&gt;</span>
+  <span class="c">&lt;!-- regrettably, 'owners' does not translate to MSBuild. --&gt;</span>
   <span class="c">&lt;!-- regrettably, 'owners' does not translate to MSBuild. --&gt;</span>
 <span class="nt">&lt;/PropertyGroup&gt;</span>
 </code></pre>
@@ -664,7 +667,7 @@ and Microsoft.NET.Sdk.Web.</p>
 <p>Package layout inside the nupkg can be modified with <code class="highlighter-rouge">PackagePath="path"</code>.</p>
 
 <p>Except for “Content”, most item groups require explicitly adding <code class="highlighter-rouge">Pack="true"</code> to 
-be included in the package. By default, this will be but in the ‘content’ folder
+be included in the package. By default, this will be put in the ‘content’ folder
 in a package. <code class="highlighter-rouge">PackagePath="%(Identity)"</code> is a short way of setting package path
 to the project-relative file path.</p>
 
@@ -682,9 +685,9 @@ to the project-relative file path.</p>
 </div>
 
 <div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;ItemGroup&gt;</span>
-  <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"Microsoft.NET.Test.Sdk"</span> <span class="na">Version=</span><span class="s">"15.0.0-*"</span> <span class="nt">/&gt;</span>
-  <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"xunit"</span> <span class="na">Version=</span><span class="s">"2.2.0-*"</span> <span class="nt">/&gt;</span>
-  <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"xunit.runner.visualstudio"</span> <span class="na">Version=</span><span class="s">"2.2.0-*"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"Microsoft.NET.Test.Sdk"</span> <span class="na">Version=</span><span class="s">"15.0.0"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"xunit"</span> <span class="na">Version=</span><span class="s">"2.2.0"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"xunit.runner.visualstudio"</span> <span class="na">Version=</span><span class="s">"2.2.0"</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/ItemGroup&gt;</span>
 </code></pre>
 </div>
@@ -701,9 +704,9 @@ to the project-relative file path.</p>
 </div>
 
 <div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;ItemGroup&gt;</span>
-  <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"Microsoft.NET.Test.Sdk"</span> <span class="na">Version=</span><span class="s">"15.0.0-*"</span> <span class="nt">/&gt;</span>
-  <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"MSTest.TestAdapter"</span> <span class="na">Version=</span><span class="s">"1.0.0-*"</span> <span class="nt">/&gt;</span>
-  <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"MSTest.TestFramework"</span> <span class="na">Version=</span><span class="s">"1.0.0-*"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"Microsoft.NET.Test.Sdk"</span> <span class="na">Version=</span><span class="s">"15.0.0"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"MSTest.TestAdapter"</span> <span class="na">Version=</span><span class="s">"1.1.12"</span> <span class="nt">/&gt;</span>
+  <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">"MSTest.TestFramework"</span> <span class="na">Version=</span><span class="s">"1.1.11"</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/ItemGroup&gt;</span>
 </code></pre>
 </div>
