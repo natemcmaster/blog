@@ -11,6 +11,8 @@ auto-generate a csproj file for you, but they won't tell you how to do things yo
 already know how to do in project.json. Here is the most exhaustive list I can create
 of all the project.json knobs as they exist in Microsoft.NET.Sdk.
 
+**Update: this has been made part of official Microsoft documentation. [project.json and csproj comparison](https://docs.microsoft.com/en-us/dotnet/articles/core/tools/project-json-to-csproj)**
+
 **See also: [Part 2 - Caveats of project.json to MSBuild conversion]({{ site.baseurl }}{% post_url /dev/2017-02-01-project-json-to-csproj-part2 %})**
 
 Missing something? Post your question in comment section below and I will update this post.
@@ -294,7 +296,7 @@ There is no equivalent in csproj. Microsoft.NET.Sdk automagically knows about Mi
 ```
 
 ## Standalone apps (self-contained deployment)
-In project.json, defining a 'runtimes' section mean the app was standalone during
+In project.json, defining a 'runtimes' section means the app was standalone during
 build and publish.
 In MSBuild, all projects are 'portable' during build, but can be published as
 standalone.
@@ -430,7 +432,7 @@ See also [Files](#files).
 
 ```xml
 <PropertyGroup>
-  <Summary>A bundle of cats</Summary>
+  <Description>A bundle of cats</Description>
   <PackageTags>hyperscale;cats</PackageTags>
   <PackageReleaseNotes>Version 1.0</PackageReleaseNotes>
   <PackageIconUrl>https://icons.com/awesomeness.png</PackageIconUrl>
@@ -567,7 +569,7 @@ All MSBuild ItemGroup's support 'Include', 'Exclude', and 'Remove'.
 Package layout inside the nupkg can be modified with `PackagePath="path"`.
 
 Except for "Content", most item groups require explicitly adding `Pack="true"` to 
-be included in the package. By default, this will be but in the 'content' folder
+be included in the package. By default, this will be put in the 'content' folder
 in a package. `PackagePath="%(Identity)"` is a short way of setting package path
 to the project-relative file path.
 
@@ -586,9 +588,9 @@ to the project-relative file path.
 
 ```xml
 <ItemGroup>
-  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-*" />
-  <PackageReference Include="xunit" Version="2.2.0-*" />
-  <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0-*" />
+  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+  <PackageReference Include="xunit" Version="2.2.0" />
+  <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
 </ItemGroup>
 ```
 
@@ -605,9 +607,9 @@ to the project-relative file path.
 
 ```xml
 <ItemGroup>
-  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0-*" />
-  <PackageReference Include="MSTest.TestAdapter" Version="1.0.0-*" />
-  <PackageReference Include="MSTest.TestFramework" Version="1.0.0-*" />
+  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+  <PackageReference Include="MSTest.TestAdapter" Version="1.1.12" />
+  <PackageReference Include="MSTest.TestFramework" Version="1.1.11" />
 </ItemGroup>
 ```
 
