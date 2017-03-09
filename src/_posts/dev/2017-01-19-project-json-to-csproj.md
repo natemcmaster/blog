@@ -19,6 +19,12 @@ Missing something? Post your question in comment section below and I will update
 
 # dotnet migrate
 
+**March update**: 
+
+[.NET Core CLI 1.0.0 Downloads](https://www.microsoft.com/net/core). It shipped!
+
+**February update:**
+
 [.NET Core CLI RC4 Downloads](https://github.com/dotnet/core/blob/master/release-notes/rc4-download.md)
 
 (As of February 2017) the latest .NET Core CLI is the RC4 release.
@@ -35,6 +41,12 @@ Tip: if you get an error, "No executable found matching command "dotnet-migrate"
 1. The RC4 version is installed. Run `dotnet --info` to see which version you are using.
 
 ## Visual Studio 2017 RC
+
+**March update**: 
+
+[Visual Studio 2017 Downloads](https://www.visualstudio.com/vs/). It shipped, too!
+
+**Original post**
 
 [Visual Studio 2017 RC Downloads](https://www.visualstudio.com/vs/visual-studio-2017-rc/)
 
@@ -243,7 +255,7 @@ the section below on [dependency types](#dependency-type)
 ```
 
 NB: this will break the way that `dotnet pack --version-suffix $suffix` determines the 
-dependency version of a project reference.
+dependency version of a project reference. See <https://github.com/NuGet/Home/issues/4337>
 
 
 ### type: build
@@ -558,13 +570,23 @@ In MSBuild, this is done using items. Here is a common conversion:
   <Content Include="files\**\*" CopyToPublishDirectory="PreserveNewest" />
   <None Include="publishnotes.txt" CopyToPublishDirectory="Always" />
   <!-- CopyToPublishDirectory = { Always, PreserveNewest, Never } -->
+
+  <!-- you can set both copy output and publish directories-->
+  <None Include="testasset.txt" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+
+  <!-- alternatively, use nested XML attributes. They're functionally the same-->
+  <None Include="testasset2.txt">
+    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+  </None>
+
 </ItemGroup>
 ```
 
 NB: many of default globbing patterns are added automatically by Microsoft.NET.Sdk
 and Microsoft.NET.Sdk.Web. 
 
-All MSBuild ItemGroup's support 'Include', 'Exclude', and 'Remove'.
+All MSBuild ItemGroup's support 'Include', 'Exclude', 'Update', and 'Remove'.
 
 Package layout inside the nupkg can be modified with `PackagePath="path"`.
 
