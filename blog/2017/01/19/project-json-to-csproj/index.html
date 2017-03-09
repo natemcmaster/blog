@@ -110,12 +110,18 @@ already know how to do in project.json. Here is the most exhaustive list I can c
 of all the project.json knobs as they exist in Microsoft.NET.Sdk.</p>
 
 <p><strong>Update: this has been made part of official Microsoft documentation. <a href="https://docs.microsoft.com/en-us/dotnet/articles/core/tools/project-json-to-csproj">project.json and csproj comparison</a></strong></p>
-  
+
 <p><strong>See also: <a href="/blog/2017/02/01/project-json-to-csproj-part2/">Part 2 - Caveats of project.json to MSBuild conversion</a></strong></p>
 
 <p>Missing something? Post your question in comment section below and I will update this post.</p>
 
 <h1 id="dotnet-migrate">dotnet migrate</h1>
+
+<p><strong>March update</strong>:</p>
+
+<p><a href="https://www.microsoft.com/net/core">.NET Core CLI 1.0.0 Downloads</a>. It shipped!</p>
+
+<p><strong>February update:</strong></p>
 
 <p><a href="https://github.com/dotnet/core/blob/master/release-notes/rc4-download.md">.NET Core CLI RC4 Downloads</a></p>
 
@@ -135,6 +141,12 @@ to automatically convert all <em>project.json</em> projects to MSBuild.</p>
 </ol>
 
 <h2 id="visual-studio-2017-rc">Visual Studio 2017 RC</h2>
+
+<p><strong>March update</strong>:</p>
+
+<p><a href="https://www.visualstudio.com/vs/">Visual Studio 2017 Downloads</a>. It shipped, too!</p>
+
+<p><strong>Original post</strong></p>
 
 <p><a href="https://www.visualstudio.com/vs/visual-studio-2017-rc/">Visual Studio 2017 RC Downloads</a></p>
 
@@ -343,7 +355,7 @@ the section below on <a href="#dependency-type">dependency types</a></p>
 </div>
 
 <p>NB: this will break the way that <code class="highlighter-rouge">dotnet pack --version-suffix $suffix</code> determines the 
-dependency version of a project reference.</p>
+dependency version of a project reference. See <a href="https://github.com/NuGet/Home/issues/4337">https://github.com/NuGet/Home/issues/4337</a></p>
 
 <h3 id="type-build">type: build</h3>
 <div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
@@ -654,6 +666,16 @@ In MSBuild, this is done using items. Here is a common conversion:</p>
   <span class="nt">&lt;Content</span> <span class="na">Include=</span><span class="s">"files\**\*"</span> <span class="na">CopyToPublishDirectory=</span><span class="s">"PreserveNewest"</span> <span class="nt">/&gt;</span>
   <span class="nt">&lt;None</span> <span class="na">Include=</span><span class="s">"publishnotes.txt"</span> <span class="na">CopyToPublishDirectory=</span><span class="s">"Always"</span> <span class="nt">/&gt;</span>
   <span class="c">&lt;!-- CopyToPublishDirectory = { Always, PreserveNewest, Never } --&gt;</span>
+
+  <span class="c">&lt;!-- you can set both copy output and publish directories--&gt;</span>
+  <span class="nt">&lt;None</span> <span class="na">Include=</span><span class="s">"testasset.txt"</span> <span class="na">CopyToOutputDirectory=</span><span class="s">"Always"</span> <span class="na">CopyToPublishDirectory=</span><span class="s">"Always"</span> <span class="nt">/&gt;</span>
+
+  <span class="c">&lt;!-- alternatively, use nested XML attributes. They're functionally the same--&gt;</span>
+  <span class="nt">&lt;None</span> <span class="na">Include=</span><span class="s">"testasset2.txt"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;CopyToOutputDirectory&gt;</span>Always<span class="nt">&lt;/CopyToOutputDirectory&gt;</span>
+    <span class="nt">&lt;CopyToPublishDirectory&gt;</span>Always<span class="nt">&lt;/CopyToPublishDirectory&gt;</span>
+  <span class="nt">&lt;/None&gt;</span>
+
 <span class="nt">&lt;/ItemGroup&gt;</span>
 </code></pre>
 </div>
@@ -661,7 +683,7 @@ In MSBuild, this is done using items. Here is a common conversion:</p>
 <p>NB: many of default globbing patterns are added automatically by Microsoft.NET.Sdk
 and Microsoft.NET.Sdk.Web.</p>
 
-<p>All MSBuild ItemGroup’s support ‘Include’, ‘Exclude’, and ‘Remove’.</p>
+<p>All MSBuild ItemGroup’s support ‘Include’, ‘Exclude’, ‘Update’, and ‘Remove’.</p>
 
 <p>Package layout inside the nupkg can be modified with <code class="highlighter-rouge">PackagePath="path"</code>.</p>
 

@@ -6,15 +6,15 @@
 </description>
     <link>http://www.natemcmaster.com/</link>
     <atom:link href="http://www.natemcmaster.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 01 Feb 2017 22:44:17 -0800</pubDate>
-    <lastBuildDate>Wed, 01 Feb 2017 22:44:17 -0800</lastBuildDate>
+    <pubDate>Thu, 09 Mar 2017 08:16:17 -0800</pubDate>
+    <lastBuildDate>Thu, 09 Mar 2017 08:16:17 -0800</lastBuildDate>
     <generator>Jekyll v3.3.1</generator>
     
       <item>
         <title>Part 2 - Caveats of project.json to MSBuild conversion</title>
-        <description>&lt;p&gt;This upgrade is not just a matter changing JSON vs XML. It’s really about learning and using a fundamentally 
-different technology: MSBuild. Regardless of how big or small your project.json project is, you are likely to 
-run into some subtle and, perhaps, mildly bewildering changes in how the build systme compares to project.json.
+        <description>&lt;p&gt;This upgrade is not only a matter changing JSON vs XML: it’s about learning and using a fundamentally 
+different technology, MSBuild. Regardless of how big or small your .NET Core project is, you are likely to 
+run into some subtle, big, and bewildering changes to how your build system as you convert.
 Here is a collection of obvious and not-so-obvious caveats to the MSBuild conversion process.&lt;/p&gt;
 
 &lt;p&gt;This is a follow up to 
@@ -113,13 +113,13 @@ Here’s how various CI’s handle .trx files.&lt;/p&gt;
 
 &lt;p&gt;The working directory of .NET Core tests is not the project directory. Any test that relies on
 &lt;code class=&quot;highlighter-rouge&quot;&gt;Directory.GetCurrentDirectory()&lt;/code&gt; (even implicitly as in &lt;code class=&quot;highlighter-rouge&quot;&gt;File.ReadAllText(&quot;log.txt&quot;)&lt;/code&gt;) will fail
-after upgrading. You can workaround by using &lt;code class=&quot;highlighter-rouge&quot;&gt;System.AppContext.BaseDirectory&lt;/code&gt;, which is the 
+after upgrading. You can work around it by using &lt;code class=&quot;highlighter-rouge&quot;&gt;System.AppContext.BaseDirectory&lt;/code&gt;, which is the 
 “bin/Debug/netcoreapp1.0/” folder. On .NET Framework, use &lt;code class=&quot;highlighter-rouge&quot;&gt;AppDomain.CurrentDomain.BaseDirectory&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;AppDomains&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Most tests using &lt;code class=&quot;highlighter-rouge&quot;&gt;AppDomain.CreateDomain&lt;/code&gt; will fail unless you also specify &lt;code class=&quot;highlighter-rouge&quot;&gt;AppDomainSetup.ApplicationBase&lt;/code&gt;.
-It’s still unclear if this is a side affect of the working directory issue, but basically&lt;/p&gt;
+It’s still unclear if this is a side effect of the working directory issue, but basically&lt;/p&gt;
 
 &lt;h1 id=&quot;the-re-architected-build-system&quot;&gt;The re-architected build system&lt;/h1&gt;
 
@@ -155,7 +155,7 @@ MSBuild-sugar.&lt;/p&gt;
 &lt;p&gt;These commands allow you to mix &lt;strong&gt;dotnet.exe&lt;/strong&gt; and &lt;strong&gt;MSBuild.exe&lt;/strong&gt; command line flags by
 adding dotnet-cli flags first and MSBuild flags last.&lt;/p&gt;
 
-&lt;p&gt;For example these are also equivalent&lt;/p&gt;
+&lt;p&gt;For example, these are also equivalent&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dotnet build --framework netcoreapp1.0
 dotnet build /p:TargetFramework=netcoreapp1.0
 &lt;/code&gt;&lt;/pre&gt;
@@ -169,7 +169,7 @@ dotnet build /p:TargetFramework=netcoreapp1.0
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Installling a new version of dotnet.exe was just a matter up updating what was inside C:\Program Files\dotnet.&lt;/p&gt;
+&lt;p&gt;Installing a new version of dotnet.exe was just a matter up updating what was inside C:\Program Files\dotnet.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;The Caveat 1 :warning:&lt;/strong&gt;&lt;/p&gt;
 
@@ -188,7 +188,7 @@ C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\
 
 &lt;p&gt;&lt;strong&gt;On the bright side :partly_sunny:&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;This means you don’t actually need dotnet.exe to build things.&lt;/p&gt;
+&lt;p&gt;This means you don’t need dotnet.exe to build things.&lt;/p&gt;
 
 &lt;p&gt;From the Visual Studio Developer Command Prompt, these are *usually equivalent&lt;/p&gt;
 
@@ -207,9 +207,9 @@ update Visual Studio to get updates.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;This one is all Caveat :warning:&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;dotnet-msbuild and MSBuild.exe may look they same, but they are not.&lt;/p&gt;
+&lt;p&gt;dotnet-msbuild and MSBuild.exe may look the same, but they are not.&lt;/p&gt;
 
-&lt;h2 id=&quot;built-in-tagets&quot;&gt;Built-in tagets&lt;/h2&gt;
+&lt;h2 id=&quot;built-in-targets&quot;&gt;Built-in targets&lt;/h2&gt;
 
 &lt;p&gt;They do not have the same set of build-in targets.&lt;/p&gt;
 
@@ -225,7 +225,7 @@ update Visual Studio to get updates.&lt;/p&gt;
 &lt;p&gt;This has big implications for those writing MSBuild tasks. To make your task work in both places,
 you must cross-compile for task assembly or target netstandard1.3.&lt;/p&gt;
 
-&lt;p&gt;It also means that it is is possible to hit a bug building with “dotnet.exe”, but it will work fine with MSBuild.exe&lt;/p&gt;
+&lt;p&gt;It also means that it is possible to hit a bug building with “dotnet.exe”, but it will work fine with MSBuild.exe&lt;/p&gt;
 
 &lt;h1 id=&quot;changes-in-dotnet-command-line-syntax&quot;&gt;Changes in dotnet command line syntax&lt;/h1&gt;
 
@@ -238,7 +238,7 @@ named ‘project.json’.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;The Caveat :warning:&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;dotnet restore only searches the current directory for a file ending in &lt;em&gt;.sln or *.&lt;/em&gt;proj
+&lt;p&gt;dotnet restore only searches the current directory for a file ending in *.sln or *.*proj
 and restores that.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;On the bright side :partly_sunny:&lt;/strong&gt;&lt;/p&gt;
@@ -265,7 +265,7 @@ dotnet build Project.sln
 
 &lt;p&gt;&lt;strong&gt;On the bright side :partly_sunny:&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;dotnet build actually supports solution files.&lt;/p&gt;
+&lt;p&gt;dotnet build supports solution files.&lt;/p&gt;
 
 &lt;h2 id=&quot;global-verbose-flag&quot;&gt;Global verbose flag&lt;/h2&gt;
 
@@ -338,17 +338,25 @@ auto-generate a csproj file for you, but they won’t tell you how to do things 
 already know how to do in project.json. Here is the most exhaustive list I can create
 of all the project.json knobs as they exist in Microsoft.NET.Sdk.&lt;/p&gt;
 
+&lt;p&gt;&lt;strong&gt;Update: this has been made part of official Microsoft documentation. &lt;a href=&quot;https://docs.microsoft.com/en-us/dotnet/articles/core/tools/project-json-to-csproj&quot;&gt;project.json and csproj comparison&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
 &lt;p&gt;&lt;strong&gt;See also: &lt;a href=&quot;/blog/2017/02/01/project-json-to-csproj-part2/&quot;&gt;Part 2 - Caveats of project.json to MSBuild conversion&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Missing something? Post your question in comment section below and I will update this post.&lt;/p&gt;
 
 &lt;h1 id=&quot;dotnet-migrate&quot;&gt;dotnet migrate&lt;/h1&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://github.com/dotnet/core/blob/master/release-notes/rc3-download.md&quot;&gt;.NET Core CLI RC3 Downloads&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;March update&lt;/strong&gt;:&lt;/p&gt;
 
-&lt;p&gt;(As of January 2017) the latest .NET Core CLI is the RC3 release.
+&lt;p&gt;&lt;a href=&quot;https://www.microsoft.com/net/core&quot;&gt;.NET Core CLI 1.0.0 Downloads&lt;/a&gt;. It shipped!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;February update:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/dotnet/core/blob/master/release-notes/rc4-download.md&quot;&gt;.NET Core CLI RC4 Downloads&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;(As of February 2017) the latest .NET Core CLI is the RC4 release.
 This is required to use the MSBuild-based .NET Core SDK.
-The RC3 version of dotnet includes a new command, &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet migrate&lt;/code&gt;. This command will attempt
+The RC4 version of dotnet includes a new command, &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet migrate&lt;/code&gt;. This command will attempt
 to automatically convert all &lt;em&gt;project.json&lt;/em&gt; projects to MSBuild.&lt;/p&gt;
 
 &lt;p&gt;For help on usage, execute &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet migrate --help&lt;/code&gt;.&lt;/p&gt;
@@ -358,10 +366,16 @@ to automatically convert all &lt;em&gt;project.json&lt;/em&gt; projects to MSBui
 &lt;ol&gt;
   &lt;li&gt;If you have a global.json file in the current or parent directires, ensure it does not set the
 “sdk” version set to an older version.&lt;/li&gt;
-  &lt;li&gt;The RC3 version is installed. Run &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet --info&lt;/code&gt; to see which version you are using.&lt;/li&gt;
+  &lt;li&gt;The RC4 version is installed. Run &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet --info&lt;/code&gt; to see which version you are using.&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h2 id=&quot;visual-studio-2017-rc&quot;&gt;Visual Studio 2017 RC&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;March update&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.visualstudio.com/vs/&quot;&gt;Visual Studio 2017 Downloads&lt;/a&gt;. It shipped, too!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Original post&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://www.visualstudio.com/vs/visual-studio-2017-rc/&quot;&gt;Visual Studio 2017 RC Downloads&lt;/a&gt;&lt;/p&gt;
 
@@ -570,7 +584,7 @@ the section below on &lt;a href=&quot;#dependency-type&quot;&gt;dependency types
 &lt;/div&gt;
 
 &lt;p&gt;NB: this will break the way that &lt;code class=&quot;highlighter-rouge&quot;&gt;dotnet pack --version-suffix $suffix&lt;/code&gt; determines the 
-dependency version of a project reference.&lt;/p&gt;
+dependency version of a project reference. See &lt;a href=&quot;https://github.com/NuGet/Home/issues/4337&quot;&gt;https://github.com/NuGet/Home/issues/4337&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;type-build&quot;&gt;type: build&lt;/h3&gt;
 &lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
@@ -622,12 +636,12 @@ dependency version of a project reference.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;h2 id=&quot;standalone-apps-self-contained-deployment&quot;&gt;Standalone apps (self-contained deployment)&lt;/h2&gt;
-&lt;p&gt;In project.json, defining a ‘runtimes’ section mean the app was standalone during
+&lt;p&gt;In project.json, defining a ‘runtimes’ section means the app was standalone during
 build and publish.
 In MSBuild, all projects are ‘portable’ during build, but can be published as
 standalone.&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dotnet publish --framework netcoreapp1.0 /p:RuntimeIdentifier=osx.10.11-x64
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dotnet publish --framework netcoreapp1.0 --runtime osx.10.11-x64
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -757,7 +771,7 @@ the new Microsoft.NET.Sdk.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;PropertyGroup&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;Summary&amp;gt;&lt;/span&gt;A bundle of cats&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Summary&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;Description&amp;gt;&lt;/span&gt;A bundle of cats&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Description&amp;gt;&lt;/span&gt;
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;PackageTags&amp;gt;&lt;/span&gt;hyperscale;cats&lt;span class=&quot;nt&quot;&gt;&amp;lt;/PackageTags&amp;gt;&lt;/span&gt;
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;PackageReleaseNotes&amp;gt;&lt;/span&gt;Version 1.0&lt;span class=&quot;nt&quot;&gt;&amp;lt;/PackageReleaseNotes&amp;gt;&lt;/span&gt;
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;PackageIconUrl&amp;gt;&lt;/span&gt;https://icons.com/awesomeness.png&lt;span class=&quot;nt&quot;&gt;&amp;lt;/PackageIconUrl&amp;gt;&lt;/span&gt;
@@ -800,23 +814,33 @@ the new Microsoft.NET.Sdk.&lt;/p&gt;
 &lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
   &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;runtimeOptions&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
     &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;configProperties&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;System.GC.Server&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;System.GC.Server&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;System.GC.Concurrent&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;System.GC.RetainVM&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;System.Threading.ThreadPool.MinThreads&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+      &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;System.Threading.ThreadPool.MaxThreads&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
     &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
   &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;All settings in this group should be placed into a file in the project folder called
-&lt;code class=&quot;highlighter-rouge&quot;&gt;runtimeconfig.template.json&lt;/code&gt;, with options lifted to root object.&lt;/p&gt;
-
-&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;configProperties&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;System.GC.Server&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;PropertyGroup&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;ServerGarbageCollection&amp;gt;&lt;/span&gt;true&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ServerGarbageCollection&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;ConcurrentGarbageCollection&amp;gt;&lt;/span&gt;true&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ConcurrentGarbageCollection&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;RetainVMGarbageCollection&amp;gt;&lt;/span&gt;true&lt;span class=&quot;nt&quot;&gt;&amp;lt;/RetainVMGarbageCollection&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- I'm not suggesting these settings...just showing usage ;) --&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;ThreadPoolMinThreads&amp;gt;&lt;/span&gt;10&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ThreadPoolMinThreads&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;ThreadPoolMaxThreads&amp;gt;&lt;/span&gt;100&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ThreadPoolMaxThreads&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ProeprtyGroup&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Tip:&lt;/strong&gt; If you are working on a web project, specifying &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;Project Sdk=&quot;Microsoft.NET.Sdk.Web&quot;&amp;gt;&lt;/code&gt;
+will automatically default ServerGarbageCollection to true.&lt;/p&gt;
+
+&lt;p&gt;See &lt;a href=&quot;https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/clr-configuration-knobs.md&quot;&gt;CoreCLR configuration&lt;/a&gt;
+for information on these settings.&lt;/p&gt;
 
 &lt;h1 id=&quot;shared&quot;&gt;shared&lt;/h1&gt;
 &lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
@@ -871,6 +895,16 @@ In MSBuild, this is done using items. Here is a common conversion:&lt;/p&gt;
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;Content&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;files\**\*&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;CopyToPublishDirectory=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;PreserveNewest&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
   &lt;span class=&quot;nt&quot;&gt;&amp;lt;None&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;publishnotes.txt&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;CopyToPublishDirectory=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Always&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
   &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- CopyToPublishDirectory = { Always, PreserveNewest, Never } --&amp;gt;&lt;/span&gt;
+
+  &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- you can set both copy output and publish directories--&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;None&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;testasset.txt&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;CopyToOutputDirectory=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Always&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;CopyToPublishDirectory=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Always&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+
+  &lt;span class=&quot;c&quot;&gt;&amp;lt;!-- alternatively, use nested XML attributes. They're functionally the same--&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;None&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;testasset2.txt&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;CopyToOutputDirectory&amp;gt;&lt;/span&gt;Always&lt;span class=&quot;nt&quot;&gt;&amp;lt;/CopyToOutputDirectory&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;CopyToPublishDirectory&amp;gt;&lt;/span&gt;Always&lt;span class=&quot;nt&quot;&gt;&amp;lt;/CopyToPublishDirectory&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/None&amp;gt;&lt;/span&gt;
+
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/ItemGroup&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -878,12 +912,12 @@ In MSBuild, this is done using items. Here is a common conversion:&lt;/p&gt;
 &lt;p&gt;NB: many of default globbing patterns are added automatically by Microsoft.NET.Sdk
 and Microsoft.NET.Sdk.Web.&lt;/p&gt;
 
-&lt;p&gt;All MSBuild ItemGroup’s support ‘Include’, ‘Exclude’, and ‘Remove’.&lt;/p&gt;
+&lt;p&gt;All MSBuild ItemGroup’s support ‘Include’, ‘Exclude’, ‘Update’, and ‘Remove’.&lt;/p&gt;
 
 &lt;p&gt;Package layout inside the nupkg can be modified with &lt;code class=&quot;highlighter-rouge&quot;&gt;PackagePath=&quot;path&quot;&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;Except for “Content”, most item groups require explicitly adding &lt;code class=&quot;highlighter-rouge&quot;&gt;Pack=&quot;true&quot;&lt;/code&gt; to 
-be included in the package. By default, this will be but in the ‘content’ folder
+be included in the package. By default, this will be put in the ‘content’ folder
 in a package. &lt;code class=&quot;highlighter-rouge&quot;&gt;PackagePath=&quot;%(Identity)&quot;&lt;/code&gt; is a short way of setting package path
 to the project-relative file path.&lt;/p&gt;
 
@@ -901,9 +935,9 @@ to the project-relative file path.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;ItemGroup&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;PackageReference&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Microsoft.NET.Test.Sdk&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;15.0.0-*&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;PackageReference&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;xunit&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2.2.0-*&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;PackageReference&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;xunit.runner.visualstudio&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2.2.0-*&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;PackageReference&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Microsoft.NET.Test.Sdk&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;15.0.0&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;PackageReference&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;xunit&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2.2.0&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;PackageReference&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;xunit.runner.visualstudio&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2.2.0&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/ItemGroup&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -920,9 +954,9 @@ to the project-relative file path.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;ItemGroup&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;PackageReference&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Microsoft.NET.Test.Sdk&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;15.0.0-*&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;PackageReference&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;MSTest.TestAdapter&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1.0.0-*&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;PackageReference&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;MSTest.TestFramework&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1.0.0-*&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;PackageReference&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Microsoft.NET.Test.Sdk&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;15.0.0&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;PackageReference&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;MSTest.TestAdapter&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1.1.12&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;PackageReference&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Include=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;MSTest.TestFramework&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Version=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1.1.11&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/ItemGroup&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
