@@ -15,6 +15,8 @@ of all the project.json knobs as they exist in Microsoft.NET.Sdk.
 
 **See also: [Part 2 - Caveats of project.json to MSBuild conversion]({{ site.baseurl }}{% post_url /dev/2017-02-01-project-json-to-csproj-part2 %})**
 
+**See also: [Old csproj to new csproj: Visual Studio 2017 upgrade guide]({{ site.baseurl }}{% post_url /dev/2017-03-09-vs2015-to-vs2017-upgrade %})**
+
 Missing something? Post your question in comment section below and I will update this post.
 
 # dotnet migrate

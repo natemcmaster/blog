@@ -62,7 +62,7 @@ Feel free to write me at hello@natemcmaster.com
           <a href="{{ "/blog/" | prepend: site.baseurl }}">See all posts...</a>
         </div>
         <div class="posts">
-        {% for post in site.posts limit:2 %}
+        {% for post in site.posts limit:4 %}
         <div class="post">
           <span class="post-date">{{ post.date | date: "%B %-d, %Y" }}</span>
           <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">

@@ -3,7 +3,7 @@ default: build
 .PHONY: publish build serve install
 
 build:
-	jekyll build --incremental
+	jekyll build
 
 serve:
 	@open http://localhost:4000
