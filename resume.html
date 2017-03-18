@@ -1,0 +1,174 @@
+---
+title: Résumé
+permalink: /resume/
+---
+<!doctype HTML>
+<html>
+
+<head>
+    <title>Nate McMaster՚s Résumé</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta name="generator" content="Jekyll">
+    <meta name="author" content="Nate McMaster" comment="Surprised?">
+    <meta http-equiv="Content-Language" content="en">
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="{{ '/css/resume.css' | absolute_url }}?{{ site.time | date: '%s%N'}}" rel="stylesheet" />
+    <script type="text/javascript" src="{{ '/assets/scripts/ga.js' | absolute_url }}" ></script>
+    <script type="text/javascript">
+        (function (ga) {
+            ga('send', 'pageview');
+        })(ga);
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="brand">
+                <a href="{{site.url}}">Nate McMaster</a>
+            </div>
+            <div class="contact-icons">
+                {% if site.github_username %}
+                <a href="https://github.com/{{ site.github_username }}">
+                    <span class="fa fa-github"></span>
+                </a>
+                {% endif %}
+                {% if site.twitter_username %}
+                <a href="https://twitter.com/{{ site.twitter_username }}">
+                    <span class="fa fa-twitter-square"></span>
+                </a>
+                {% endif %}
+                {% if site.linkedin_username %}
+                <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}">
+                    <span class="fa fa-linkedin-square"></span>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        <article>
+            <div class="subtitle">
+                I՚m a
+                <div class="rotating-titles">
+                    <ul class="rotating">
+                        <li>developer.</li>
+                        <li>programmer.</li>
+                        <li>keyboard magician.</li>
+                        <li>code ninja.</li>
+                        <li>web dev.</li>
+                        <li>software engineer.</li>
+                    </ul>
+                </div>
+            </div>
+            <section>
+                <h1 class="section-start-tag">&lt;jobs&gt;</h1>
+                <div>
+                    <img src="{{ "/assets/images/microsoft.png" | relative_url }}" class="msft-logo" />
+                    <h2 class="first">Software Engineer II</h2>
+                    <h3>May 2015 - present</h3>
+                    <p>
+                        Developer on <a href="https://www.github.com/aspnet/EntityFramework">Entity Framework</a>,
+                        Microsoft's data access framework for .NET apps
+                        <br />
+                        Responsibilities include writing <a href="http://docs.efproject.net">documentation</a>, 
+                        reviewing team members' code, 
+                        developing and testing new product features, 
+                        maintaining build infrastructure, 
+                        and interacting with external partners and open-source collaborators 
+                    </p>
+                </div>
+                <div>
+                    <img src="{{ "/assets/images/byulogo.jpg" | relative_url }}" class="byu-logo" />
+                    <h2>
+                    Research Assistant</h2>
+                    <h3>Nov. 2014 - May 2015</h3>
+                    <p>
+                        Researched user interface design and human-computer interaction
+                        <br />
+                        Prototyped programmable LED lighting devices
+                        <br />
+                        Designed software to automate circuit board design and assembly
+                        <br />
+                        Refactored vanilla JS web application into AngularJS
+                    </p>
+                </div>
+                <div>
+                    <img src="{{ "/assets/images/ancestry.png" | relative_url }}" class="ancestry-logo" />
+                    <h2>
+                Software Engineer Intern
+            </h2>
+                    <h3>August 2013 - April 2014</h3>
+                    <p>
+                        Created front-end visualizations of family history data
+                        <br />Used JavaScript, ASP.NET MVC, and NodeJS
+                    </p>
+                </div>
+                <div class="section-end-tag">
+                    &lt;/jobs&gt;
+                </div>
+            </section>
+            <section>
+                <h1 class="section-start-tag">&lt;education&gt;</h1>
+                <img src="{{ "/assets/images/byulogo.jpg" | relative_url }}" class="byu-logo" />
+                <h2 class="first">Brigham Young University</h2>
+                <h3>Class 2015</h3>
+                <p>
+                    BS in Computer Science
+                    <br>
+                    Cum Laude
+                    <br>
+                    <br>
+                    <em>Example projects:</em>
+                    <br><a href="{{site.baseurl}}/projects/historyexplorer">History Explorer</a> - a website for exploring historical concepts
+                    <br>
+                    <a href="https://github.com/lumberjack3/catan">Settlers of Catan</a> - an online, multiplayer version of the board game, created with a NodeJS server and JavaScript front-end
+                    <br>
+                    <a href="https://github.com/">More projects on my GitHub profile</a>
+                </p>
+                <div class="section-end-tag">
+                    &lt;/education&gt;
+                </div>
+            </section>
+            <section>
+                <h1 class="section-start-tag">&lt;honors&gt;</h1>
+                <h2 class="job-header first">Dean՚s List, BYU</h2>
+                <p>
+                    Honored in 2009, 2013, and 2014. Given to full-time students in the top 5% of their class
+                </p>
+                <h2 class="job-header">National Merit Finalist</h2>
+                <p>
+                    From the National Merit Scholarship Corporation, received in 2008.
+                </p>
+                <h2 class="job-header">Eagle Scout</h2>
+                <p>
+                    From the Boy Scouts of America, received in 2007.
+                </p>
+                <div class="section-end-tag">&lt;/honors&gt;</div>
+            </section>
+            <section>
+                <h1 class="section-start-tag">&lt;contact.me&gt;</h1>
+                {% if site.email %}
+                <div>
+                    <span class="fa fa-envelope-o"></span>  <a href="mailto: {{ site.email }}">{{ site.email }}</a>
+                </div>
+                {% endif %}
+                {% if site.github_username %}
+                <div>
+                    <span class="fa fa-github"></span> To see more examples of my code, checkout <a href="https://github.com/{{ site.github_username }}">my GitHub profile.</a>
+                </div>
+                {% endif %}
+                <div class="section-end-tag">&lt;/contact.me&gt;</div>
+            </section>
+        </article>
+        <footer>
+            <a href="{{ "/assets/files/resume.pdf" | relative_url }}">
+            Printable version
+            </a>
+        </footer>
+    </div>
+</body>
+
+</html>

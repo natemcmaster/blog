@@ -1,0 +1,41 @@
+- title: Entity Framework Core
+  category: work
+  url: https://www.github.com/aspnet/EntityFramework
+  description: >
+    <p>
+      A data-access framework for .NET. Entity Framework Core is a lightweight and extensible version
+      of the popular Entity Framework data access technology. This makes it easy for developers to create
+      and access databases as well as manage changing database schemas.
+    </p>
+    <p>
+      I first interned on this project in 2014 (when it was called EF 7) and prototyped using EF 7 for
+      Azure Table Storage. I joined the project as a full-time software engineer in Spring 2015.
+    </p>
+
+- title: SQLite for ADO.NET (Microsoft.Data.SQLite)
+  category: work
+  url: https://www.github.com/aspnet/Microsoft.Data.SQLite
+  description: >
+    <p>
+      This library allows interaction with SQLite databases using ADO.NET patterns and interfaces.
+    </p>
+    <p>
+      This library was primarily created by Brice Lambson of the Entity Framework team. When EF Core
+      was created, System.Data.SQLite was not suitable as the lower-layer component. Brice started this
+      project to create a cross-platform, .NET Core-compatible, lightweight implementation of
+      System.Data.Common contracts for use with Microsoft.EntityFrameworkCore.SQLite.
+    </p>
+
+- title: Native SQLite on NuGet
+  category: work
+  url: https://www.github.com/natemcmaster/libsqlite3-package
+  description: >
+    <p>
+      NuGet packaging for the native components of SQLite. These are available at
+      https://www.nuget.org/packages/SQLite
+    </p>
+    <p>
+      This package provides the native libraries required to execute SQLite on any platform where
+      .NET Core is supported. It is officially owned by the SQLite Team, but I created the package for
+      them as they were unfamiliar with how to create a native package that works on Linux, Windows, macOS, etc.
+    </p>

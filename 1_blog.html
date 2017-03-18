@@ -1,0 +1,54 @@
+---
+layout: default
+title: Blog
+header: true
+group: navigation
+permalink: /blog/
+---
+<div class="post-header">
+    <h1>Blog</h1>
+</div>
+<div id="page-blog">
+  <div class="posts">
+    {% for post in site.posts limit:10 %}
+    <div class="post">
+      <span class="post-date">{{ post.date | date: "%B %-d, %Y" }}</span>
+      <a class="post-link" href="{{ post.url | relative_url }}">
+        <h1 class="post-title">{{ post.title }}</h1>
+      </a>
+      {% if post.subtitle %}
+      <h2>{{ post.subtitle }}</h2>
+      {% endif %}
+{% if post.hero %}
+      <div class="postimage hero {{post.hero.classes}}">
+        <a href="{{ post.url | relative_url }}">
+          {% if post.hero.asset_path %}
+            <img src="{{ post.hero.asset_path | relative_url }}" alt="{{post.hero.description}}" />
+          {% else %}
+            <img src="{{ post.hero.url }}" alt="{{post.hero.description}}" />
+          {% endif %}
+        </a>
+      </div>
+      {% endif %}
+      <div>
+        {% if post.excerpt %}
+  {{ post.excerpt }}
+  {% else %}
+  {{ post.content | truncatewords: 75 }}
+  {% endif %}
+      </div>
+      <p class="read-full">
+        <a  href="{{ post.url | relative_url }}">Read full post...</a>
+      </p>
+    </div>
+    {% endfor %}
+  </div>
+  <div>
+    <h3><a href="{{ '/blog/archive' | relative_url }}">See all posts...</a></h3>
+  </div>
+
+  <p class="rss-subscribe">
+    Subscribe
+    <a href="{{ "/feed.xml" | relative_url }}">via RSS</a>
+  </p>
+</div>

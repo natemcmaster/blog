@@ -1,0 +1,94 @@
+---
+---
+<!--
+
+Hi, I'm Nate McMaster.
+
+I write all the code for my own website. Jekyll provides a foundation for content generation,
+but on top of that I have written lots of custom Ruby, HTML, SASS, JS, etc to make this website
+custom.
+
+Feel free to write me at hello@natemcmaster.com
+
+
+-->
+<!doctype html>
+<html lang="en">
+{% include head.html %}
+
+<body>
+  <div class="personal-banner">
+    <div class="wrap">
+      <p class="icons">
+        {% if site.github_username %}
+        <a href="https://www.github.com/{{ site.github_username }}" analytics-on="click" analytics-event="outbound" analytics-label="github_profile">
+          <span class="icon-github"></span>
+        </a>
+        {% endif %} {% if site.twitter_username %}
+        <a href="https://www.twitter.com/{{ site.twitter_username }}" analytics-on="click" analytics-event="outbound" analytics-label="twitter_profile">
+          <span class="icon-twitter"></span>
+        </a>
+        {% endif %} {% if site.linkedin_username %}
+        <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}" analytics-on="click" analytics-event="outbound" analytics-label="linkedin_profile">
+          <span class="icon-linkedin"></span>
+        </a>
+        {% endif %}
+      </p>
+      <div class="brand">
+        <div class="brand-img">
+          <img src="//www.gravatar.com/avatar/692c58f37a3704944bd31c4cbcb287e7.png?s=150" class="img-profile"></div>
+        <div class="brand-name">
+          <h1>Nate McMaster</h1>
+          <h3>Software dev &amp; infrequent blogger</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav nav-homepage">
+    <div class="wrap">
+      {% for page in site.pages %} {% if page.title and page.header and page.partial != 'true' %}
+      <a class="page-link" href="{{ page.url | relative_url }}">{{ page.title }}</a> {% endif %} {% endfor %}
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="wrap">
+      <div id="page-blog">
+        <h2 class="blog-title">Recent Posts</h2>
+        <div class="blog-read-more">
+          <a href="{{ '/blog/' | relative_url }}">See all posts...</a>
+        </div>
+        <div class="posts">
+          {% for post in site.posts limit:4 %}
+          <div class="post">
+            <span class="post-date">{{ post.date | date: "%B %-d, %Y" }}</span>
+            <a class="post-link" href="{{ post.url | relative_url }}">
+              <h1 class="font-main">{{ post.title }}</h1>
+            </a>
+            {% if post.subtitle %}
+            <h2>{{ post.subtitle }}</h2>
+            {% endif %} {% if post.hero %}
+            <div class="postimage hero {{post.hero.classes}}">
+              <a href="{{ post.url | relative_url }}">
+                {% if post.hero.asset_path %}
+                  <img src="{{ post.hero.asset_path | relative_url }}" alt="{{post.hero.description}}" />
+                {% else %}
+                  <img src="{{ post.hero.url }}" alt="{{ post.hero.description }}" />
+                {% endif %}
+              </a>
+            </div>
+            {% endif %}
+            <div>
+              {% if post.excerpt %} {{ post.excerpt }} {% else %} {{ post.content | truncatewords: 75 }} {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <h3>
+          <a href="{{ '/blog/' | relative_url }}">See more posts...</a>
+        </h3>
+      </div>
+    </div>
+  </div>
+  {% include footer.html %}
+
+</html>

@@ -1,0 +1,210 @@
+@import "variables"
+html
+    height: 100%
+
+body
+    +mainFont
+    height: 100%
+    font-size: 16px
+    line-height: 1.5
+    font-weight: 300
+    background-color: $color-body-bg
+
+a
+    color: #2a7ae2
+    text-decoration: none
+    &:hover
+        color: #000
+        text-decoration: underline
+    &:visited
+        color: #205caa
+
+/* Utility */
+
+.wrap
+    &:before
+        content: ""
+        display: table
+    &:after
+        content: ""
+        display: table
+        clear: both
+    max-width: 800px
+    padding: 0 30px
+    margin: 0 auto
+    zoom: 1
+
+
+/* Site header */
+
+.site-header
+    $nav-height: 68px
+    $nav-padding: 10px
+    background-color: $color-header-bg
+    color: white
+    padding: 0
+
+    .brand
+        padding: $nav-padding
+        display: inline-block
+        font-size: 26px
+        > div
+            display: inline-block
+        .brand-img
+            padding-right: 10px
+        .site-title
+            +mainFont
+            font-weight: 200
+            padding-right: 32px
+            text-decoration: none
+            &:visited, &:active
+                color: white
+            &:hover
+                color: transparentize(white, 0.2)
+
+    .img-profile
+        $size: $nav-height - 2* $nav-padding
+        height: $size
+        width: $size
+        border-radius: $size
+        vertical-align: middle
+
+    .site-nav
+        float: right
+        .menu-icon
+            display: none
+            font-size: 24px
+            color: white
+            float: right
+            width: 36px
+            text-align: center
+            line-height: 36px
+            svg
+                width: 18px
+                height: 16px
+        .page-link
+            box-sizing: border-box
+            display: inline-block
+            font-size: 16px
+            height: $nav-height
+            padding: 19px 20px
+            color: white
+            &:hover
+                background: transparentize(white, 0.9)
+                text-decoration: none
+            &.active
+                background: $color-body-bg
+                color: black
+
+        @media screen  and (max-width: 600px)
+            position: fixed
+            z-index: 10
+            top: 14px
+            right: 8px
+            background-color: $color-header-bg
+            border-radius: 5px
+            border: 1px solid #e8e8e8
+            .menu-icon
+                display: block
+            .trigger
+                clear: both
+                margin-bottom: 5px
+                display: none
+                min-width: 130px
+            &:hover .trigger
+                display: block
+            .page-link
+                display: block
+                text-align: left
+                line-height: 1.25
+                padding: 7px 10px
+                margin: 0
+                height: auto
+/* Site footer */
+
+.site-footer
+    border-top: 1px solid #e8e8e8
+    padding: 30px 0
+
+    .column
+        float: left
+        margin-bottom: 15px
+
+.footer-col-1
+    width: 270px
+    /*fallback */
+    width: -webkit-calc(35% - 10px)
+    width: -moz-calc(35% - 10px)
+    width: -o-calc(35% - 10px)
+    width: calc(35% - 10px)
+    margin-right: 10px
+
+.footer-col-2
+    width: 175px
+    /*fallback */
+    width: -webkit-calc(23.125% - 10px)
+    width: -moz-calc(23.125% - 10px)
+    width: -o-calc(23.125% - 10px)
+    width: calc(23.125% - 10px)
+    margin-right: 10px
+
+.footer-icons
+    font-size: 20px
+    a:not(:first-child)
+        margin-left: 7px
+    a:not(:last-child)
+        margin-right: 7px
+
+
+.footer-col-3
+    width: 335px
+    /*fallback  */
+    width: -webkit-calc(41.875%)
+    width: -moz-calc(41.875%)
+    width: -o-calc(41.875%)
+    width: calc(41.875%)
+
+.site-footer
+    ul
+        list-style: none
+    li, p
+        font-size: 15px
+        letter-spacing: -.3px
+        color: #828282
+
+/* media queries */
+@media screen and (max-width: 750px)
+    .footer-col-1
+        width: 50%
+    .footer-col-2
+        width: 45%
+        /*fallback  */
+        width: -webkit-calc(50% - 10px)
+        width: -moz-calc(50% - 10px)
+        width: -o-calc(50% - 10px)
+        width: calc(50% - 10px)
+        margin-right: 0
+    .site-footer .column.footer-col-3
+        width: auto
+        float: none
+        clear: both
+
+@media screen and (max-width: 600px)
+    .wrap
+        padding: 0 12px
+    .post-header h1
+        font-size: 36px
+    .post-content
+        h2
+            font-size: 28px
+        h3
+            font-size: 22px
+        h4
+            font-size: 18px
+        blockquote, ul, ol
+            padding-left: 10px
+    .site-footer .column
+        float: none
+        clear: both
+        width: auto
+        margin: 0 0 15px
