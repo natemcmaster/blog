@@ -1,3 +1,18 @@
+- title: ASP.NET Core
+  category: work
+  url: https://www.github.com/aspnet/
+  description: >
+    <p>
+      ASP.NET Core is an open-source web framework for .NET. While on this project I have been
+      a regular contributor to various parts of the stack, including Kestrel HTTP Server, dotnet-watch,
+      and .NET Core in general.
+    </p>
+    <p>
+      I switched to this team full-time in August 2016. For the first 5 months I primarily helped convert
+      the entire build system and tools (like dotnet-watch) from project.json to MSBuild. I then
+      moved on to runtime components of the web stack.
+    </p>
+
 - title: Entity Framework Core
   category: work
   url: https://www.github.com/aspnet/EntityFramework
