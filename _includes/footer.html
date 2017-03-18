@@ -1,0 +1,38 @@
+<footer class="site-footer">
+
+  <div class="wrap">
+
+  <div class="vcard">
+    <h4 class="fn">{{ site.full_name }}</h4>
+  </div>
+
+    <div class="footer-col-1 column">
+      <div>
+        <a href="mailto:{{ site.email }}" analytics-on="click" analytics-event="email" rel="">{{ site.email }}</a>
+      </div>
+      <div class="footer-icons">
+          {% if site.github_username %}
+            <a href="https://github.com/{{ site.github_username }}" analytics-on="click" analytics-event="outbound" analytics-label="github_profile">
+              <span class="icon-github"></span>
+            </a>{% endif %}
+          {% if site.twitter_username %}
+            <a href="https://twitter.com/{{ site.twitter_username }}" analytics-on="click" analytics-event="outbound" analytics-label="twitter_profile">
+              <span class="icon-twitter"></span>
+            </a>{% endif %}
+          {% if site.linkedin_username %}
+           <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}" analytics-on="click" analytics-event="outbound" analytics-label="linkedin_profile">
+            <span class="icon-linkedin"></span>
+            </a>
+          {% endif %}
+      </div>
+    </div>
+
+
+    <div class="footer-col-3 column">
+      <p class="text">{{ site.description }}Disclaimer: Thoughts and opinions are my own.</p>
+      <p>Generated with Jekyll at {{ site.time | date: '%b. %d, %Y %r (%Z)'}}</p>
+    </div>
+
+  </div>
+
+</footer>

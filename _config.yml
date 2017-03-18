@@ -1,47 +1,35 @@
+# default github settings
+lsi: false
+safe: true
+source: .
+highlighter: rouge
+gist:
+  noscript: false
+kramdown:
+  math_engine: mathjax
+
 # Site settings
 title: Nate McMaster
 description: >
-    Infrequent blog posts about software development, lifehacks, opinion, etc.
+    Blog posts about software development, lifehacks, opinion, etc.
 baseurl:
 url: "http://www.natemcmaster.com"
 twitter_username: natemcmaster
-github_username:  natemcmaster
-linkedin_username:  natemcmaster
+github_username: natemcmaster
+linkedin_username: natemcmaster
 full_name: Nate McMaster
-
 
 # Build settings
 markdown: kramdown
 permalink: /blog/:categories/:year/:month/:day/:title/
-source: src
-destination: build
 encoding: utf-8
 timezone: US/Pacific
-sass:
-    sass_dir: _sass
 gems:
-    - jekyll-assets
-    - jekyll-sitemap
-    - jekyll-gist
-    - jemoji
-    - jekyll-redirect-from
-assets:
-    cache: build/.asset-cache
-    compress:
-        css: true
-        js: true
-    prefix: "/assets"
-    assets:
-        - "*.pdf"
-        - "*.eot"
-        - "*.ttf"
-        - "*.svg"
-        - "*.woff"
-    sources:
-        - _assets/files
-        - _assets/fonts
-    digest: true
-
-include: [.nojekyll, CNAME]
-exclude: [bower.json]
-
+  - jekyll-sitemap
+  - jekyll-gist
+  - jemoji
+  - jekyll-redirect-from
+exclude:
+  - Gemfile
+  - .ruby-version
+  - Makefile

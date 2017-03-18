@@ -1,16 +1,6 @@
 .DS_Store
-_site
-*.sublime-workspace
-bower_components
-node_modules
-
+_site/
 .bundle/
-.idea/
-.vscode/
-
-build/
-.jekyll-assets-cache
 .jekyll-metadata
 .sass-cache/
 Gemfile.lock
-src/_assets/bower/

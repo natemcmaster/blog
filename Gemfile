@@ -1,10 +1,2 @@
-ruby "2.1.5"
 source 'https://rubygems.org'
-gem 'rake'
-gem 'jekyll'
-gem 'jekyll-assets'
-gem 'jekyll-sitemap'
-gem 'jekyll-gist'
-gem 'uglifier'
-gem 'jemoji'
-gem 'jekyll-redirect-from'
+gem 'github-pages', group: :jekyll_plugins
