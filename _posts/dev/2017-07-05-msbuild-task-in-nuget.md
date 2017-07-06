@@ -164,9 +164,13 @@ This would make MSBuild.exe work, but then the reverse problem happens with `dot
 
 ## The solution
 
-You can vary which task assembly loads based on MSBuild's runtime type using the pre-defined property `MSBuildRuntimeType`. In `dotnet msbuild`, its value will be `Core`
-and in `MSBuild.exe` it will be `Full`. (Old versions of MSBuild may not set this property, so you
-can't count on "Full" to be specified.)
+You can vary which task assembly loads based on MSBuild's runtime type using the pre-defined property `MSBuildRuntimeType`.
+
+In `dotnet msbuild`, its value will be `Core`.
+In `MSBuild.exe`, it will be `Full`. 
+In `msbuild` in Mono 5, it will be `Mono`. 
+
+(Old versions of MSBuild may not set this property, so you can't count on "Full" to be specified.)
 
 Here is one way to use that property to vary the assembly path:
 
