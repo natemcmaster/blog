@@ -280,12 +280,69 @@ To acheive this layout using the csproj, we will change our `GreetingTasks.cspro
 to your package's list of dependencies. These packages are not required when your task is installed;
 they are only used when you compile your project.
 
-## Pack
+## Step 5 - pack
 
 To build and package the target, you can use `dotnet pack` or `MSBuild /t:Pack`.
 
 ```
 dotnet pack GreetingTasks.csproj --output ./ --configuration Release
+```
+
+## Step 6 - install
+
+Now that you have a \*.nupkg file, you can upload it NuGet.org or your own feed. Users can install
+this task as a package reference.
+
+```xml
+<ItemGroup>
+  <PackageReference Include="GreetingTasks" Version="1.0.0" />
+</ItemGroup>
+```
+
+## What happens when you install
+
+When a user executes NuGet restore, it will download and extract the package to the global NuGet 
+cache.
+
+```
+%USERPROFILE%\.nuget\packages\GreetingTasks\1.0.0\
+```
+
+It will also generate a file in `obj/$(MSBuildProject).nuget.g.props` which is automatically included
+in your csproj. This file will contain this line:
+
+```xml
+<Import Project="$(NuGetPackageRoot)greetingtasks/1.0.0/build/GreetingTasks.props" Condition="Exists('$(NuGetPackageRoot)greetingtasks/1.0.0/build/GreetingTasks.props')" />
+```
+
+When a user loads the project, your task will automatically load your \*.props files from the NuGet
+cache.
+
+# Next steps - adding targets
+
+All you've done so far is add a task to the project, but a user still has to use it. Or, if you know
+where you want your task to execute, you can add a targets file to your project too.
+
+As discussed above, NuGet will automatically import MSBuild files from `build/GreetingTasks.props`. 
+It will also import `build/GreetingTasks.targets` and `buildMultiTargeting/GreetingTasks.targets`.
+By MSBuild convention, it is best to put targets in \*.targets files, and to put properties and
+`UsingTask` calls in \*.props files.
+
+```
+- GreetingTasks.nupkg
+    - build/
+        + GreetingTasks.targets
+```
+
+You can add your own targets to this file.
+```xml
+<!-- build/GreetingTasks.targets -->
+<Project>
+  <!-- this will automatically run after the 'Build' target -->
+  <Target Name="RunMyGreeting" AfterTargets="Build">
+    <SayHello />
+  </Target>
+</Project>
 ```
 
 # Closing
