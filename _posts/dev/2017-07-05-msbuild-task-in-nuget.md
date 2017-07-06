@@ -32,13 +32,15 @@ powers Visual Studio) and "portable" MSBuild, or the one bundled in the .NET Cor
 
 This version of MSBuild usually lives inside Visual Studio. 
 e.g. `C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\Bin\MSBuild.exe`.
+It also ships in Mono 5 on macOS and Linux.
 
 Characteristics:
 
  - Runs on .NET Framework.
- - Windows only.
  - Visual Studio uses this when you execute "Build" on your solution or project.
- - Supports the widest range of project types.
+ - Typically only available on Windows, but Mono 5 ships MSBuild now too.
+ - On Windows, it supports the widest range of project types.
+ - On Mono, it supports a subset of project types and doesn't have NuGet 4 (yet).
 
 ### dotnet msbuild
 
@@ -163,7 +165,8 @@ This would make MSBuild.exe work, but then the reverse problem happens with `dot
 ## The solution
 
 You can vary which task assembly loads based on MSBuild's runtime type using the pre-defined property `MSBuildRuntimeType`. In `dotnet msbuild`, its value will be `Core`
-and in `MSBuild.exe` it will be `Full`.
+and in `MSBuild.exe` it will be `Full`. (Old versions of MSBuild may not set this property, so you
+can't count on "Full" to be specified.)
 
 Here is one way to use that property to vary the assembly path:
 
