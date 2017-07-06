@@ -3,6 +3,10 @@ layout: post
 title: Part 2 - Caveats of project.json to MSBuild conversion
 subtitle: To convert is to change form, function, or beliefs. There will lots of this.
 date: Feb. 1, 2017
+tags:
+  - msbuild
+  - project-json
+  - dotnet
 ---
 
 This upgrade is not only a matter changing JSON vs XML: it’s about learning and using a fundamentally 

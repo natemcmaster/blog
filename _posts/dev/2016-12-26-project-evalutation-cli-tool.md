@@ -4,9 +4,12 @@ title: "MSBuild + .NET Core CLI Tools: Getting information about the project"
 subtitle: Replacing project.json APIs with an MSBuild target
 date: 2016-12-26 6:00 PM
 hero:
-    asset_path: /assets/images/dotnet_cli_tool_screenshot.png
-    width: 558
-    height: 188
+  asset_path: /assets/images/dotnet_cli_tool_screenshot.png
+  width: 558
+  height: 188
+tags:
+  - msbuild
+  - dotnet
 ---
 
 The .NET Core CLI 1.0.0 has a feature called "project tools extensions", often called "CLI tools".

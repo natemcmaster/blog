@@ -1,11 +1,11 @@
 ---
 layout: post
 title: Shipping a cross-platform MSBuild task in a NuGet package
-date: 2017-07-05 21:30:00 PDT
+date: July 5, 2017
 tags:
-  - dotnet
-  - nuget
   - msbuild
+  - nuget
+  - dotnet
 ---
 
 MSBuild allows users to write and register their own tasks. Tasks, unlike targets, can be written in

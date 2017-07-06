@@ -8,6 +8,8 @@ hero:
     height: 405
     link: /assets/files/codecamp_slides.pdf
 date: 2015-03-14 10:35:00
+tags:
+  - dotnet-core
 ---
 
 This presentation covers an overview of what is new from Microsoft's ASP.NET team. For more information, checkout their official website at [asp.net](http://asp.net) or [on GitHub](http://github.com/aspnet/home).  ■

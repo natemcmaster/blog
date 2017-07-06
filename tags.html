@@ -1,0 +1,29 @@
+---
+layout: default
+title: Blog Posts by tag
+header: false
+group: navigation
+permalink: /blog/tags/
+---
+
+<div id="page-tags">
+<h1>Posts by Tag</h1>
+
+{% for tag in site.tags  %}
+  {% assign t = tag | first %}
+  {% assign posts = tag | last %}
+   
+  <h4 id="{{ t | slugify }}">{{ t }}</h4>
+  <ul>
+  {% for post in posts %}
+    {% if post.tags contains t %}
+      <li>
+        <div>
+          <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+          <span class="post-date">/  {{ post.date | date: "%B %e, %Y" }}</span>
+        </div>
+    </li>
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+</div>

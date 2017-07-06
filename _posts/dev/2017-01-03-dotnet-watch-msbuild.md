@@ -4,9 +4,12 @@ title: .NET Core command-line file watcher (dotnet watch) for MSBuild
 subtitle: Basic usage and pro-tips for using dotnet-watch with MSBuild
 date: 2017-01-03 10:52 PM
 hero:
-    asset_path: /assets/images/blog/dotnet-watch-preview.png
-    width: 296
-    height: 75
+  asset_path: /assets/images/blog/dotnet-watch-preview.png
+  width: 296
+  height: 75
+tags:
+  - dotnet
+  - msbuild
 ---
 
 The most recent preview ([1.0.0-msbuild2-final](https://www.nuget.org/packages/Microsoft.DotNet.Watcher.Tools/1.0.0-msbuild2-final))

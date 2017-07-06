@@ -1,3 +1,5 @@
+@import 'mixins'
+
 /*   Specific Page adjustments */
 /* ---------------------------------------------------------- */
 
@@ -60,3 +62,13 @@
         padding-bottom: 20px
     #professional
         clear: left
+
+#page-tags
+    .post-date
+        font-size: 80%
+        color: lighten(black, 10%)
+        padding-left: 0.5em
+
+    h4
+        margin-top: 1em
+        +header-link(20px)

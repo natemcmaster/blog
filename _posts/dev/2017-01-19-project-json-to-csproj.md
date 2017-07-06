@@ -2,6 +2,10 @@
 layout: post
 title: Project.json to MSBuild conversion guide
 date: Jan. 19, 2017
+tags:
+  - msbuild
+  - project-json
+  - dotnet
 ---
 
 If you been given the unenviable task of migrating your .NET Core project from 'project.json'

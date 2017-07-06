@@ -2,6 +2,9 @@
 layout: post
 title: "NuGet 3: The Runtime ID Graph"
 date: 2016-05-19 8:00 AM
+tags:
+  - nuget
+  - dotnet-core
 ---
 
 If you have ever cracked open* a NuGet package such as .NET Core's 
@@ -11,7 +14,7 @@ What is the folder and how is it used?
 
 *It's just a zip file. Unzip it.
 
-###TLDR;
+**TL;DR**
 
 Here is the RC2 rid graph:
 <https://github.com/dotnet/corefx/blob/v1.0.0-rc2/pkg/Microsoft.NETCore.Platforms/runtime.json>

@@ -7,6 +7,15 @@ layout: default
   {% if page.subtitle %}
     <h2>{{ page.subtitle }}</h2>
   {% endif %}
+  {% if page.tags.size > 0 %}
+    <ul class="tags">
+      {% for tag in page.tags %}
+        <li>
+          <a href="{% link tags.html %}#{{ tag | slugify }}"><span class="icon-tags"></span> {{ tag | xml_escape }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 </header>
 
 <article class="post-content">
