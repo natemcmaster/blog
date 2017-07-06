@@ -347,7 +347,7 @@ You can add your own targets to this file.
 
 # Closing
 
-I've posted the fully-working as a GitHub repository here: 
+I've posted the fully-working sample as a GitHub project here: 
 <https://github.com/natemcmaster/msbuild-tasks>.
 
 If you want to see a "real world" example of a project that uses this approach, checkout the 
