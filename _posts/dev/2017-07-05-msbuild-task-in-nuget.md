@@ -211,9 +211,11 @@ Our final sample NuGet package will have the following layout:
             + GreetingTasks.dll
 ```
 
-NuGet will automatically import the `build/GreetingTasks.props` file is imported into projects when 
-the project has a single `TargetFramework`. It will import `buildMultiTargeting/GreetingTasks.props`
-when the project has multiple `TargetFrameworks`.
+NuGet will automatically import the `build/(package id).props` file is imported into projects when 
+the project has a single `TargetFramework`. It will import `buildMultiTargeting/(package id).props`
+when the project has multiple `TargetFrameworks`. (FYI - NuGet will also import `build/(package id).targets`
+and `buildMultiTargeting/(package id).targets`. `.props` files are imported near the top of the file and
+`.targets` files near the bottom.)
 
 Also, we've put the assemblies in `tasks/` instead of `lib/`. If there were in `lib/`, NuGet would
 automatically add a compile-time reference to these assemblies. We don't really want developers
