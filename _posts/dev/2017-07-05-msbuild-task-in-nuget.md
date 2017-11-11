@@ -9,7 +9,7 @@ tags:
 ---
 
 MSBuild allows users to write and register their own tasks. Tasks, unlike targets, can be written in
-C# and can perform build operations that would be impossible to write in MSBuild's XML dialect. 
+C# and can perform build operations that would be impossible to write in MSBuild's XML dialect.
 In this post, I'm going walk through the key pieces of how to write an MSBuild task that works on both
 the .NET Core command line and in Visual Studio, and then how to bundle that task into a NuGet package
 so the task can be shared and installed automatically into projects.
@@ -30,7 +30,7 @@ powers Visual Studio) and "portable" MSBuild, or the one bundled in the .NET Cor
 
 ### Full MSBuild
 
-This version of MSBuild usually lives inside Visual Studio. 
+This version of MSBuild usually lives inside Visual Studio.
 e.g. `C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\Bin\MSBuild.exe`.
 It also ships in Mono 5 on macOS and Linux.
 
@@ -107,7 +107,7 @@ dotnet build GreetingTasks.csproj
 
 # Step 2 - use the task
 
-The assembly compiled in step 1 contains the `SayHello` task. To use this in MSBuild, 
+The assembly compiled in step 1 contains the `SayHello` task. To use this in MSBuild,
 you must first explicitly register the task by name, then invoke the task from a target.
 
 Create a new project file `test.proj` in your project folder with the contents below. The `UsingTask`
@@ -142,7 +142,7 @@ As explained above in [Primer](#primer), MSBuild can run on
 .NET Framework or .NET Core. In step 2, we used `dotnet msbuild` and the netstandard1.6 task assembly.
 But this won't work if we use `MSBuild.exe`.
 
-To see this blow up for yourself, using the code from step 2 and try this: 
+To see this blow up for yourself, using the code from step 2 and try this:
 
 1. open the Developer Command Prompt for VS 2017 or (add MSBuild.exe to your path)
 2. execute `MSBuild.exe test.proj`
@@ -167,8 +167,8 @@ This would make MSBuild.exe work, but then the reverse problem happens with `dot
 You can vary which task assembly loads based on MSBuild's runtime type using the pre-defined property `MSBuildRuntimeType`.
 
 In `dotnet msbuild`, its value will be `Core`.
-In `MSBuild.exe`, it will be `Full`. 
-In `msbuild` in Mono 5, it will be `Mono`. 
+In `MSBuild.exe`, it will be `Full`.
+In `msbuild` in Mono 5, it will be `Mono`.
 
 (Old versions of MSBuild may not set this property, so you can't count on "Full" to be specified.)
 
@@ -195,7 +195,7 @@ Now, both `dotnet msbuild test.proj` and `MSBuild.exe test.proj` will work.
 
 # Step 4 - shipping your task in a NuGet package
 
-## Package layout 
+## Package layout
 Our final sample NuGet package will have the following layout:
 
 ```
@@ -211,7 +211,7 @@ Our final sample NuGet package will have the following layout:
             + GreetingTasks.dll
 ```
 
-NuGet will automatically import the `build/(package id).props` file is imported into projects when 
+NuGet will automatically import the `build/(package id).props` file is imported into projects when
 the project has a single `TargetFramework`. It will import `buildMultiTargeting/(package id).props`
 when the project has multiple `TargetFrameworks`. (FYI - NuGet will also import `build/(package id).targets`
 and `buildMultiTargeting/(package id).targets`. `.props` files are imported near the top of the file and
@@ -310,7 +310,7 @@ this task as a package reference.
 
 ## What happens when you install
 
-When a user executes NuGet restore, it will download and extract the package to the global NuGet 
+When a user executes NuGet restore, it will download and extract the package to the global NuGet
 cache.
 
 ```
@@ -332,7 +332,7 @@ cache.
 All you've done so far is add a task to the project, but a user still has to use it. Or, if you know
 where you want your task to execute, you can add a targets file to your project too.
 
-As discussed above, NuGet will automatically import MSBuild files from `build/GreetingTasks.props`. 
+As discussed above, NuGet will automatically import MSBuild files from `build/GreetingTasks.props`.
 It will also import `build/GreetingTasks.targets` and `buildMultiTargeting/GreetingTasks.targets`.
 By MSBuild convention, it is best to put targets in \*.targets files, and to put properties and
 `UsingTask` calls in \*.props files.
@@ -354,14 +354,21 @@ You can add your own targets to this file.
 </Project>
 ```
 
+## Something you should know
+
+This approach has limitations. If you need an external dependency from your task, like Newtonsoft.Json, you may
+run into issues due to MSBuild's limited capability to load them.
+
+Read more about this here: **[MSBuild tasks with dependencies]({{ site.baseurl }}{% post_url /dev/2017-11-11-msbuild-task-with-dependencies %})**.
+
 # Closing
 
-I've posted the fully-working sample as a GitHub project here: 
+I've posted the fully-working sample as a GitHub project here:
 <https://github.com/natemcmaster/msbuild-tasks>.
 
-If you want to see a "real world" example of a project that uses this approach, checkout the 
+If you want to see a "real world" example of a project that uses this approach, checkout the
 following projects:
 
  - [Yarn.MSBuild](https://github.com/natemcmaster/yarn.msbuild)
- - [BuildBundlerMinifier](https://github.com/madskristensen/BundlerMinifier), specifically 
+ - [BuildBundlerMinifier](https://github.com/madskristensen/BundlerMinifier), specifically
    [these files](https://github.com/madskristensen/BundlerMinifier/tree/master/src/BundlerMinifier).
