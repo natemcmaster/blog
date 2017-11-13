@@ -4,7 +4,7 @@ title: Docker + dotnet-watch
 subtitle: How to setup your ASP.NET Core project with Docker and dotnet-watch, without making it impossible to use VS Code or Visual Studio
 tags:
   - aspnetcore
-  - dotnetcore
+  - dotnet
   - docker
 hero:
   asset_path: /assets/images/blog/dotnet_watch_and_docker.png
