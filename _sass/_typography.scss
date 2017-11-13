@@ -1,13 +1,21 @@
-$mainFontFamily: "Open Sans", "Helvetica Neue", sans-serif;
-$headingFontFamily: "Roboto Slab", serif;
+$mainFontFamily: "Open Sans", "Helvetica Neue", Helvetica, sans-serif;
+$serifFontFamily: "PT Serif", Georgia, serif;
+$headingFontFamily: $mainFontFamily;
 $monospacedFontFamily: "source-code-pro", Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", monospace;
 
 @mixin mainFont {
-  font-family: ($mainFontFamily,);
+  font-family: $mainFontFamily;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-style: normal;
   font-weight: 200;
+}
+
+@mixin serifFont {
+  font-family: $serifFontFamily;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-style: normal;
 }
 
 @mixin headingFont {

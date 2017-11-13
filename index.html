@@ -60,12 +60,14 @@ Feel free to write me at hello@natemcmaster.com
         <div class="posts">
           {% for post in site.posts limit:4 %}
           <div class="post">
-            <span class="post-date">{{ post.date | date: "%B %-d, %Y" }}</span>
             <a class="post-link" href="{{ post.url | relative_url }}">
               <h1 class="font-main">{{ post.title }}</h1>
             </a>
             {% if post.subtitle %}
             <h2>{{ post.subtitle }}</h2>
+            <div class="meta">
+              <span class="post-date">{{ post.date | date: "%B %-d, %Y" }}</span>
+            </div>
             {% endif %} {% if post.hero %}
             <div class="postimage hero {{post.hero.classes}}">
               <a href="{{ post.url | relative_url }}">

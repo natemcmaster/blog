@@ -12,13 +12,15 @@ permalink: /blog/
   <div class="posts">
     {% for post in site.posts limit:10 %}
     <div class="post">
-      <span class="post-date">{{ post.date | date: "%B %-d, %Y" }}</span>
       <a class="post-link" href="{{ post.url | relative_url }}">
         <h1 class="post-title">{{ post.title }}</h1>
       </a>
       {% if post.subtitle %}
       <h2>{{ post.subtitle }}</h2>
       {% endif %}
+      <div class="meta">
+        <span class="post-date">{{ post.date | date: "%B %-d, %Y" }}</span>
+      </div>
 {% if post.hero %}
       <div class="postimage hero {{post.hero.classes}}">
         <a href="{{ post.url | relative_url }}">

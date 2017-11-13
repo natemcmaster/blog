@@ -7,7 +7,7 @@ layout: default
     {% if page.subtitle %}
     <h2>{{ page.subtitle }}</h2>
     {% endif %}
-    <span class="meta">By <a href="{% link 4_profile.html %}">Nate McMaster</a> | {{ page.date | date: "%B %-d, %Y" }}{% if page.meta %} • {{ page.meta }}{% endif %}</span>
+    <div class="meta">By <a href="{% link 4_profile.html %}">Nate McMaster</a> | {{ page.date | date: "%B %-d, %Y" }}{% if page.meta %} • {{ page.meta }}{% endif %}</div>
     {% if page.tags.size > 0 %}
     <ul class="tags">
       {% for tag in page.tags %}
