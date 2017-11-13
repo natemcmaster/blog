@@ -6,6 +6,10 @@ tags:
   - aspnetcore
   - dotnetcore
   - docker
+hero:
+  asset_path: /assets/images/blog/dotnet_watch_and_docker.png
+  width: 1587
+  height: 419
 date: Nov. 13, 2017
 ---
 
