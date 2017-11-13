@@ -10,7 +10,7 @@ tags:
 ---
 
 A few months ago, I wrote demos and a [blog post]({{ site.baseurl }}{% post_url /dev/2017-07-05-msbuild-task-in-nuget %}) about writing
-MSBuild tasks and shipping them in a NuGet package. The most frequently asked question I've been asked
+MSBuild tasks and shipping them in a NuGet package. The question I've been asked most frequently
 since then is "how to I make a task with external dependencies work?" i.e. "my task needs to connect to MySql, Postgres, load SQLite", or something like that. When I started writing a post to answer these questions, I intended to show you the way to make all this work.
 
 But then, as the list of workarounds grew, I realized that my advise is probably leading down a bad road. So in response to this, I wrote
