@@ -9,6 +9,8 @@ hero:
     url: https://farm6.staticflickr.com/5592/14778307563_fbdc53cfed_b.jpg
     height: 1024
     width: 413
+tags:
+  - entityframework-core
 ---
 
 ## Update

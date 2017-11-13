@@ -3,9 +3,11 @@ layout: post
 title: Installing ASP.NET 5 (beta 3)
 subtitle: Installing VS 2015 and the ASP.NET 5 CLI tools
 date: 2015-03-14 9:10:00
+tags:
+ - aspnetcore
 ---
 
-The easiest, but slowest, way to install ASP.NET 5 is through Visual Studio 2015. 
+The easiest, but slowest, way to install ASP.NET 5 is through Visual Studio 2015.
 
 Alternatively, you can install the command line tools by following the instructions below. These are instructions are for the **beta 3** versions of the tools as posted on [ASP.NET 5 on GitHub](https://github.com/aspnet/home). Beginning with **beta 4** these will be obsolete.
 
@@ -30,7 +32,7 @@ Execute the following in *Command Prompt* (cmd.exe)
 
 
 ## OS X
-You must have >= Mono 3.6.0 installed. 
+You must have >= Mono 3.6.0 installed.
 
 If you have [brew](http://brew.sh), the following will the correct version of Mono and the KVM. Execute these in the Terminal.
 

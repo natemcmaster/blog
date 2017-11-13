@@ -4,7 +4,7 @@ title: "NuGet 3: The Runtime ID Graph"
 date: 2016-05-19 8:00 AM
 tags:
   - nuget
-  - dotnet-core
+  - dotnet
 ---
 
 If you have ever cracked open* a NuGet package such as .NET Core's

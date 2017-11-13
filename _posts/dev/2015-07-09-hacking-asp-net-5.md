@@ -2,6 +2,8 @@
 layout: post
 title: Hacking ASP.NET 5 and Mono
 subtitle: Tricks to help you develop ASP.NET 5 applications on OS X and Linux
+tags:
+  - aspnetcore
 ---
 
 First, it is important understand what happens when you execute `dnx`.
@@ -23,7 +25,7 @@ Execute `MONO_OPTIONS=--debug dnx . run`
 
 ## Change the mono runtime
 
-If you have multiple versions of mono installed, it may be useful to change which version mono is using. 
+If you have multiple versions of mono installed, it may be useful to change which version mono is using.
 DNX will [first look within the runtime folder](https://github.com/aspnet/dnx/blob/dev/scripts/dnx.sh) for an executable mono. If not, it will use the system default.
 You can override the system default mono by adding a symbolic link into the runtime folder.
 
