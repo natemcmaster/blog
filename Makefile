@@ -17,6 +17,7 @@ test: build
 	bundle exec htmlproofer ./_site \
 		--allow-hash-href \
 		--assume-extension \
+		--disable-external \
 		--empty-alt-ignore \
 		--internal-domains www.natemcmaster.com,natemcmaster.com,natemcmaster.github.io,localhost \
 		--url-ignore https://www.linkedin.com/in/natemcmaster
