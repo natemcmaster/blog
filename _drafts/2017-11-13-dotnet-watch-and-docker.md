@@ -67,6 +67,10 @@ Add a file named `Directory.Build.props` to your project with these contents:
 </Project>
 ```
 
+:warning: Make sure to delete you existing `obj/` and `bin/` folders after you change this, otherwise you'll get a warning like
+
+> /code/obj/Debug/netcoreapp2.0/web.AssemblyInfo.cs(10,12): error CS0579: Duplicate 'System.Reflection.AssemblyCompanyAttribute' attribute [/code/app/web.csproj]
+
 ## Add a dockerfile
 
 Add a file named `Dockerfile` to your project folder with these contents:
@@ -76,10 +80,11 @@ FROM microsoft/aspnetcore-build:2.0.2
 
 # Required inside Docker, otherwise file-change events may not trigger
 ENV DOTNET_USE_POLLING_FILE_WATCHER 1
-WORKDIR /app
 
-# By copying these into the image when building the image, we don't have to re-run restore everytime we launch
-# the image
+# Set a working dir at least 2 deep. The output and intermediate output folders will be /code/obj and /code/bin
+WORKDIR /code/app
+
+# By copying these into the image when building it, we don't have to re-run restore everytime we launch a new container
 COPY web.csproj .
 COPY NuGet.config .
 COPY Directory.Build.props .
@@ -98,13 +103,9 @@ Open a command line to your project folder and use the following commands.
     docker build ./ -t my-server
     ```
 2. Start your Docker container.
-    For macOS and Linux users in Bash, run
+    For macOS and Linux users in Bash, and Windows users in Powershell, run
     ```sh
-docker run --rm -it -p 5000:80 -v $(pwd):/app my-server
-    ```
-    For Windows users in PowerShell, run
-    ```ps1
-docker run --rm -it -p $(Get-Location):/app my-server
+    docker run --rm -it -p 5000:80 -v "$(pwd):/code/app" my-server
     ```
 
 #### What do those flags mean?
@@ -115,8 +116,29 @@ docker run --rm -it -p $(Get-Location):/app my-server
 
 `-p 5000:80` - maps port 5000 on your host machine to port 80 of the container
 
-`-v $(pwd):/app` - volume mounts the project directory into the app folder `/app` so file changes made locally are immediately available in the Docker container
+`-v "$(pwd):/code/app"` - volume mounts the project directory into the app folder `/code/app` so file changes made locally are immediately available in the Docker container
 
+**You might also consider adding:**
+
+`-e ASPNETCORE_ENVIRONMENT=Development` - changes the default environment from  `Production` to `Development`
+
+#### Pro-tip: user secrets + Docker
+
+If you use user secrets to configure your app, you can make these secrets available inside your container like this:
+
+For Windows users in Powershell, run
+```sh
+docker run --rm -it -p 5000:80 -v "$(pwd):/code/app" -v "${env:APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets/" -e ASPNETCORE_ENVIRONMENT=Development my-server
+```
+
+For macOS and Linux users, run
+```sh
+docker run --rm -it -p 5000:80 -v "$(pwd):/code/app" -v "$HOME/.microsoft/usersecrets:/root/.microsoft/usersecrets/" -e ASPNETCORE_ENVIRONMENT=Development my-server
+```
+
+This mounts the location where user secrets are stored on the host into the container.
+
+Also, by default, UserSecrets is only loaded in "Development", not "Production" environments.
 
 ## Issues?
 
