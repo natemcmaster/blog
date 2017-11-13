@@ -12,12 +12,20 @@ tags:
 If you are looking for a way to share a build tool among several .NET Framework or .NET Core projects,
 NuGet is an excellent way to distribute it. Starting with Visual Studio 2017, NuGet comes "batteries included"
 with Microsoft.NET.Sdk (typically for .NET Standard and Core) projects, and can be made to work with
-"classic" .NET Framework projects too. Most of the time, NuGet packages are used to distribute shared runtime libraries
-that are referenced by the project, but NuGet packages can be used for build tools too.
-By adding a `<PackageReference>` line to your \*.csproj files, you can ensure that the tool is available, and
-you can even automatically wire it up into the build.
+"classic" .NET Framework projects, too. Most of the time, NuGet packages are used to share runtime libraries,
+but NuGet packages can be used for build tools, too.
+By adding a `<PackageReference>` to your \*.csproj files, you can ensure that the tool is available, and
+you can even automatically wire it up into the project's compilation steps.
 
-Figuring out how to glue these pieces together is the tricky bit, so in the sections below, I've created some instructions for how to build a sample project. The focus of these steps is how to tie it all together, but not how to actually write MSBuild or a console tool.
+Figuring out how to glue these pieces together is the tricky bit, so in the sections below, I've created some
+instructions for how to build a sample build tool that is available in a NuGet package. The focus of these
+steps is how to tie it all together, but not how to actually write MSBuild or a console tool.
+
+If you want to see real-life examples of this, checkout these:
+
+ - [Microsoft.Net.Compilers](https://www.nuget.org/packages/Microsoft.Net.Compilers/2.4.0) - the C# compiler itself
+ - [xunit.runner.console](https://www.nuget.org/packages/xunit.runner.console/2.3.1) - the Xunit test framework console runner
+ - [Microsoft.AspNetCore.Mvc.Razor.ViewCompilation](https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.Razor.ViewCompilation/2.0.0) - the ASP.NET Core MVC Precompiler
 
 ## Goal
 
@@ -42,7 +50,7 @@ When executing `dotnet build`, all C# classes in the `MyCompany.Web.Typescript` 
 
 ## Step 1 - build the tool as a console app
 
-For this example, let's say we want a build tool that will generate TypeScript files to match your C#. As an additional requirement, let's make sure this tool works cross-platform, which means we will have both a .NET Framework and a .NET Core version
+Let assume this tool has been implemented already, but as an additional requirement, let's make sure this tool works cross-platform. This means we will have both a .NET Framework and a .NET Core version
 of this console tool.
 
 Its usage will look like this:
@@ -54,7 +62,7 @@ dotnet ts-gen.dll <ASSEMBLY_FILE> <OUTPUT_DIR> [--namespace <NAMESPACE>]
 ts-gen.exe <ASSEMBLY_FILE> <OUTPUT_DIR> [--namespace <NAMESPACE>]
 ```
 
-For the sake of this blog, I won't actually provide an implementation, but assume it is a console application that is build from a project like this.
+I won't actually provide an implementation, but assume it is a console application that is built from a project like this.
 
 ```xml
 <!-- MyTypescriptGenerator.csproj -->
@@ -69,7 +77,8 @@ For the sake of this blog, I won't actually provide an implementation, but assum
 
 ## Step 2 - write an MSBuild target to invoke the tool
 
-To wire this build tool into a compilation step of another project, you'll need a little MSBuild glue code. For this target, we will assume that a compiled version of our console tool will sit next to this targets file in this folder structure.
+To wire this build tool into a compilation step of another project, you'll need a little MSBuild glue code.
+For this target, we will assume that a compiled version of our console tool will sit next to this targets file in this folder structure.
 
 ```
 + GenerateTypescript.targets
@@ -131,16 +140,17 @@ To tap into these conventions, our package will have the following layout
 
 ### The lib folder and placeholder file ( \_.\_ )
 
+The `_._` file is known as the "NuGet placeholder file" and is just an empty text file.
 As stated above, our goal is to support .NET Standard and .NET Framework projects.
-By adding these two files -- `lib/netstandard1.0/_._` and `lib/net45/_._` -- we have instructed NuGet to treat this package as compatible with .NETStandard1.0 and .NETFramework4.5 and any other framework compatible with these, such as .NET Core. The `_._` file is known as the "NuGet placeholder file" and is just an empty text file.
+By adding these two files -- `lib/netstandard1.0/_._` and `lib/net45/_._` -- we have instructed NuGet to treat this package as compatible with .NETStandard1.0 and .NETFramework4.5. This means .NET Core 1.0 and up and others can install it.
 
 ### The build folder and the .targets file
 
-NuGet will automatically import the `build/*/(package id).targets` file is imported into projects by using the same `TargetFramework` compatibility rules that guide the `lib/` folder.
+NuGet will automatically import the `build/*/(package id).targets` file into projects by using the same `TargetFramework` compatibility rules that guide the `lib/` folder.
 
-By the way, it's important the file is named `$PackageId$.targets`. NuGet will ignore other files.
+By the way, it's important the file is named `PackageId + ".targets"`. NuGet will ignore other files.
 
-These files are a little bit of "glue". NuGet and MSBuild will automatically add `<Import>`'s from the consumer project to this file in your package, wherever it ends up on disk. These files can be identical and should look like this:
+These files are another little bit of "glue". NuGet and MSBuild will automatically add `<Import>`'s from the consumer project to this file in your package, wherever it ends up on disk. These files can be identical and should look like this:
 
 ```xml
 <!-- MyTypescriptGenerator.targets -->
@@ -151,8 +161,8 @@ These files are a little bit of "glue". NuGet and MSBuild will automatically add
 
 ### nuspec
 
-To wrap the tool and target into a package, we'll need to write a custom nuspec file
-to package it altogether. The `$publishdir$` is treated as a variable that must be passed in during the packaging step.
+To wrap the tool and targets files into a package, we'll need to write a custom nuspec file.
+`$publishdir$` is treated as a variable that must be passed in during the packaging step.
 
 Add a nuspec file to your project folder that looks like this:
 
@@ -177,7 +187,7 @@ Add a nuspec file to your project folder that looks like this:
 </package>
 ```
 
-## Step 4 - package it
+## Step 4 - define pack settings
 
 Let's go back to the \*.csproj file used to create `ts-gen.exe`. In order to make `dotnet pack` or `msbuild.exe /t:Pack` work correctly, we'll need to add settings to control how the `/t:Pack` target works.
 
@@ -239,7 +249,7 @@ When a user executes NuGet restore, it will download and extract the package to 
 cache.
 
 ```
-%USERPROFILE%\.nuget\packages\MyTypescriptGenerator\1.0.0\
+%USERPROFILE%\.nuget\packages\mytypescriptgenerator\1.0.0\
 ```
 
 It will also generate a file in `obj/$(MSBuildProject).nuget.g.targets` which is automatically included
