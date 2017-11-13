@@ -1,0 +1,76 @@
+$searchIcon: 20px;
+
+@mixin searchbar($height) {
+  .searchbar {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: $height;
+    border-bottom: $pageSeparator;
+    padding-right: 10px;
+
+    @include box-shadow(0 3px 10px -5px rgba(0, 0, 0, 0.3));
+
+    span[class^="icon"] {
+      width: $searchIcon;
+      position: absolute;
+      left: 10px;
+      top: 10px;
+    }
+
+    $pad: 10px;
+
+    %searchItem {
+      padding-left: $searchIcon + $pad;
+      padding-right: $pad;
+      font-size: $height - 2 * $pad;
+    }
+
+    input[type="search"] {
+      @include bodyFont;
+
+      -webkit-appearance: caret;
+      height: 100%;
+      outline: none;
+      border: none;
+      width: 100%;
+
+      @extend %searchItem;
+    }
+
+    .matches {
+      position: absolute;
+      top: $height;
+      width: 100%;
+      background: white;
+
+      @include box-shadow(0 5px 10px -5px rgba(0, 0, 0, 0.3));
+
+      overflow: hidden;
+      border-bottom: $pageSeparator;
+
+      .match {
+        cursor: pointer;
+
+        @include transition(all 50ms ease);
+
+        padding-top: $pad;
+        padding-bottom: $pad;
+
+        @extend %searchItem;
+
+        height: $height;
+        border-bottom: 1px solid darken(white, 5%);
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &.active {
+          background: lighten($primary, 10%);
+          color: white;
+        }
+      }
+    }
+  }
+}

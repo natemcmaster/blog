@@ -1,0 +1,18 @@
+$mainFontFamily: "Open Sans";
+$headingFontFamily: "Roboto Slab";
+
+@mixin bodyFont {
+  font-family: $mainFontFamily, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-style: normal;
+  font-weight: 200;
+}
+
+@mixin headingsFont {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-family: $headingFontFamily, serif;
+  font-style: normal;
+  font-weight: 400;
+}

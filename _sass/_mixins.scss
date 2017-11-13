@@ -1,0 +1,29 @@
+@mixin header-link($size: 32px, $bottom: 0px) {
+  position: relative;
+
+  .header-link {
+    color: black;
+    position: absolute;
+    opacity: 0.1;
+    bottom: $bottom;
+    font-size: $size * 2 / 3;
+    transition: opacity 0.2s ease-in-out 0.1s;
+  }
+
+  &:hover .header-link {
+    text-decoration: none;
+    opacity: 0.9;
+  }
+
+  @media screen and (min-width: $max-site-width + 20) {
+    .header-link {
+      left: -1.4em;
+    }
+  }
+
+  @media screen and (max-width: $max-site-width + 20) {
+    .header-link {
+      right: 0.5em;
+    }
+  }
+}

@@ -1,0 +1,47 @@
+@mixin animation($animation, $duration: 5s, $timingFunc: linear, $delay: 0s, $repeat: 1) {
+  -webkit-animation: $animation $duration $timingFunc $delay $repeat;
+  -moz-animation: $animation $duration $timingFunc $delay $repeat;
+  animation: $animation $duration $timingFunc $delay $repeat;
+}
+
+@mixin keyframe($animation_name) {
+  @-webkit-keyframes #{$animation_name} {
+    @content;
+  }
+
+  @-moz-keyframes #{$animation_name} {
+    @content;
+  }
+
+  @-o-keyframes #{$animation_name} {
+    @content;
+  }
+
+  @keyframes #{$animation_name} {
+    @content;
+  }
+}
+
+@mixin scale($scale) {
+  -webkit-transform: scale($scale);
+  -moz-transform: scale($scale);
+  transform: scale($scale);
+}
+
+@mixin text-shadow($shadow) {
+  -webkit-text-shadow: $shadow;
+  -moz-text-shadow: $shadow;
+  text-shadow: $shadow;
+}
+
+@mixin box-shadow($shadow) {
+  -webkit-box-shadow: $shadow;
+  -moz-box-shadow: $shadow;
+  box-shadow: $shadow;
+}
+
+@mixin transition($trans) {
+  -webkit-transition: $trans;
+  -moz-transition: $trans;
+  transition: $trans;
+}

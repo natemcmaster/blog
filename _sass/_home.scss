@@ -1,0 +1,83 @@
+@import "variables";
+
+.personal-banner {
+  color: white;
+  background: $color-header-bg;
+  padding: 20px;
+
+  .icons {
+    margin-top: 16px;
+    font-size: 14px;
+    display: inline-block;
+    float: right;
+
+    a:hover {
+      text-decoration: none;
+    }
+  }
+
+  [class^="icon-"] {
+    font-size: 30px;
+    margin: 0.5em 0.25em 0.25em;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    opacity: 0.5;
+    color: white;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  h1 {
+    @include mainFont;
+
+    font-size: 32px;
+    font-weight: 200;
+    margin: 0;
+    line-height: 1em;
+    padding-right: 32px;
+  }
+
+  h3 {
+    font-size: 16px;
+  }
+
+  .brand {
+    > div {
+      display: inline-block;
+    }
+
+    .brand-img {
+      padding-right: 10px;
+      font-size: 26px;
+    }
+  }
+
+  .img-profile {
+    $size: 64px;
+
+    height: $size;
+    width: $size;
+    border-radius: $size;
+    vertical-align: bottom;
+  }
+}
+
+.nav-homepage {
+  background: darken(white, 11%);
+
+  a.page-link {
+    display: inline-block;
+    padding: 8px 20px;
+    color: black;
+    text-decoration: none;
+
+    &:hover {
+      background: darken(white, 20%);
+    }
+  }
+}

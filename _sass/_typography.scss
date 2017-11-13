@@ -1,0 +1,73 @@
+$mainFontFamily: "Open Sans", "Helvetica Neue", sans-serif;
+$headingFontFamily: "Roboto Slab", serif;
+$monospacedFontFamily: "source-code-pro", Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", monospace;
+
+@mixin mainFont {
+  font-family: ($mainFontFamily,);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-style: normal;
+  font-weight: 200;
+}
+
+@mixin headingFont {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-family: $headingFontFamily;
+  font-style: normal;
+  font-weight: 600;
+}
+
+@mixin monospacedFont {
+  font-family: $monospacedFontFamily;
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.font-heading {
+  @include headingFont;
+}
+
+.font-main {
+  @include mainFont;
+}
+
+.font-monospace {
+  @include monospacedFont;
+}
+
+.text-muted {
+  opacity: 0.75;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @include headingFont;
+
+  font-size: 100%;
+}
+
+h1 {
+  margin: 0.5em 0;
+  font-size: 36px;
+}
+
+h2 {
+  font-size: 29px;
+}
+
+h3 {
+  font-size: 21px;
+}
+
+strong {
+  font-weight: 400;
+}
+
+.text-center {
+  text-align: center;
+}
+
+em {
+  font-style: italic;
+}
