@@ -2,7 +2,7 @@
 layout: post
 title: Bundling .NET build tools in NuGet
 subtitle: How to share your console app via NuGet and MSBuild
-date: Nov. 11, 2017
+date: Nov. 11, 2017, 1:00 pm
 tags:
   - msbuild
   - nuget

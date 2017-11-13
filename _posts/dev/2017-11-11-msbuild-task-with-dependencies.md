@@ -2,7 +2,7 @@
 layout: post
 title: MSBuild tasks with dependencies
 subtitle: You could wrestle with MSBuild's task loading mechanism, or just don't.
-date: Nov. 11, 2017
+date: Nov. 11, 2017, 12:00pm
 tags:
   - msbuild
   - nuget
