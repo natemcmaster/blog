@@ -1,13 +1,14 @@
 ---
 layout: default
 ---
-<header class="post-header">
-  <h1>{{ page.title }}</h1>
-  {% if page.subtitle %}
+<article>
+  <header class="post-header">
+    <h1>{{ page.title }}</h1>
+    {% if page.subtitle %}
     <h2>{{ page.subtitle }}</h2>
-  {% endif %}
-  <span class="meta">By <a href="{% link 4_profile.html %}">Nate McMaster</a> | {{ page.date | date: "%B %-d, %Y" }}{% if page.meta %} • {{ page.meta }}{% endif %}</span>
-  {% if page.tags.size > 0 %}
+    {% endif %}
+    <span class="meta">By <a href="{% link 4_profile.html %}">Nate McMaster</a> | {{ page.date | date: "%B %-d, %Y" }}{% if page.meta %} • {{ page.meta }}{% endif %}</span>
+    {% if page.tags.size > 0 %}
     <ul class="tags">
       {% for tag in page.tags %}
       <li>
@@ -15,27 +16,29 @@ layout: default
       </li>
       {% endfor %}
     </ul>
-  {% endif %}
+    {% endif %}
   </header>
 
-<article class="post-content">
-  {% if page.hero %}
+  <div class="post-content">
+    {% if page.hero %}
     <p class="postimage hero {{page.hero.classes}}">
       {%if page.hero.link %}
-        <a href="{{ page.hero.link | relative_url }}">
+      <a href="{{ page.hero.link | relative_url }}">
         {% endif %}
-      {% if page.hero.asset_path %}
-      <img src="{{page.hero.asset_path | relative_url }}" alt="{{page.hero.description}}"/>
-      {% else %}
-      <img src="{{page.hero.url}}" alt="{{page.hero.description}}"/>
-      {% endif %}
-      {%if page.hero.link %}
-        </a>
+        {% if page.hero.asset_path %}
+        <img src="{{page.hero.asset_path | relative_url }}" alt="{{page.hero.description}}"/>
+        {% else %}
+        <img src="{{page.hero.url}}" alt="{{page.hero.description}}"/>
+        {% endif %}
+        {%if page.hero.link %}
+      </a>
       {% endif %}
     </p>
-  {% endif %}
-{{ content }}
+    {% endif %}
+    {{ content }}
+  </div>
 </article>
+
 <div class="comments">
 {% if jekyll.environment == "production" %}
   {% include disqus.html %}
