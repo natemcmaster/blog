@@ -13,7 +13,7 @@ repository: natemcmaster/blog
 title: Nate McMaster
 description: >
     Blog posts about software development, plus some other stuff.
-baseurl:
+baseurl: ''
 url: "http://www.natemcmaster.com"
 twitter_username: natemcmaster
 github_username: natemcmaster
