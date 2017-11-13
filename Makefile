@@ -1,20 +1,17 @@
 default: build
 
-.PHONY: publish build serve install
+.PHONY: build serve setup
 
 build:
-	jekyll build
+	bundle exec jekyll build
 
 serve:
 	@open http://localhost:4000
-	jekyll serve --watch
+	bundle exec jekyll serve --watch
 
 setup:
-	npm install -g bower
 	gem install bundler
-
-install:
 	bundle install
-	pushd src
-	bower install
-	popd
+
+test:
+	bundle exec htmlproofer ./_site

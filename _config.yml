@@ -9,6 +9,7 @@ kramdown:
   math_engine: mathjax
 
 # Site settings
+repository: natemcmaster/blog
 title: Nate McMaster
 description: >
     Blog posts about software development, plus some other stuff.
@@ -29,7 +30,9 @@ plugins:
   - jekyll-gist
   - jemoji
   - jekyll-redirect-from
+  - jekyll-github-metadata
 exclude:
   - Gemfile
   - .ruby-version
   - Makefile
+  - [vendor]
