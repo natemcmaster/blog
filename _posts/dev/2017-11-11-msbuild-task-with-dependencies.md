@@ -20,11 +20,11 @@ _This is a follow up to
 **[Shipping a cross-platform MSBuild task in a NuGet package]({{ site.baseurl }}{% post_url /dev/2017-07-05-msbuild-task-in-nuget %})**._
 
 
-# Just don't
+## Just don't
 
 **TL;DR** Just don't. Use a console tool instead. MSBuild tasks have limitations. It's typically easier to write a console tool and start a new process from MSBuild using `Exec`.
 
-# The exception
+## The exception
 
 If you need access to MSBuild's object model so you have richer access to logging, items, properties, and task outputs, you will still need to write a task. But even in this case, I recommend making your task simply a wrapper for starting a new process that launches your console tool.
 
