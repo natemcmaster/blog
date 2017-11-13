@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Docker + dotnet-watch
-subtitle: How to setup your ASP.NET Core project to build in a Docker container using dotnet-watch to auto-restart the server
+subtitle: How to setup your ASP.NET Core project with Docker and dotnet-watch, without making it impossible to use VS Code or Visual Studio
 tags:
   - aspnetcore
   - dotnetcore
@@ -9,15 +9,18 @@ tags:
 date: Nov. 13, 2017
 ---
 
-It's still in pre-release, but I [made a change to dotnet-watch recently](https://github.com/aspnet/DotNetTools/pull/347) that will make it much easier to setup
-a local developer environment to use Docker and dotnet-watch for local development. The post below shows you
-how to setup your project to use this.
+I made [a change to dotnet-watch recently](https://github.com/aspnet/DotNetTools/pull/347) that will make it much easier to setup Docker + dotnet-watch in your ASP.NET Core project, without causing Visual Studio to crash and burn.
+In current versions of dotnet-watch, there have been issues getting it to work with Docker, and it required some ugly workarounds.
+Even then, it was hard to keep Docker, dotnet-watch, and Visual Studio happy. Either Docker or Visual Studio would complain about issues with NuGet caches, duplicate attributes, etc.
+The next version of dotnet-watch removes the need for those ugly workarounds.
+This version isn't available yet on NuGet.org, but you can still give it a test run today with ASP.NET Core 2.0.0 projects.
+The post below shows you
+how to setup your project to do this today using a nightly build of dotnet-watch.
 
 ## Background
 
 `dotnet watch` is a command line utility that watches files and can re-run dotnet commands when files in your
-project change. It can be used along with `dotnet test`, `dotnet run`, and others to make it easy to quickly
-iterate.
+project change. It can be used along with `dotnet test`, `dotnet run`, and any other dotnet command.
 
 .NET Core is available in a Docker image. Docker containers allow you to sandbox your application and run it
 in an environment similar or identical to a production environment. If you're unfamiliar with it, think of Docker
@@ -34,7 +37,7 @@ it to contain this.
   </ItemGroup>
 ```
 
-This is a **pre-release build**. It's not on NuGet.org yet, so you'll also need this. Add a file named `NuGet.config`
+This is a **pre-release build**. It's not on NuGet.org yet, so you'll need to get it from the ASP.NET Core nightly feed. Add a file named `NuGet.config`
 to your project directory with these contents.
 
 ```xml
@@ -47,22 +50,22 @@ to your project directory with these contents.
 </configuration>
 ```
 
-## Change the location of obj/ and bin/
+## Change the location of  the obj/ and bin/ folders
 
 One of the most common problems with making Docker and Visual Studio (Code) work well is that the files in the
-obj/ and bin/ folders need to be different inside and outside the docker container. If they overlap, you'll
-get errors like "Version for package 'Microsoft.DotNet.Watcher.Tools' could not be resolve".
+`obj/` and `bin/` folders need to be different inside and outside the Docker container. If they overlap, you'll
+get errors, including "Version for package 'Microsoft.DotNet.Watcher.Tools' could not be resolve", issues with the runtime store, and  more.
 
-To resolve this, we will move the location of the obj/ and bin/ folder to **sit next to the project directory,
-not inside it.**
+To resolve this, we will move the location of the `obj/` and `bin/` folders to **sit next to the project directory**,
+not inside it.
 
 Add a file named `Directory.Build.props` to your project with these contents:
 
 ```xml
 <Project>
   <PropertyGroup>
-    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)../obj/</BaseIntermediateOutputPath>
-    <BaseOutputPath>$(MSBuildThisFileDirectory)../bin/</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(MSBuildProjectDirectory)/../obj/</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(MSBuildProjectDirectory)/../bin/</BaseOutputPath>
   </PropertyGroup>
 </Project>
 ```
@@ -76,7 +79,7 @@ Add a file named `Directory.Build.props` to your project with these contents:
 Add a file named `Dockerfile` to your project folder with these contents:
 
 ```Dockerfile
-FROM microsoft/aspnetcore-build:2.0.2
+FROM microsoft/aspnetcore-build:2.0
 
 # Required inside Docker, otherwise file-change events may not trigger
 ENV DOTNET_USE_POLLING_FILE_WATCHER 1
