@@ -1,0 +1,124 @@
+---
+---
+
+@import "historyexplorer/reset";
+@import "historyexplorer/mixins";
+@import "historyexplorer/font";
+@import "historyexplorer/icons";
+
+h1, h2, h3, h4, h5, h6 {
+  @include headingsFont;
+}
+
+div, p, span, a {
+  @include bodyFont;
+}
+
+html, body {
+  height: 100%;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+/* COLORS */
+$primary: #0079d1;
+$secondary: #C1C923;
+$highlight: #F41C54;
+$tertiary: #002E3F;
+$pageSeparator: 1px solid darken(white, 20%);
+
+a {
+  color: $primary;
+  text-decoration: none;
+
+  @include transition(all 200ms ease);
+
+  &:hover {
+    color: darken(blue, 15%);
+  }
+}
+
+$headerHeight: 45px;
+
+.container {
+  height: 100%;
+}
+
+.header {
+  $pad: 5px;
+
+  background: $primary;
+  color: white;
+  padding: $pad;
+  padding-left: 2 * $pad;
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $headerHeight - 2 * $pad;
+
+  small {
+    font-size: 12pt;
+    padding-left: 1em;
+  }
+}
+
+@import "historyexplorer/sidebar";
+@import "historyexplorer/graph";
+@import "historyexplorer/searchbar";
+
+@mixin sidebarTransision {
+  @include transition(width 400ms ease);
+}
+
+.page {
+  padding-top: $headerHeight;
+  width: 100%;
+  z-index: 50;
+
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .sidebar {
+    @include sidebar(33%);
+  }
+
+  .content {
+    @include sidebarTransision;
+
+    position: relative;
+    float: left;
+    width: 67%;
+    height: 100%;
+    display: inline-block;
+
+    $searchbar: 40px;
+
+    @include searchbar($searchbar);
+
+    .graph {
+      padding-top: $searchbar;
+      height: 100%;
+
+      @include graph;
+    }
+  }
+
+  height: 100%;
+
+  &.hide-sidebar {
+    .sidebar {
+      width: 0%;
+    }
+
+    .content {
+      width: 100%;
+    }
+  }
+}

@@ -11,7 +11,7 @@ kramdown:
 # Site settings
 title: Nate McMaster
 description: >
-    Blog posts about software development, lifehacks, opinion, etc.
+    Blog posts about software development, plus some other stuff.
 baseurl:
 url: "http://www.natemcmaster.com"
 twitter_username: natemcmaster
@@ -24,7 +24,7 @@ markdown: kramdown
 permalink: /blog/:categories/:year/:month/:day/:title/
 encoding: utf-8
 timezone: US/Pacific
-gems:
+plugins:
   - jekyll-sitemap
   - jekyll-gist
   - jemoji
