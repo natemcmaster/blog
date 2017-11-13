@@ -2,21 +2,21 @@
 layout: default
 ---
 <header class="post-header">
-  <p class="meta">Blog Post: {{ page.date | date: "%B %-d, %Y" }}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
   <h1>{{ page.title }}</h1>
   {% if page.subtitle %}
     <h2>{{ page.subtitle }}</h2>
   {% endif %}
+  <span class="meta">By <a href="{% link 4_profile.html %}">Nate McMaster</a> | {{ page.date | date: "%B %-d, %Y" }}{% if page.meta %} • {{ page.meta }}{% endif %}</span>
   {% if page.tags.size > 0 %}
     <ul class="tags">
       {% for tag in page.tags %}
-        <li>
-          <a href="{% link tags.html %}#{{ tag | slugify }}"><span class="icon-tags"></span> {{ tag | xml_escape }}</a>
-        </li>
+      <li>
+        <a href="{% link tags.html %}#{{ tag | slugify }}"><span class="icon-tags"></span> {{ tag | xml_escape }}</a>
+      </li>
       {% endfor %}
     </ul>
   {% endif %}
-</header>
+  </header>
 
 <article class="post-content">
   {% if page.hero %}

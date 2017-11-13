@@ -10,7 +10,16 @@ hero:
     height: 1024
     width: 413
 ---
-I spent my summer internship at Microsoft to building a piece of software that allows Entity Framework 7 to connect with Azure Table Storage accounts. 
+
+## Update
+
+This content is stale. The EF7 was renamed to Entity Framework Core. You can find this information here now:
+
+<https://docs.microsoft.com/en-us/ef/core/providers/writing-a-provider>
+
+## Original post
+
+I spent my summer internship at Microsoft to building a piece of software that allows Entity Framework 7 to connect with Azure Table Storage accounts.
 In the process of creating this, I attempted to document the interface between the provider and the core APIs of EF. This post includes technical details that should enable third-parties to create their own provider for Entity Framework.
 
 *Note: this content is accurate as of the today (July 19), but these APIs are subject to change. This content is also available on the [Entity Framework wiki.](https://github.com/aspnet/EntityFramework/wiki/Writing-an-EF7-Provider)*
@@ -48,10 +57,6 @@ providing extension methods](#extensionmethods) on some of the default EF classe
  - DbContextOptions
  - EntityServicesBuilder
  - Storage.Database
-
-## Getting Started: Sample Project
-See [this repository](https://github.com/natemcmaster/entityframework-provider-starter)
-to get a starter project for writing a new EF provider.
 
 # Reference
 
@@ -101,7 +106,7 @@ the original LINQ query requested by user code on DbSet. (Thanks [relinq](#relin
 This class manages connection settings and sessions.
 
 Although an EF provider requires an implementation, the details of how the class
-operates is *entirely up to the provider* i.e. time to freestyle. :snowboarder: 
+operates is *entirely up to the provider* i.e. time to freestyle. :snowboarder:
 
 For example, SQL Server uses this class to open TCP/IP connections,
 but SQLite uses this class to create connections to the local filesystem.
@@ -142,7 +147,7 @@ of theses classes:
 
 ![Datastoresource](http://i.imgur.com/nMQM7Dl.png)
 
-Because this is fairly straightforward class, we have provided an abstract implementation that makes it 
+Because this is fairly straightforward class, we have provided an abstract implementation that makes it
 easier to use dependency injection.
 
 #### DatastoreSource&lt;TDataStore, TDbContextOptionsExtension, TCreator, TConnection, TValueGeneratorCache, TDatabase&gt;
@@ -173,8 +178,8 @@ custom methods to configure the provider.
 IntelliSense works best the extension methods are defined in the namespace of the class they extend.
 
 ### DbContextOptions
-Expose access to your provider within the *OnConfiguring* method of DbContext. 
-Your extension method should add your provider-specific implementation of 
+Expose access to your provider within the *OnConfiguring* method of DbContext.
+Your extension method should add your provider-specific implementation of
 DbContextOptionsExtension to an instance of DbContextOptions.
 
 :hammer: Power user note: To add a DbContextOptionsExtension to DbContextOptions,

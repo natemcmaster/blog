@@ -7,7 +7,7 @@ tags:
   - dotnet-core
 ---
 
-If you have ever cracked open* a NuGet package such as .NET Core's 
+If you have ever cracked open* a NuGet package such as .NET Core's
 [System.IO.Compression](https://www.nuget.org/packages/System.IO.Compression/),
 you have may have noticed that the package includes a folder named "runtimes".
 What is the folder and how is it used?
@@ -21,10 +21,10 @@ Here is the RC2 rid graph:
 
 ## Background
 
-NuGet's official documentation only comments on runtimes briefly. 
+NuGet's official documentation only comments on runtimes briefly.
 See <https://docs.nuget.org/consume/projectjson-format#runtimes>. The documentation
 doesn't detail how runtimes work in NuGet 3 under the hood. In this post, I'll share
-some of the internal workings of NuGet 3 and "runtimes". 
+some of the internal workings of NuGet 3 and "runtimes".
 
 
 ## What are "runtimes"?
@@ -32,8 +32,8 @@ some of the internal workings of NuGet 3 and "runtimes".
 In NuGet, "runtimes" is essential synonymous with "operating systems". Don't confuse
 this with how .NET uses the word (e.g. the .NET runtime != NuGet runtimes.)
 
-The .NET Core docs page also include an explanation of this. 
-<http://dotnet.github.io/docs/core-concepts/rid-catalog.html>
+The .NET Core docs page also include an explanation of this.
+<https://docs.microsoft.com/en-us/dotnet/core/rid-catalog>
 
 ## What is a RID?
 Runtime identifier, or the specific moniker for a specific runtime. It usually includes name, version, and bitness.
@@ -52,7 +52,7 @@ The runtimes folder is for operating-system specific libraries. Sometimes it is 
 to write code that works on all operating systems. For example,
 System.IO.Compression includes a library design for *nix systems and another for Windows systems.
 
-Managed libraries can be placed in folders that follow this pattern. 
+Managed libraries can be placed in folders that follow this pattern.
 
 ```
 runtimes/{rid}/lib/{tfm}/*.dll
@@ -69,7 +69,7 @@ list of available TFMs and to determine which you should use.
 
 ## What "runtimes" are available for NuGet 3?
 There is no set list of "runtimes". This list is actually generated dynamically when you restore packages.
-In most cases, this list of runtimes will come from a special package called 
+In most cases, this list of runtimes will come from a special package called
 ["Microsoft.NETCore.Platforms"](https://www.nuget.org/packages?q=microsoft.netcore.platforms).
 
 This package contains a special file named "runtime.json" which lists dozens of "runtimes". Here are just a few:
@@ -78,16 +78,16 @@ This package contains a special file named "runtime.json" which lists dozens of 
  - "win7-x86"
  - "linuxmint.17.3"
  - "ubuntu.15.04-x64"
- 
+
 ## What is the RID graph?
 
 The RID graph is a list of "runtimes" that are compatible with each other. For example, in theory
 a library that is compatible with Windows 7 should also be compatible with newer version.
 
-NuGet can import compatible libraries using something called the "RID graph" or "runtime fallback graph". 
+NuGet can import compatible libraries using something called the "RID graph" or "runtime fallback graph".
 This is basically a list of all RIDs .NET Core supports, and which RIDs are compatible with each other.
-The graph definition can be found in the <https://github.com/dotnet/corefx/> repo. 
-The RC2 graph is found in this file: 
+The graph definition can be found in the <https://github.com/dotnet/corefx/> repo.
+The RC2 graph is found in this file:
 
 <https://github.com/dotnet/corefx/blob/v1.0.0-rc2/pkg/Microsoft.NETCore.Platforms/runtime.json>
 
@@ -144,10 +144,10 @@ any
 base
 {% endhighlight %}
 
-For example, if I use a library that has a library under `runtimes/win/lib/*.dll` and I restore packages for 
+For example, if I use a library that has a library under `runtimes/win/lib/*.dll` and I restore packages for
 Windows 7, 32 bit, NuGet can trace the RID graph and will fallback to the closest, most compatible RID,
  which in this case will be "win".
- 
+
 ## What if my library breaks on newer operating systems?
 
 For example, what if a library that works for Windows 7 doesn't work for Windows 10?

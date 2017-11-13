@@ -25,13 +25,13 @@ Missing something? Post your question in comment section below and I will update
 
 # dotnet migrate
 
-**March update**: 
+**March update**:
 
 [.NET Core CLI 1.0.0 Downloads](https://www.microsoft.com/net/core). It shipped!
 
 **February update:**
 
-[.NET Core CLI RC4 Downloads](https://github.com/dotnet/core/blob/master/release-notes/rc4-download.md)
+[.NET Core CLI RC4 Downloads](https://github.com/dotnet/core/blob/e76714101ab2bfb650ceb42888ae8359525b2f47/release-notes/1.0/1.0.3-SDK-RC4.md)
 
 (As of February 2017) the latest .NET Core CLI is the RC4 release.
 This is required to use the MSBuild-based .NET Core SDK.
@@ -48,7 +48,7 @@ Tip: if you get an error, "No executable found matching command "dotnet-migrate"
 
 ## Visual Studio 2017 RC
 
-**March update**: 
+**March update**:
 
 [Visual Studio 2017 Downloads](https://www.visualstudio.com/vs/). It shipped, too!
 
@@ -63,8 +63,8 @@ solution that has "xproj" projects in it, VS will convert from project.json to t
 
 # csproj
 
-The new format, *.csproj, is an XML based format. Below are examples of how to 
-configure a .NET Core, .NET Standard, or .NET Framework project using the new Microsoft.NET.Sdk. 
+The new format, *.csproj, is an XML based format. Below are examples of how to
+configure a .NET Core, .NET Standard, or .NET Framework project using the new Microsoft.NET.Sdk.
 
 For all examples below, assume the XML is inside this root node:
 
@@ -260,7 +260,7 @@ the section below on [dependency types](#dependency-type)
 </ItemGroup>
 ```
 
-NB: this will break the way that `dotnet pack --version-suffix $suffix` determines the 
+NB: this will break the way that `dotnet pack --version-suffix $suffix` determines the
 dependency version of a project reference. See <https://github.com/NuGet/Home/issues/4337>
 
 
@@ -517,7 +517,7 @@ Their equivalent in MSBuild are targets.
 ```
 
 **Tip:** If you are working on a web project, specifying `<Project Sdk="Microsoft.NET.Sdk.Web">`
-will automatically default ServerGarbageCollection to true. 
+will automatically default ServerGarbageCollection to true.
 
 See [CoreCLR configuration](https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/clr-configuration-knobs.md)
 for information on these settings.
@@ -569,7 +569,7 @@ In MSBuild, this is done using items. Here is a common conversion:
   <EmbeddedResource Include="..\Shared\*.resx" />
   <Content Include="Views\**\*" PackagePath="%(Identity)" />
   <None Include="some/path/in/project.txt" Pack="true" PackagePath="in/package.txt" />
-  
+
   <None Include="notes.txt" CopyToOutputDirectory="Always" />
   <!-- CopyToOutputDirectory = { Always, PreserveNewest, Never } -->
 
@@ -590,13 +590,13 @@ In MSBuild, this is done using items. Here is a common conversion:
 ```
 
 NB: many of default globbing patterns are added automatically by Microsoft.NET.Sdk
-and Microsoft.NET.Sdk.Web. 
+and Microsoft.NET.Sdk.Web.
 
 All MSBuild ItemGroup's support 'Include', 'Exclude', 'Update', and 'Remove'.
 
 Package layout inside the nupkg can be modified with `PackagePath="path"`.
 
-Except for "Content", most item groups require explicitly adding `Pack="true"` to 
+Except for "Content", most item groups require explicitly adding `Pack="true"` to
 be included in the package. By default, this will be put in the 'content' folder
 in a package. `PackagePath="%(Identity)"` is a short way of setting package path
 to the project-relative file path.

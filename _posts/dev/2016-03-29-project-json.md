@@ -7,19 +7,11 @@ date: 2016-03-29 8:00 AM
 .NET Core introduces a new project model. A projects is defined by JSON file named "project.json". This post will examine
 some of the options available to projects.
 
-# Official docs
-
-To read the full spec, see <http://dotnet.github.io/docs/project-model/>.
-
 # Project.json
 
 *project.json* defines everything about a .NET Core project. It controls the project's platform support, references, compilation, and packaging.
 
 The best way to get a starter template is execute `dotnet new` on the command line, or to use Visual Studio. This will create an empty project with a project.json that works for a basic library.
-
-For more advanced features of project.json, see <http://dotnet.github.io/docs/project-model/>.
-
-<!-- TODO block post about advanced project.json setup -->
 
 # Multi-project setup
 

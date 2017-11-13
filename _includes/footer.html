@@ -7,9 +7,11 @@
   </div>
 
     <div class="footer-col-1 column">
+      {% if site.email %}
       <div>
         <a href="mailto:{{ site.email }}" analytics-on="click" analytics-event="email" rel="">{{ site.email }}</a>
       </div>
+      {% endif %}
       <div class="footer-icons">
           {% if site.github_username %}
             <a href="https://github.com/{{ site.github_username }}" analytics-on="click" analytics-event="outbound" analytics-label="github_profile">
