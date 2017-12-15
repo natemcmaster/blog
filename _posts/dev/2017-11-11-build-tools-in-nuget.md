@@ -181,6 +181,7 @@ Add a nuspec file to your project folder that looks like this:
     <file src="MyTypescriptGenerator.targets" target="build/netstandard1.0/MyTypescriptGenerator.targets" />
     <file src="MyTypescriptGenerator.targets" target="build/net45/MyTypescriptGenerator.targets" />
 
+    <file src="GenerateTypescript.targets" target="tools/" />
     <file src="$publishdir$\net46\**\*" target="tools/net46/" />
     <file src="$publishdir$\netcoreapp2.0\**\*" target="tools/netcoreapp2.0/" />
   </files>
@@ -208,9 +209,9 @@ Note: due to quirks in MSBuild and NuGet, we'll actually use `BeforeTargets="Gen
   <PropertyGroup>
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <NuspecFile>ts-gen.nuspec</NuspecFile>
-    <IntermediatePackDir>bin/$(Configuration)/publish/</IntermediatePackDir>
+    <IntermediatePackDir>$(MSBuildProjectDirectory)/bin/$(Configuration)/publish/</IntermediatePackDir>
     <PublishDir>$(IntermediatePackDir)$(TargetFramework)/</PublishDir>
-    <NuspecProperties>publishDir=$(IntermediatePackDir)</NuspecProperties>
+    <NuspecProperties>publishDir=$([MSBuild]::NormalizeDirectory($(IntermediatePackDir)))</NuspecProperties>
   </PropertyGroup>
 
   <!-- Executes /t:Publish for all target frameworks before packing-->
