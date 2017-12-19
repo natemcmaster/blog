@@ -174,6 +174,7 @@ Add a nuspec file to your project folder that looks like this:
     <id>MyTypescriptGenerator</id>
     <version>1.0.0</version>
     <authors>Nate McMaster</authors>
+    <description>Generates typescript from .NET Types</description>
   </metadata>
   <files>
     <file src="_._" target="lib/netstandard1.0/" />
