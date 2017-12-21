@@ -1,7 +1,7 @@
 $mainFontFamily: "Open Sans", "Helvetica Neue", Helvetica, sans-serif;
 $serifFontFamily: "PT Serif", Georgia, serif;
 $headingFontFamily: $mainFontFamily;
-$monospacedFontFamily: "source-code-pro", Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", monospace;
+$monospacedFontFamily: "Cousine", Consolas, monospace;
 
 @mixin mainFont {
   font-family: $mainFontFamily;
