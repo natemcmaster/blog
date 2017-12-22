@@ -21,19 +21,19 @@ Many projects can be build together. This is similar to a Visual Studio "Solutio
 
 Without configuration, projects are are considered part of a solution if they are in the same file directory with each other.
 
-{% highlight console %}
+```
 
 solution/
     Banana.Library
     Banana.Web
 
-{% endhighlight %}
+```
 
 ## With global.json
 
 A file named *global.json* can be used to identify the location of projects
 
-{% highlight console %}
+```
 
 solution/
     global.json
@@ -44,19 +44,19 @@ solution/
     test/
         Banana.Test
 
-{% endhighlight %}
+```
 Contents of **global.json**
-{% highlight json %}
+```json
 {
     "projects": ["src", "test"]
 }
-{% endhighlight %}
+```
 
 
 # Examples
 
 ## A typical project.json for a web project
-{% highlight json %}
+```json
 {
     "version": "0.0.1",
     "name": "Banana.Web",
@@ -87,10 +87,10 @@ Contents of **global.json**
         "dotnet-razor-tooling": "1.0.0-rc2"
     }
 }
-{% endhighlight %}
+```
 
 ## A typical project.json for a library
-{% highlight json %}
+```json
 {
     "version": "0.0.1",
     "name": "Banana.Library",
@@ -116,4 +116,4 @@ Contents of **global.json**
         "prepublish": [ "gen.cmd" ]
     }
 }
-{% endhighlight %}
+```

@@ -69,9 +69,9 @@ This class configures the dependency injection settings used in an instance of D
 It is used during DbContext initialization to configure the DbContextOptions.
 
 Methods required:
-{% highlight c# %}
+```c#
 void ApplyServices(EntityServicesBuilder builder);
-{% endhighlight %}
+```
 
 ![DbContextOptionExtension](http://i.imgur.com/abu6gCh.png)
 
@@ -79,7 +79,7 @@ void ApplyServices(EntityServicesBuilder builder);
 This class is the hub of activity for a provider.
 A data store must implement these methods:
 
-{% highlight c# %}
+```c#
 Task<int> SaveChangesAsync(IReadOnlyList<StateEntry> stateEntries,
                            CancellationToken cancellationToken);
 
@@ -88,7 +88,7 @@ IEnumerable<TResult> Query<TResult>(QueryModel queryModel,
 
 IAsyncEnumerable<TResult> AsyncQuery<TResult>(QueryModel queryModel,
                                               StateManager stateManager);
-{% endhighlight %}
+```
 
 **SaveChanges** receives a list of entities which must be persisted to the data store.
 Upon successful completion, return the number of entities successfully saved.
@@ -116,13 +116,13 @@ but SQLite uses this class to create connections to the local filesystem.
 ### Storage.DataStoreCreator
 An implementation of requires implementation of the following methods.
 
-{% highlight c# %}
+```c#
 bool       EnsureCreated(IModel model);
 Task<bool> EnsureCreatedAsync(IModel model, CancellationToken cancellationToken);
 
 bool       EnsureDeleted(IModel model);
 Task<bool> EnsureDeletedAsync(IModel model, CancellationToken cancellationToken);
-{% endhighlight %}
+```
 
 **EnsureCreated** ensures that the database/tables/containers needed to store
 the model on the server exists and are write-accessible.
@@ -191,7 +191,7 @@ We require this to keep IntelliSense clean for users, but still expose
 APIs for EF provider developers.
 
 Example: This will help users configure a context that connects to Azure Table Storage.
-{% highlight c# %}
+```c#
 namespace Microsoft.Data.Entity
 {
     public static class AtsDbContextExtensions
@@ -209,7 +209,7 @@ namespace Microsoft.Data.Entity
         }
     }
 }
-{% endhighlight %}
+```
 
 
 ### EntityServicesBuilder
@@ -217,7 +217,7 @@ Expose access to dependency injection configuration. This extension should confi
 DI to use provider-specific implementations.
 
 Example: Configure DI to use Azure Table Storage's implementations
-{% highlight c# %}
+```c#
 namespace Microsoft.Framework.DependencyInjection
 {
     public static class EntityServicesBuilderExtensions
@@ -239,7 +239,7 @@ namespace Microsoft.Framework.DependencyInjection
         }
     }
 }
-{% endhighlight %}
+```
 
 
 ### Storage.Database
@@ -248,7 +248,7 @@ safely casts Storage.Database to the provider implementation.
 
 Example: This will light-up the APIs unique to SQL. A user will see this extension method
 listed in IntelliSense when accessing DbContext.Database
-{% highlight c# %}
+```c#
 namespace Microsoft.Data.Entity
 {
     public static class RelationalDatabaseExtensions
@@ -264,7 +264,7 @@ namespace Microsoft.Data.Entity
         }
     }
 }
-{% endhighlight %}
+```
 
 
 

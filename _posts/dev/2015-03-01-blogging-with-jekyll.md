@@ -29,16 +29,16 @@ By default, GitHub will run Jekyll when you push your content and generate the H
 ## My setup
 For this blog, I have setup a separate folder within my project where Jekyll builds the content. This folder is configured as a git submodule for the same repo as the parent project.
 
-{% highlight ini %}
+```ini
 [submodule "build"]
     path = build
     url = git@github.com:natemcmaster/natemcmaster.github.io.git
     branch = master
-{% endhighlight %}
+```
 
 I added a simple **Makefile** to simplify the build and publishing process.
 
-{% highlight make %}
+```make
 DIR=./build
 
 .PHONY: publish j_build serve
@@ -55,6 +55,6 @@ publish: j_build
     git --git-dir=$(DIR)/.git commit -m "Build `date`"
     git --git-dir=$(DIR)/.git push
     git add build/
-{% endhighlight %}
+```
 
 Happy blogging! ■

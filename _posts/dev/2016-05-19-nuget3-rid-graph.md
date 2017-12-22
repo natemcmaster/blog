@@ -93,7 +93,7 @@ The RC2 graph is found in this file:
 
 Here is a snippet from that RID graph:
 
-{% highlight json %}
+```json
 
 {
     "runtimes": {
@@ -126,7 +126,7 @@ Here is a snippet from that RID graph:
     }
 }
 
-{% endhighlight %}
+```
 
 ## How is the RID graph used?
 
@@ -135,14 +135,14 @@ present in a package, but none with a package that match the exact runtime curre
 it will trace the graph back to the closest compatible system. For example, the list of RID fallbacks
 for Windows 7 32 bit machines are as follows:
 
-{% highlight text %}
+```
 win7-x86
 win7
 win-x86
 win
 any
 base
-{% endhighlight %}
+```
 
 For example, if I use a library that has a library under `runtimes/win/lib/*.dll` and I restore packages for
 Windows 7, 32 bit, NuGet can trace the RID graph and will fallback to the closest, most compatible RID,

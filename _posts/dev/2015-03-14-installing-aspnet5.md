@@ -26,9 +26,9 @@ These instructions are found in more complete form on the [ASP.NET 5 Home](https
 Execute the following in *Command Prompt* (cmd.exe)
 
 
-{% highlight bat %}
+```bat
 @powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/aspnet/Home/master/kvminstall.ps1'))"
-{% endhighlight %}
+```
 
 
 ## OS X
@@ -36,18 +36,18 @@ You must have >= Mono 3.6.0 installed.
 
 If you have [brew](http://brew.sh), the following will the correct version of Mono and the KVM. Execute these in the Terminal.
 
-{% highlight sh %}
+```sh
 brew tap aspnet/k
 brew install kvm
 source kvm.sh
-{% endhighlight %}
+```
 
 ## Linux
 You must have Mono 3.4.1 or greater installed. Execute these on the command line.
 
-{% highlight sh %}
+```sh
 curl -sSL https://raw.githubusercontent.com/aspnet/Home/master/kvminstall.sh | sh && source ~/.k/kvm/kvm.sh
-{% endhighlight %}
+```
 
 
 # Beta 4
