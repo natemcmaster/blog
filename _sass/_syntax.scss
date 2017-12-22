@@ -11,13 +11,13 @@ $number-literal-color: rgb(181,206,168);
 $reserved-word-color: rgb(182, 88, 182);
 
 .highlight, .highlight span, .highlight code { background: rgb(30, 30, 30); color: $code-color; font-weight: bold; }
-.highlight .c { color: $comment-color	; font-style: italic } /* Comment */
+.highlight .c { color: $comment-color	; } /* Comment */
 .highlight .err { color: #a61717; background-color: rgb(43, 25, 25) } /* Error */
 .highlight .k { font-weight: bold; color: $keyword-color } /* Keyword */
 .highlight .o { font-weight: bold } /* Operator */
-.highlight .cm { color: $comment-color; font-style: italic } /* Comment.Multiline */
+.highlight .cm { color: $comment-color; } /* Comment.Multiline */
 .highlight .cp { color: $comment-color; font-weight: bold } /* Comment.Preproc */
-.highlight .c1 { color: $comment-color; font-style: italic } /* Comment.Single */
+.highlight .c1 { color: $comment-color; } /* Comment.Single */
 .highlight .cs { color: $comment-color; font-weight: bold; font-style: italic } /* Comment.Special */
 .highlight .gd { opacity: 0.9; background-color: rgb(75,24,24) } /* Generic.Deleted */
 .highlight .gd .x { opacity: 0.9; background-color: rgb(111,19,19) } /* Generic.Deleted.Specific */
@@ -49,7 +49,7 @@ $reserved-word-color: rgb(182, 88, 182);
 .highlight .nt { color: $keyword-bright-color } /* Name.Tag */
 .highlight .nv { color: $variable-color } /* Name.Variable */
 .highlight .ow { font-weight: bold } /* Operator.Word */
-.highlight .w { background-color: rgb(83, 83, 83); } /* Text.Whitespace */
+// .highlight .w { background-color: rgb(83, 83, 83); } /* Text.Whitespace */
 .highlight .mf { color: $number-literal-color } /* Literal.Number.Float */
 .highlight .mh { color: $number-literal-color } /* Literal.Number.Hex */
 .highlight .mi { color: $number-literal-color } /* Literal.Number.Integer */
