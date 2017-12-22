@@ -4,6 +4,10 @@ title: "Deep-dive into .NET Core primitives: deps.json, runtimeconfig.json, and 
 subtitle: Examining the foundations of a .NET Core application
 author: Nate
 date: Dec. 21, 2017
+hero:
+  asset_path: /assets/images/blog/netcore_primitives.png
+  width: 1788
+  height: 1214
 tags:
   - dotnet
 ---
