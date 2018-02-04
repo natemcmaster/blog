@@ -2,7 +2,7 @@
 layout: post
 title: .NET Core Global Tools and Gotchas
 subtitle: Getting started with using or creating a .NET Core global tool package, and how to deal with the gotchas
-date: Feb. 2, 2018
+date: Feb. 3, 2018
 tags:
 - dotnet
 - nuget
@@ -15,6 +15,7 @@ and how to make it all owrk.
 
 For those who want to get started on code right away, checkout the project templates
 in <https://github.com/natemcmaster/DotNetGlobalTool>.
+You will need to [download a pre-release build](https://github.com/dotnet/versions/tree/master/build-info/dotnet/product/cli/release/2.1) of the .NET Core CLI that supports these features.
 
 _**At the time of writing this post**, this feature is still in progress and is subject to change._
 
@@ -91,7 +92,7 @@ contains workarounds for some of these.
 
 There is no uninstall after `dotnet install tool`.
 
-I'm willing to be this will change by RTM. But for previews, you can manually uninstall tools by deleting this files:
+I'm willing to bet this will change by RTM. But for previews, you can manually uninstall tools by deleting this files:
 
     (Windows)
     %USERPROFILE%\.dotnet\tools\awesome-tool.exe
@@ -130,12 +131,14 @@ Linux/macOS:
 
     echo "export PATH=\"\$PATH:\$HOME/.dotnet/tools\"" >> ~/.bash_profile
 
-### Gotcha 3 - dotnet-pack can't create a global tool package
+### Gotcha 3 - dotnet-pack can't create a global tool package (yet)
 
 As mentioned above, the tools package must contain the output of `dotnet publish`. By default, `dotnet pack`
-only contains the output of `dotnet build`. This output does not contain third-party assemblies, static files, and the `DotnetToolSettings.xml` file.
+only contains the output of `dotnet build`. This output does not normally contain third-party assemblies, static files, and the `DotnetToolSettings.xml` file.
 
-You can workaround this by chaining publish before dotnet-pack, and using a .nuspec file.
+Early previews of the SDK don't support packing global tools at the time of writing. This will likely
+change before the global tools feature is moved out of preview. You can workaround this by chaining
+publish before dotnet-pack, and using a .nuspec file.
 
 ```xml
   <!-- In .csproj file -->
