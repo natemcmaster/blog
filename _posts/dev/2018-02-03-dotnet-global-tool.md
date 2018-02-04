@@ -157,7 +157,7 @@ Example:
 </Project>
 ```
 
-**Tip:** Until .NET Core 2.1 is released, you may warnings when calling `dotnet pack` on this project. To workaround this, add the following:
+**Tip:** Until .NET Core 2.1 is released, you may see build warnings when calling `dotnet pack` on this project. To workaround this, add the following:
 
 ```xml
 <PropertyGroup>
