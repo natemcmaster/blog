@@ -42,7 +42,7 @@ To simplify getting started, I've created a [project templates](https://github.c
 
 Install the templates package
 
-    dotnet new --install "McMaster.DotNet.GlobalTool.Templates::2.1.300-preview1-*"
+    dotnet new --install "McMaster.DotNet.GlobalTool.Templates::2.1.300-preview1"
 
 Create a new project
 
@@ -84,9 +84,6 @@ The executable shim generation is controlled by a file named `DotnetToolSettings
 ## Gotchas
 
 **At the time of writing this post**, this feature has some restrictions and unexpected behaviors. These may change as the feature evolves.
-
-The templates package [McMaster.DotNet.GlobalTool.Templates](https://www.nuget.org/packages/McMaster.DotNet.GlobalTool.Templates/2.1.300-preview1-build6)
-contains workarounds for some of these.
 
 ### Gotcha 1 - there is no uninstall (yet)
 
@@ -131,13 +128,54 @@ Linux/macOS:
 
     echo "export PATH=\"\$PATH:\$HOME/.dotnet/tools\"" >> ~/.bash_profile
 
-### Gotcha 3 - dotnet-pack can't create a global tool package (yet)
+### Gotcha 3 - tools are user-specific, not machine global
 
-As mentioned above, the tools package must contain the output of `dotnet publish`. By default, `dotnet pack`
-only contains the output of `dotnet build`. This output does not normally contain third-party assemblies, static files, and the `DotnetToolSettings.xml` file.
+The .NET Core CLI installs global tools to `$HOME/.dotnet/tools` (Linux/macOS) or `%USERPROFILE%\.dotnet\tools` (Windows).
+This means you cannot install a global tool for the entire machine using `dotnet install tool --global`.
+Installed tools are only available to the user who installed them.
 
-Early previews of the SDK don't support packing global tools at the time of writing. This will likely
-change before the global tools feature is moved out of preview. You can workaround this by chaining
+## Package authoring and SDK
+
+The best experience for authoring a global tool requires a .NET Core SDK version 2.1.300-preview1-008000 or newer.
+This SDK provides a few simple settings that adjust package layout to match the requirements for .NET Core global tools.
+You only need to add two properties to enable packing the project as a global tool.
+
+1. PackAsTool=true
+2. ToolCommandName
+
+Example:
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <ToolCommandName>test-template</ToolCommandName>
+    <PackAsTool>true</PackAsTool>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+</Project>
+```
+
+## Deep-dive: package requirements
+
+There are some very specific requirements for CLI global tools. The SDK takes care of most of these for you
+when you specify PackAsTool=true.
+
+If you cannot yet upgrade to a nightly build of the .NET Core SDK but want to try this out, you can workaround these restrictions. The templates package [McMaster.DotNet.GlobalTool.Templates, version 2.1.300-preview-build7](https://www.nuget.org/packages/McMaster.DotNet.GlobalTool.Templates/2.1.300-preview1-build7)
+contains a template that workarounds this for older SDKs.
+
+    dotnet new --install "McMaster.DotNet.GlobalTool.Templates::2.1.300-preview1-build7"
+
+### Publish output into pack
+
+As mentioned above, the tools package must contain all your apps dependencies.
+This can be collected into one place by using `dotnet publish`.
+By default, `dotnet pack` only contains the output of `dotnet build`.
+This output does not normally contain third-party assemblies, static files, and the `DotnetToolSettings.xml` file,
+which is why you need to publish, not just build.
+
+Early version of the SDK don't support packing global tools. You can workaround this by chaining
 publish before dotnet-pack, and using a .nuspec file.
 
 ```xml
@@ -168,7 +206,7 @@ publish before dotnet-pack, and using a .nuspec file.
 </package>
 ```
 
-### Gotcha 4 - error NU1202 and "Microsoft.NETCore.Platforms"
+### Error NU1202 and "Microsoft.NETCore.Platforms"
 
 A global tool package must specify a dependency to "Microsoft.NETCore.Platforms". This is required because
 dotnet-install-tool does some magic stuff. Ask me about this in the comments if you want me to explain. Without this dependency, the package will fail to install with
@@ -193,13 +231,7 @@ To workaround, add this to your nuspec:
 
 See [this GitHub issue](https://github.com/dotnet/cli/issues/8418) for details.
 
-### Gotcha 5 - tools are user-specific, not machine global
-
-The .NET Core CLI installs global tools to `$HOME/.dotnet/tools` (Linux/macOS) or `%USERPROFILE%\.dotnet\tools` (Windows).
-This means you cannot install a global tool for the entire machine using `dotnet install tool --global`.
-Installed tools are only available to the user who installed them.
-
-### Gotcha 6 - restrictions on DotnetToolSettings.xml
+### Restrictions on DotnetToolSettings.xml
 
 The schema for this file looks like this:
 
@@ -223,7 +255,7 @@ Lots of restrictions here:
 
   - The value for `EntryPoint` must be a `.dll` file that sits next to `DotnetToolSettings.xml` in the package.
 
-### Gotcha 7 - error NU1212 and package type
+### Error NU1212 and package type
 
 Installation may fail with this error
 
@@ -244,7 +276,7 @@ What this means is that dotnet-install-tool is currently restricted to only inst
 </package>
 ```
 
-### Gotcha 8 - dependencies
+### Dependencies
 
 You must redistribute any of your dependencies in your tools package. Dependencies define in the `<dependencies>` metadata of your NuGet package are not
 honored by dotnet-install-tool.
