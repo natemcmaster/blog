@@ -2,7 +2,7 @@
 layout: post
 title: .NET Core Global Tools and Gotchas
 subtitle: Getting started with using or creating a .NET Core global tool package, and how to deal with the gotchas
-date: Feb. 3, 2018
+date: Feb. 2, 2018
 tags:
 - dotnet
 - nuget
