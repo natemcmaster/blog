@@ -148,7 +148,7 @@ Example:
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <ToolCommandName>test-template</ToolCommandName>
+    <ToolCommandName>awesome-tool</ToolCommandName>
     <PackAsTool>true</PackAsTool>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
@@ -156,6 +156,18 @@ Example:
 
 </Project>
 ```
+
+**Tip:** Until .NET Core 2.1 is released, you may warnings when calling `dotnet pack` on this project. To workaround this, add the following:
+
+```xml
+<PropertyGroup>
+  <NETCorePlatformsImplicitPackageVersion>2.0.1</NETCorePlatformsImplicitPackageVersion>
+</PropertyGroup>
+```
+
+I recommend this for now as it will also prevent an install error for users that would look like this:
+
+    error NU1102: Unable to find package Microsoft.NETCore.Platforms with version (>= 2.1.0-preview1-26202-03)
 
 ## Deep-dive: package requirements
 
