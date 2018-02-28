@@ -21,6 +21,8 @@ This version isn't available yet on NuGet.org, but you can still give it a test 
 The post below shows you
 how to setup your project to do this today using a nightly build of dotnet-watch.
 
+**Update Feb. 28: This blog post used a nightly build of dotnet-watch. Starting in the 2.1.300-preview2 SDK, dotnet-watch will be bundled in the CLI. See <https://github.com/aspnet/Announcements/issues/290> for details.**
+
 ## Background
 
 `dotnet watch` is a command line utility that watches files and can re-run dotnet commands when files in your
@@ -31,6 +33,8 @@ in an environment similar or identical to a production environment. If you're un
 as a mini-virtual machine.
 
 ## Install dotnet-watch
+
+**Update Feb. 28: if your CLI is 2.1.300-preview2 or newer, `dotnet watch` is bundled in the CLI, so you can skip to the next step.**.
 
 At the moment, dotnet-watch installs using NuGet and `DotNetCliToolReference`. Open your \*.csproj file and edit
 it to contain this.
