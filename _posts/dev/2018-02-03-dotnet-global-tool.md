@@ -220,6 +220,8 @@ publish before dotnet-pack, and using a .nuspec file.
 
 ### Error NU1202 and "Microsoft.NETCore.Platforms"
 
+_This is only a requirement for 2.1.300-preview1. It will be fixed in 2.1.300-preview2 when that becomes available._
+
 A global tool package must specify a dependency to "Microsoft.NETCore.Platforms". This is required because
 dotnet-install-tool does some magic stuff. Ask me about this in the comments if you want me to explain. Without this dependency, the package will fail to install with
 
@@ -272,14 +274,15 @@ Lots of restrictions here:
 Installation may fail with this error
 
     error NU1212: Invalid project-package combination for awesome-tool 1.0.0. DotnetToolReference project style can only contain references of the DotnetTool type
-
+    
+This error message is not very clear (see <https://github.com/dotnet/cli/issues/8698> for improvement). 
 What this means is that dotnet-install-tool is currently restricted to only installing a .NET Core package that has specific metadata. That metadata can be defined in your nuspec file and must be set as follows:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <!-- ... -->
+    <!-- This piece is required -->
     <packageTypes>
       <packageType name="DotnetTool" />
     </packageTypes>
