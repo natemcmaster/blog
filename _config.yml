@@ -13,6 +13,8 @@ repository: natemcmaster/blog
 title: Nate McMaster
 description: >
     Blog posts about software development, plus some other stuff.
+author:
+  twitter: natemcmaster
 baseurl: ''
 url: "https://www.natemcmaster.com"
 twitter_username: natemcmaster
@@ -31,6 +33,7 @@ plugins:
   - jemoji
   - jekyll-redirect-from
   - jekyll-github-metadata
+  - jekyll-feed
 exclude:
   - Gemfile
   - .ruby-version
