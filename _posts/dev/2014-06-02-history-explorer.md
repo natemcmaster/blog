@@ -11,7 +11,7 @@ hero:
     height: 313
 ---
 
-[History Explorer](http://www.natemcmaster.com/projects/historyexplorer/) allows users to explore the relationship between historical people, places, and ideas. The content itself is almost completely verbatim Wikipedia. The more important part is the graphical presentation. 
+[History Explorer](https://natemcmaster.com/projects/historyexplorer/) allows users to explore the relationship between historical people, places, and ideas. The content itself is almost completely verbatim Wikipedia. The more important part is the graphical presentation.
 
 Ideas, people, and places share a connection. Karinthy theorized that everyone can be connected to everyone in a chain of six links or fewer, or six degrees of separation. Unique ideas, wars, political leaders, books, painting, and music share a similar connection. History explorer attempts to capture and present some of those connections (but only a very minor subset).
 
