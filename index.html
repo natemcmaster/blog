@@ -59,6 +59,7 @@ Feel free to write me at hello@natemcmaster.com
         </div>
         <div class="posts">
           {% for post in site.posts limit:4 %}
+          {% if post.hidden != true %}
           <div class="post">
             <a class="post-link" href="{{ post.url | relative_url }}">
               <h1 class="font-main">{{ post.title }}</h1>
@@ -83,6 +84,7 @@ Feel free to write me at hello@natemcmaster.com
               {% if post.excerpt %} {{ post.excerpt }} {% else %} {{ post.content | truncatewords: 75 }} {% endif %}
             </div>
           </div>
+          {% endif %}
           {% endfor %}
         </div>
         <h3>

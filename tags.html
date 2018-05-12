@@ -10,11 +10,11 @@ permalink: /blog/tags/
 <h1>Posts by Tag</h1>
 
 {% for tag in site.tags  %}
-  {% assign t = tag | first %}
-  {% assign posts = tag | last %}
-   
-  <h4 id="{{ t | slugify }}">{{ t }}</h4>
-  <ul>
+{% assign t = tag | first %}
+{% assign posts = tag | last %}
+
+<h4 id="{{ t | slugify }}">{{ t }}</h4>
+<ul>
   {% for post in posts %}
     {% if post.tags contains t %}
       <li>

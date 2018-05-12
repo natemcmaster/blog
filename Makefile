@@ -3,7 +3,7 @@ default: build
 .PHONY: build serve setup
 
 build:
-	bundle exec jekyll build
+	bundle exec jekyll build --future
 
 serve:
 	@open http://localhost:4000

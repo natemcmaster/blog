@@ -6,6 +6,7 @@ date: Feb. 2, 2018
 tags:
 - dotnet
 - nuget
+hidden: true # The content of this post became obsolete fairly fast. There is a better post on this subject
 ---
 
 As announced recently in the [.NET Core 2.1 Roadmap](https://blogs.msdn.microsoft.com/dotnet/2018/02/02/net-core-2-1-roadmap/),
