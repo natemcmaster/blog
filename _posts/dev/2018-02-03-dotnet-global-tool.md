@@ -11,7 +11,9 @@ tags:
 As announced recently in the [.NET Core 2.1 Roadmap](https://blogs.msdn.microsoft.com/dotnet/2018/02/02/net-core-2-1-roadmap/),
 the .NET Core 2.1.300 SDK will add a feature called ".NET Core Global Tools". This announcement contains a brief snippet of how the tools will work. As this feature is new, there are some rough edges.
 In this post, I'll go over the basic design of how global CLI tool should work, some of the gotchas,
-and how to make it all owrk.
+and how to make it all work.
+
+> :warning: (Update May 12, 2018) This post was written for 2.1 Preview 1 and is now obsolete. See [this post for an updated version]({{ site.baseurl }}{% post_url /dev/2018-05-12-dotnet-global-tools %})
 
 For those who want to get started on code right away, checkout the project templates
 in <https://github.com/natemcmaster/DotNetGlobalTool>.
@@ -274,8 +276,8 @@ Lots of restrictions here:
 Installation may fail with this error
 
     error NU1212: Invalid project-package combination for awesome-tool 1.0.0. DotnetToolReference project style can only contain references of the DotnetTool type
-    
-This error message is not very clear (see <https://github.com/dotnet/cli/issues/8698> for improvement). 
+
+This error message is not very clear (see <https://github.com/dotnet/cli/issues/8698> for improvement).
 What this means is that dotnet-install-tool is currently restricted to only installing a .NET Core package that has specific metadata. That metadata can be defined in your nuspec file and must be set as follows:
 
 ```xml

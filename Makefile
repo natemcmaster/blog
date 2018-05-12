@@ -7,7 +7,7 @@ build:
 
 serve:
 	@open http://localhost:4000
-	bundle exec jekyll serve --watch --drafts
+	bundle exec jekyll serve --watch --drafts --future
 
 setup:
 	gem install bundler
