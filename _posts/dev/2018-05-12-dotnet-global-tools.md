@@ -2,7 +2,7 @@
 layout: post
 title: .NET Core 2.1 Global Tools
 subtitle: Getting started with creating a .NET Core global tool package. Also, a peek under the hood.
-date: May 12, 2018
+date: May 12, 2018, 12:00 AM
 tags:
 - dotnet
 - nuget

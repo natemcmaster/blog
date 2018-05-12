@@ -21,6 +21,8 @@ This version isn't available yet on NuGet.org, but you can still give it a test 
 The post below shows you
 how to setup your project to do this today using a nightly build of dotnet-watch.
 
+> :warning: This post is obsolete. It contained a temporary solution. A more permanent solution is documented in [this post about dotnet-watch 2.1]({% post_url /dev/2018-05-12-dotnet-watch-2.1 %})
+
 **Update Feb. 28: This blog post used a nightly build of dotnet-watch. Starting in the 2.1.300-preview2 SDK, dotnet-watch will be bundled in the CLI. See <https://github.com/aspnet/Announcements/issues/290> for details.**
 
 ## Background
