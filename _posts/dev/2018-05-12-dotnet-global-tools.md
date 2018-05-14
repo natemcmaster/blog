@@ -54,6 +54,18 @@ You can install your package like this:
 
 When you are ready to share with world, upload the package to <https://nuget.org>.
 
+> Note: in 2.1 RC1, use `--source-feed` instead of `--add-source`. This was renamed in <https://github.com/dotnet/cli/pull/9164>
+
+## Additional commands
+
+`dotnet tool` has other commands you can invoke. For example,
+
+```
+dotnet tool list -g
+dotnet tool uninstall -g awesome-tool
+dotnet tool update -g awesome-tool
+```
+
 ## Under the hood
 
 The NuGet package that contains the tool is produced by running `dotnet publish`
