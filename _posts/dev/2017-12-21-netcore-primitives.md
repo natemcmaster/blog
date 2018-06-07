@@ -284,6 +284,7 @@ contains full file paths, so it is not suitable to distribute between machines.
 
     ```json
     {
+      "runtimeOptions": {
         "additionalProbingPaths": [
           "/Users/nmcmaster/code/packages/"
         ]
