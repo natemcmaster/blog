@@ -8,14 +8,15 @@ tags:
 - aspnetcore
 - typescript
 - webpack
+hero:
+  asset_path: /assets/images/blog/aspnetcore_webpack_hmr_1.gif
+  height: 800
+  width: 1280
 ---
 
 Recently, I spent a weekend banging my head against the wall as I tried to figure out how to upgrade a personal project 
 to webpack 4, TypeScript 2.9, and React (used to be AngularJS 1.6). I finally got it all working together -- and even got
-hot module replacement (hmr) working. **TL;DR?** Checkout the code here: https://github.com/natemcmaster/aspnetcore-webpack-hmr-demo
-
-The result:
-![screenshot](https://raw.githubusercontent.com/natemcmaster/aspnetcore-webpack-hmr-demo/b969c8bca2a574fb84221379bbad575093c64426/screenshot.gif)
+hot module replacement (hmr) working. **TL;DR?** Checkout the code here: <https://github.com/natemcmaster/aspnetcore-webpack-hmr-demo>
 
 The important bits:
 
