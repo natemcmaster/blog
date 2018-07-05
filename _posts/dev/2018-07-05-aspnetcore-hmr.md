@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Configuring ASP.NET Core, webpack, and hmr for fast TypeScript development
-subtitle: Impressed by how many buzzwords I used? Ok, seriously. This makes developing with TypeScript + ASP.NET Core a joy
+subtitle: Not just buzzwords - this project setup supports browser live-reloading changes to TypeScript files while you develop in ASP.NET Core
 date: July 5, 2018
 author: Nate
 tags:
@@ -39,6 +39,7 @@ HMR was silently failing for a while until I discovered a few knobs in awesomet-
 After a bunch of GitHub spelunking, I discovered that I needed these magical settings in webpack.config.js.
 
 ```js
+// webpack.config.js
 {
     test: /\.tsx?$/,
     include: /ClientApp/,
@@ -57,6 +58,18 @@ After a bunch of GitHub spelunking, I discovered that I needed these magical set
     ]
 }
 ```
+
+Also, you may need to update your tsconfig.json file to target ES6.
+```json
+{
+    "compilerOptions": {
+         "target": "es6",
+        "module": "commonjs",
+        "jsx": "react"
+    }
+}
+```
+
 [See in source](https://github.com/natemcmaster/aspnetcore-webpack-hmr-demo/blob/b969c8bca2a574fb84221379bbad575093c64426/WebApplication1/webpack.config.js#L45-L61)
 
 ### react-hot-loader 4
