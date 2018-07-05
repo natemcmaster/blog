@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Configuring ASP.NET Core, webpack, and hmr for fast TypeScript development
-subtitle: Not just buzzwords - this project setup supports browser live-reloading changes to TypeScript files while you develop in ASP.NET Core
+title: Configuring ASP.NET Core, webpack, and hot module replacement (hmr) for fast TypeScript development
+subtitle: This project setup supports browser live-reloading changes to TypeScript files while you develop in ASP.NET Core
 date: July 5, 2018
 author: Nate
 tags:
