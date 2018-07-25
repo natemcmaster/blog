@@ -190,8 +190,9 @@ the creators of AssemblyLoadContext
 In `PluginLoader`, I've done my best to imitate most of the behaviors of corehost, however, there are some gaps which I can't cover.
 
 * Unloading - once a plugin is loaded, the files it uses are locked by the process. The only way to unload a plugin is by killing the host app. Hopefully one day, .NET Core will [implement collectible ALC's](https://github.com/dotnet/coreclr/issues/552), which will enable this feature.
+* Localization and resource assemblies - if you have locale-specific resource assemblies, they're not automagically loaded yet. 
 * Conflict resolution - I haven't yet defined behavior yet for what to do when there are multiple sources for the same assembly. For example, what if both the shared runtime and an local copy of the same binary exist which only differ by file version? TBD.
-* Perf issues - assembly loading is lazy. I haven't taken time to investigate perf, but its likely to be a bit slower than corehost, which does all its assembly conflict resolution ahead of time.
+* Perf - I haven't taken time to investigate performance, yet. Before I would recommend this for production, I want to take a closer look at memory impact, CPU throughput, etc.
 
 Plus, there is more work to be done on the "plugin config file" idea, API refinements, bugs to squash, etc.
 
