@@ -71,7 +71,7 @@ $reserved-word-color: rgb(182, 88, 182);
 .highlight .vi { color: $type-color } /* Name.Variable.Instance */
 .highlight .il { color: $number-literal-color } /* Literal.Number.Integer.Long */
 
-li, ol, p, div {
+li, ol, p, div, td, tr, th {
   > code {
     @include monospacedFont;
 

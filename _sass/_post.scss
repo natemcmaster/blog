@@ -115,6 +115,18 @@ $postContentColor: rgb(56, 56, 56);
       max-width: 100%;
     }
   }
+
+  table {
+    border: 1px darken(white, 12%) solid;
+  }
+  thead, th {
+    background: darken(white, 5%);
+    font-weight: bold;
+  }
+  td, th {
+    border: 1px darken(white, 12%) solid;
+    padding: 0.25em 0.5em;
+  }
 }
 
 .postimage {
