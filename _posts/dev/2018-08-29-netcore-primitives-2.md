@@ -186,7 +186,7 @@ how this happens.
 
 By far the most common pitfall when hosting ASP.NET Core in IIS or running on Azure Web Services.
 This typically happens after a developer upgraded a project, or when an app is deployed to a machine which hasn't
-been updated recently. The real error is often that a shared framework cannot be find, which causes the .NET Core application to fail to launch. When it fails to launch, IIS issues the HTTP 502.5 error, but does not
+been updated recently. The real error is often that a shared framework cannot be found, and the .NET Core application cannot start without it. When dotnet fails to launch the app, IIS issues the HTTP 502.5 error, but does not
 surface the internal error message.
 
 ### "The specified framework was not found"
@@ -205,27 +205,30 @@ The specified framework 'Microsoft.AspNetCore.App', version '2.1.3' was not foun
       2.1.2 at [/usr/local/share/dotnet/shared/Microsoft.AspNetCore.App]
 ```
 
-This error often found lurking behind HTTP 502.5 errors or Visual Studio Test Explorer failures.
+This error is often found lurking behind HTTP 502.5 errors or Visual Studio Test Explorer failures.
 
-This happens when the `runtimeconfig.json` file specifies a framework name and version, and the host
+This happens when the runtimeconfig.json file specifies a framework name and version, and the host
 cannot find an appropriate version using the [multi-level lookup](#multi-level-lookup) and
-[rollforward policies](#version-roll-forward) explained above.
+[rollforward policies](#version-roll-forward), as explained above.
 
-### I updated my NuGet package for Microsoft.AspNetCore.App and now my app does not start
+### Updating the NuGet package for Microsoft.AspNetCore.App
 
 The NuGet package for Microsoft.AspNetCore.App does not provide the shared framework.
-It only provides the APIs used by the C#/F# compiler. You must download and install the
+It only provides the APIs used by the C#/F# compiler and a few SDK bits. You must download and install the
 shared framework separately. See <https://aka.ms/dotnet-download>.
 
-This was probably a design mistake on the part of the ASP.NET Core team (which I'm on).
-It is reasonable to expect that when a project uses a `<PackageReference>`,
-NuGet be able to install everything you need. [Various proposals](https://github.com/aspnet/Home/issues/3307)
+Also, because of [rollforward policies](#version-roll-forward), you don't need to update the NuGet package version to get your app to run on a new shared framework version.
+
+It was probably a design mistake on the part of the ASP.NET Core team (which I'm on) to represent the shared framework as a NuGet package in the project file.
+The packages which represent shared frameworks are not normal packages. Unlike most packages, they are not
+self-sufficient. It is reasonable to expect that when a project uses a `<PackageReference>`,
+NuGet is able to install everything needed, and frustrating that these special packages
+deviate from the pattern. [Various proposals](https://github.com/aspnet/Home/issues/3307)
 have been made to fix this. I'm hopeful one will land soon-ish.
 
 ### `<PackageReference Include="Microsoft.AspNetCore.App" />`
 
-New project templates and docs for ASP.NET Core 2.1 showed users that they only needed to have this line
-in their project.
+New project templates and docs for ASP.NET Core 2.1 showed users that they only needed to have this line in their project.
 
 ```xml
 <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -236,15 +239,16 @@ only works if the project begins with `<Project Sdk="Microsoft.NET.Sdk.Web">`, a
  automatically pick a version of these packages based on other valeus in the project, like `<TargetFramework>`
  and `<RuntimeIdentifier>`.
 
-Unless you specify a version on the package reference...in which case the Web SDK does nothing.
-Or unless you're not using the Web SDK...in which case NuGet gives you an error message about "lower bounds".
+This magic does not work if you specify a version on the package reference element,
+or if you're not using the Web SDK. It's hard to recommend a good solution because
+the best approach depends on your level of understanding and the project type.
 
 ### Publish trimming
 
 When you run `dotnet publish` to create a framework-dependent app, the SDK uses the NuGet restore
-result to determine which assemblies should be in the publish folder. Some will be copied from NuGet packages, and others are expected to be in the shared framework.
+result to determine which assemblies should be in the publish folder. Some will be copied from NuGet packages, and others are not because they are expected to be in the shared frameworks.
 
-This can easily go wrong because ASP.NET Core is available as both a shared framework and as NuGet packages.
+This can easily go wrong because ASP.NET Core is available as a shared framework _and_ as NuGet packages.
 The trimming attempts to do some graph math to examine transitive dependencies, upgrades, etc., and pick
 the right files accordingly.
 
@@ -261,13 +265,13 @@ Microsoft.AspNetCore.App 2.1.1 includes, so it will put Mvc.dll into your publis
 
 This is less than ideal because your application grows in size and you don't get a ReadyToRun optimized version
 of Microsoft.AspNetCore.Mvc.dll. This can happen unintentionally if you get upgraded transitively through
-a ProjectReference of via a third-party package.
+a ProjectReference of via a third-party dependencies.
 
 ### Confusing the target framework moniker with the shared framework
 
 It's easy to think that `"netcoreapp2.0" == "Microsoft.NETCore.App, v2.0.0"`. This is not true.
-A target framework moniker (aka TFM) is specified in projects using the `<TargetFramework>` element.
-This is meant to be a human-friendly way to define which version of .NET Core you would like to use.
+A target framework moniker (aka TFM) is specified in a project using the `<TargetFramework>` element.
+"netcoreapp2.0" is meant to be a human-friendly way to express which version of .NET Core you would like to use.
 
 The pitfall of a TFM is that it is too short. It cannot express things like multiple shared frameworks,
 patch-specific versioning, version rollforward, output type, and self-contained vs framework-dependent deployment.
@@ -277,8 +281,7 @@ So, more accurately, `"netcoreapp2.0" implies "Microsoft.NETCore.App, at least v
 
 ### Confusing project settings
 
-The final pitfall I will mention is that project settings to define your .NET Core usage don't align with
-the terminology used everywhere else. It's a confusing set of terms, so this one isn't your fault.
+The final pitfall I will mention is about project settings. There are many, and the terminology and setting names don't always line up. It's a confusing set of terms, so this one isn't your fault if you get them mixed up.
 
 Below, I've listed some common project settings and what they actually mean.
 
@@ -352,8 +355,8 @@ Below, I've listed some common project settings and what they actually mean.
 
 # Closing
 
-Hopefully this clears up some aspects of the shared framework. I tried to link to official docs and guidance
-where possible. If you have questions, leave a comment or tweet at me.
+The shared framework is an optional feature of .NET Core, and I think it's a reasonable default for most users despite the pitfalls. I still think it's good for .NET Core developers to understand what goes on under the hood, and hopefully this was a good overview of the shared frameworks feature. I tried to link to official docs and guidance
+where possible so you can find more info. If you have more questions, leave a comment below.
 
 ### More info
 
