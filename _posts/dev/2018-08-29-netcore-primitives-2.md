@@ -52,6 +52,7 @@ different modes? As [the docs explain well][deployment-doc]:
 # The shared framework
 
 To put it simply, a .NET Core shared framework is a folder of assemblies (\*.dll files) that are not in the application folder. These assemblies version and release together.
+This folder is one part of the "shared system-wide version of .NET Core", and is usually found in `C:/Program Files/dotnet/shared`.
 
 When you run `dotnet.exe WebApp1.dll`, the **.NET Core host** must
 
