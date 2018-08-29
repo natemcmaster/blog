@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Deep-dive into .NET Core primitives, part 2: the shared framework"
-subtitle: Examining the foundations of .NET Core
+subtitle: A closer look at Microsoft.AspNetCore.App and common pitfalls
 author: Nate
 date: Aug. 29, 2018
 hero:
