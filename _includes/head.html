@@ -13,12 +13,15 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 
-    <script type="text/javascript" src="{{ '/assets/scripts/ga.js' | absolute_url }}" ></script>
-    <script type="text/javascript">
-        (function (ga) {
-            ga('send', 'pageview');
-        })(ga);
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-38984092-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-38984092-1');
     </script>
+
     <script type="text/javascript" src="{{ '/assets/scripts/site.js' | absolute_url }}?{{site.time | date: '%s%N'}}" ></script>
     <link href="{{ '/css/app.css' | absolute_url }}?{{site.time | date: '%s%N'}}" rel="stylesheet" />
 </head>
