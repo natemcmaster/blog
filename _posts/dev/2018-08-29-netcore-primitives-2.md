@@ -19,10 +19,13 @@ You may not have noticed if things are working smoothly, but there have been
 [some][bump1] [bumps][bump2] and [ongoing discussion][bump3] about its design.
 In this post, I will dive deep into the shared frameworks and talk about some common developer pitfalls.
 
-[bump1]: https://github.com/aspnet/Home/issues/3241
+See also [Part 1][part-1] of this series if you want to learn more about .NET Core's inner workings.
+
+[bump1]: https://github.com/aspnet/AspNetCore/issues/3241
 [bump2]: https://github.com/aspnet/Universe/issues/1180
-[bump3]: https://github.com/aspnet/Home/issues/3292
+[bump3]: https://github.com/aspnet/AspNetCore/issues/3292
 [download]: https://aka.ms/dotnet-download
+[part-1]: {{ site.baseurl }}{% post_url /dev/2017-12-21-netcore-primitives %}
 
 # The Basics
 
@@ -61,8 +64,6 @@ When you run `dotnet.exe WebApp1.dll`, the **.NET Core host** must
 
 These dependencies are found in a variety locations, including, but not limited to, the shared frameworks.
 In a previous post, I briefly explained how the [deps.json and runtimeconfig.json files][part-1] configure the host's behavior. See that post for more details.
-
-[part-1]: {{ site.baseurl }}{% post_url /dev/2017-12-21-netcore-primitives %}
 
 The .NET Core host reads the \*.runtimeconfig.json file to determine which shared framework(s) to load. Its contents
 may look like this:
@@ -223,7 +224,7 @@ It was probably a design mistake on the part of the ASP.NET Core team (which I'm
 The packages which represent shared frameworks are not normal packages. Unlike most packages, they are not
 self-sufficient. It is reasonable to expect that when a project uses a `<PackageReference>`,
 NuGet is able to install everything needed, and frustrating that these special packages
-deviate from the pattern. [Various proposals](https://github.com/aspnet/Home/issues/3307)
+deviate from the pattern. [Various proposals](https://github.com/aspnet/AspNetCore/issues/3307)
 have been made to fix this. I'm hopeful one will land soon-ish.
 
 ### `<PackageReference Include="Microsoft.AspNetCore.App" />`

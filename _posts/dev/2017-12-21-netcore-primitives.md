@@ -25,6 +25,10 @@ I'm going to abandon the magic of Visual Studio and stick to command-line tools.
 you'll need the [.NET Core 2.1 SDK](https://www.microsoft.com/net/download/). These steps were written for macOS,
 but they work on Linux and Windows, too, if you adjust file paths to `C:\Program Files\dotnet\` and `dotnet.exe`.
 
+See also [Part 2][part-2] if you want to keep learning out .NET Core's inner workings.
+
+[part-2]: {{ site.baseurl }}{% post_url /dev/2018-08-29-netcore-primitives-2 %}
+
 ## The C# Compiler
 
 The C# compiler turns \*.cs files into a \*.dll file, aka an assembly file. An assembly file is a portable
@@ -249,7 +253,10 @@ Add a file named `Program.deps.json` into your project with these contents.
     ".NETCoreApp,Version=v2.0": {
       "Newtonsoft.Json/10.0.3": {
         "runtime": {
-          "lib/netstandard1.3/Newtonsoft.Json.dll": {}
+          "lib/netstandard1.3/Newtonsoft.Json.dll": {
+            "assemblyVersion": "10.0.0.0",
+            "fileVersion": "10.0.3.21018"
+          }
         }
       }
     }
