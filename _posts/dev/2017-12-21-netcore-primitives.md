@@ -25,9 +25,14 @@ I'm going to abandon the magic of Visual Studio and stick to command-line tools.
 you'll need the [.NET Core 2.1 SDK](https://www.microsoft.com/net/download/). These steps were written for macOS,
 but they work on Linux and Windows, too, if you adjust file paths to `C:\Program Files\dotnet\` and `dotnet.exe`.
 
-See also [Part 2][part-2] if you want to keep learning out .NET Core's inner workings.
+This post is part of a series:
+* Part 1 - .deps.json, runtimeconfig.json, and dll's
+* [Part 2 - the shared framework][part-2]
+* [Part 3 - runtimeconfig.json in depth][part-3]
 
+[part-1]: {{ site.baseurl }}{% post_url /dev/2017-12-21-netcore-primitives %}
 [part-2]: {{ site.baseurl }}{% post_url /dev/2018-08-29-netcore-primitives-2 %}
+[part-3]: {{ site.baseurl }}{% post_url /dev/2019-01-12-netcore-primitives-3 %}
 
 ## The C# Compiler
 

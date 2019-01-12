@@ -19,13 +19,19 @@ You may not have noticed if things are working smoothly, but there have been
 [some][bump1] [bumps][bump2] and [ongoing discussion][bump3] about its design.
 In this post, I will dive deep into the shared frameworks and talk about some common developer pitfalls.
 
-See also [Part 1][part-1] of this series if you want to learn more about .NET Core's inner workings.
-
 [bump1]: https://github.com/aspnet/AspNetCore/issues/3241
 [bump2]: https://github.com/aspnet/Universe/issues/1180
 [bump3]: https://github.com/aspnet/AspNetCore/issues/3292
 [download]: https://aka.ms/dotnet-download
+
+This post is part of a series:
+* [Part 1 - .deps.json, runtimeconfig.json, and dll's][part-1]
+* Part 2 - the shared framework
+* [Part 3 - runtimeconfig.json in depth][part-3]
+
 [part-1]: {{ site.baseurl }}{% post_url /dev/2017-12-21-netcore-primitives %}
+[part-2]: {{ site.baseurl }}{% post_url /dev/2018-08-29-netcore-primitives-2 %}
+[part-3]: {{ site.baseurl }}{% post_url /dev/2019-01-12-netcore-primitives-3 %}
 
 # The Basics
 
@@ -84,6 +90,10 @@ be anything, like "FooBananaShark".
 The **shared framework version** represents the _minimum_ version. The .NET Core host will never run on
 a lower version, but it may try to run on a higher one.
 
+### Which shared frameworks do I have installed?
+
+Run `dotnet --list-runtimes`. It will show the names, versions, and locations of shared frameworks.
+
 ### Comparing Microsoft.NETCore.App, AspNetCore.App, and AspNetCore.All
 
 As of .NET Core 2.2, there are three shared frameworks.
@@ -119,6 +129,8 @@ policy [documented in great detail by Microsoft](https://docs.microsoft.com/en-u
 The most common way this applies is:
 
 * If an app minimum version is 2.1.0, the highest 2.1.\* version will be loaded.
+
+I'll go into this file in more details. See [.NET Core Primitives part 3][part-3].
 
 ### Layered shared frameworks
 
