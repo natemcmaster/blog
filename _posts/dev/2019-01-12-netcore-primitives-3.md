@@ -183,7 +183,7 @@ By default, .NET Core will try to find the highest patch version of  the shared 
 **.csproj**: currently not available as an SDK option. See [above](#template-json).
 
 This can be set to 0, 1, or 2.
-See the [design document](rollfoward-spec) for more details.
+See the [design document][rollforward-spec] for more details.
 
 For example, given framework.version == 2.1.0, this is how .NET Core uses
 this setting to decided what is a 'compatible' version of the framework.
