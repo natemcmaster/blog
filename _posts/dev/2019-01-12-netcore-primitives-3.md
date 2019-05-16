@@ -165,7 +165,7 @@ By default, .NET Core will try to find the highest patch version of the shared f
   }
 }
 ```
-**.csproj**: currently not implemented yet as an SDK option. See [above](#template-json).
+**.csproj**: currently not implemented yet as an SDK option. See [above](#template-json) and <https://github.com/dotnet/core-setup/issues/6420>.
 
 The spec for this setting can be found at <https://github.com/dotnet/designs/blob/master/accepted/runtime-binding.md>. About this setting, it says:
 
