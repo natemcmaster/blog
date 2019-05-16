@@ -151,7 +151,43 @@ For .NET Core >= 3.0, multiple shared frameworks can be used and are no longer r
 </ItemGroup>
 ```
 
-### Automatically run on higher patch versions
+### Automatically run on higher versions 
+
+This option is new in .NET Core 3.0.
+
+By default, .NET Core will try to find the highest patch version of the shared framework which has the same major and minor version as your app specifies. But if it can't find that, it may roll-forward to newer versions. This option controls the roll-forward policy.
+
+**JSON**:
+```json
+{
+  "runtimeOptions": {
+    "rollForward": "Major"
+  }
+}
+```
+**.csproj**: currently not implemented yet as an SDK option. See [above](#template-json).
+
+The spec for this setting can be found at <https://github.com/dotnet/designs/blob/master/accepted/runtime-binding.md>. About this setting, it says:
+
+> `RollForward` can have the following values:
+> 
+> * `LatestPatch` -- Roll forward to the highest patch version. This disables minor version roll forward.
+> * `Minor` -- Roll forward to the lowest higher minor version, if requested minor version is missing. If the requested minor version is present, then the `LatestPatch` policy is used.
+> * `Major` -- Roll forward to lowest higher major version, and lowest minor version, if requested major version is missing. If the requested major version is present, then the `Minor` policy is used.
+> * `LatestMinor` -- Roll forward to highest minor version, even if requested minor version is present.
+> * `LatestMajor` -- Roll forward to highest major and highest minor version, even if requested major is present.
+> * `Disable` -- Do not roll forward. Only bind to specified version. This policy is not recommended for general use since it disable the ability to roll-forward to the latest patches. It is only recommended for testing.
+> 
+> `Minor` is the default setting. See [**Configuration Precedence**](https://github.com/dotnet/designs/blob/master/accepted/runtime-binding.md#configuration-precedence) for more information.
+> 
+> In all cases except `Disable` the highest available patch version is selected.
+> 
+> Note: `LatestMinor` and `LatestMajor` are intended for component hosting scenarios, for both managed and native hosts (for example, managed COM components).
+
+
+### Automatically run on higher patch versions (before .NET Core 3.0)
+
+This policy is being deprecated in .NET Core 3.0 in favor of the simpler "rollForward" option, as described above.
 
 By default, .NET Core runs on the highest patch version of shared frameworks installed on the machine. This can be disabled using 'applyPatches'.
 
@@ -168,9 +204,11 @@ By default, .NET Core runs on the highest patch version of shared frameworks ins
 > Note: I couldn't write about this without a word of caution. I would personally only use this in production when it's 3 AM, the site is down, the phone is ringing, and the company is bleeding $$$ every minute.
 > Otherwise, it's better to get the latest security patches -- for obvious reasons.
 
-### Automatically run on higher major or minor versions
+### Automatically run on higher major or minor versions (before .NET Core 3.0)
 
-By default, .NET Core will try to find the highest patch version of  the shared framework which has the same major and minor version as your app specifies. But if it can't find that, it may roll-forward to newer versions. This option controls the roll-forward policy.
+This policy is being deprecated in .NET Core 3.0 in favor of the simpler "rollForward" option, as described above.
+
+By default, .NET Core will try to find the highest patch version of the shared framework which has the same major and minor version as your app specifies. But if it can't find that, it may roll-forward to newer versions. This option controls the roll-forward policy.
 
 **JSON**:
 ```json
