@@ -3,6 +3,7 @@ layout: post
 title: .NET Core Plugins
 subtitle: Introducing an API for loading .dll files (and their dependencies) as 'plugins'
 date: July 25, 2018
+updated: Aug. 29, 2019
 author: Nate
 tags:
 - dotnet
@@ -156,7 +157,14 @@ PluginLoader loader = PluginLoader.CreateFromAssemblyFile(
 The `sharedTypes` parameter is important: this is used to define types which must exchange between the plugin and the host.
 These types are used to ensure consistent type identity.
 
-Furthermore, I've begun work to define a way to express plugin behavior through [config files](https://github.com/natemcmaster/DotNetCorePlugins/blob/v0.1.0/docs/plugin-config.md). While this is in its early stages, the vision for config files is that you can define plugin behavior externally from the app (if you want) so you can make decisions about how plugins interact with the host app or other plugins.
+Once you have the loader, you can then use `PluginLoader.LoadDefaultAssembly()` or `LoadAssembly(AssemblyName)` to get
+`System.Reflection.Assembly` objects. You can get from this object to executing code using a little bit of reflection.
+
+> **UPDATE Aug. 28, 2019**
+> This following paragraph appeared in the original post, but I've since abandoned this config file.
+> It turns out no one really needed this and it was overly complicated.
+
+~~Furthermore, I've begun work to define a way to express plugin behavior through [config files](https://github.com/natemcmaster/DotNetCorePlugins/blob/v0.1.0/docs/plugin-config.md). While this is in its early stages, the vision for config files is that you can define plugin behavior externally from the app (if you want) so you can make decisions about how plugins interact with the host app or other plugins.~~
 
 ```csharp
 PluginLoader loader = PluginLoader.CreateFromConfigFile(
@@ -164,12 +172,9 @@ PluginLoader loader = PluginLoader.CreateFromConfigFile(
     sharedTypes: new[] { typeof(ILogger) });
 ```
 
-Once you have the loader, you can then use `PluginLoader.LoadDefaultAssembly()` or `LoadAssembly(AssemblyName)` to get
-`System.Reflection.Assembly` objects. You can get from this object to executing code using a little bit of reflection.
-
 ## Demo
 
-A full example of the API in action can be seen here: <https://github.com/natemcmaster/DotNetCorePlugins/tree/v0.1.0/samples/aspnetcore>.
+A full example of the API in action can be seen here: <https://github.com/natemcmaster/DotNetCorePlugins/tree/master/samples/>.
 
 This demo includes a fully-working ASP.NET Core app which has two plugins loaded side-by-side. The plugins use type unification to ensure the plugin can interact with the `IServiceCollection` and `IApplicationBuilder` of the host application.
 
@@ -189,11 +194,11 @@ the creators of AssemblyLoadContext
 
 In `PluginLoader`, I've done my best to imitate most of the behaviors of corehost, however, there are some gaps which I can't cover.
 
-* Unloading - once a plugin is loaded, the files it uses are locked by the process. The only way to unload a plugin is by killing the host app. Hopefully one day, .NET Core will [implement collectible ALC's](https://github.com/dotnet/coreclr/issues/552), which will enable this feature.
-* Localization and resource assemblies - if you have locale-specific resource assemblies, they're not automagically loaded yet. 
+* Unloading - once a plugin is loaded, the files it uses are locked by the process. The only way to unload a plugin is by killing the host app. Hopefully one day, .NET Core will [implement collectible ALC's](https://github.com/dotnet/coreclr/issues/552), which will enable this feature. **UPDATE: Aug. 28, 2019** - this was in the v0.3.0.
+* Localization and resource assemblies - if you have locale-specific resource assemblies, they're not automagically loaded yet. **UPDATE: Aug. 28, 2019** - this was fixed in the v0.2.0.
 * Conflict resolution - I haven't yet defined behavior yet for what to do when there are multiple sources for the same assembly. For example, what if both the shared runtime and an local copy of the same binary exist which only differ by file version? TBD.
 * Perf - I haven't taken time to investigate performance, yet. Before I would recommend this for production, I want to take a closer look at memory impact, CPU throughput, etc.
 
 Plus, there is more work to be done on the "plugin config file" idea, API refinements, bugs to squash, etc.
 
-I would not recommend this yet for production critical apps, but I hope to get it there. The project is open source, and I'm happy to take contributions. Give it a shot let me know what you think.
+I would not recommend this yet for production critical apps, but I hope to get it there. The project is open source, and I'm happy to take contributions. Give it a shot let me know what you think. 
