@@ -155,7 +155,7 @@ PluginLoader loader = PluginLoader.CreateFromAssemblyFile(
 ```
 
 The `sharedTypes` parameter is important: this is used to define types which must exchange between the plugin and the host.
-These types are used to ensure consistent type identity.
+These types are used to ensure consistent type identity. [Read more details about this here.][shared-types]
 
 Once you have the loader, you can then use `PluginLoader.LoadDefaultAssembly()` or `LoadAssembly(AssemblyName)` to get
 `System.Reflection.Assembly` objects. You can get from this object to executing code using a little bit of reflection.
@@ -184,10 +184,13 @@ This demo includes a fully-working ASP.NET Core app which has two plugins loaded
 
 For more information, I recommend the following articles:
 
+* [An Explanation of Shared Types][shared-types] - docs in the project about type identity, type exchange, and the `sharedTypes` parameter in the PluginLoader API
 * [.NET Framework: Best Practices for Assembly Loading](https://docs.microsoft.com/en-us/dotnet/framework/deployment/best-practices-for-assembly-loading) on docs.microsoft.com. Although it doesn't apply to .NET Core, it's still a good read. Some the concepts were used when creating .NET Core.
 * [Deep-dive into .NET Core primitives: deps.json, runtimeconfig.json, and dll's]({{ site.baseurl }}{% post_url /dev/2017-12-21-netcore-primitives %}). A post I wrote last year about some of the foundations of .NET Core apps.
 * [Design doc: AssemblyLoadContext](https://github.com/dotnet/coreclr/blob/v2.1.0/Documentation/design-docs/assemblyloadcontext.md) - design notes from
 the creators of AssemblyLoadContext
+
+[shared-types]: https://github.com/natemcmaster/DotNetCorePlugins/blob/master/docs/what-are-shared-types.md
 
 
 #### Why it's still experimental
