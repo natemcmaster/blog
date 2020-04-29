@@ -165,9 +165,14 @@ By default, .NET Core will try to find the highest patch version of the shared f
   }
 }
 ```
-**.csproj**: currently not implemented yet as an SDK option. See [above](#template-json) and <https://github.com/dotnet/core-setup/issues/6420>.
+**.csproj**:
+```xml
+<PropertyGroup>
+  <RollForward>Major</RollForward>
+</PropertyGroup>
+```
 
-The spec for this setting can be found at <https://github.com/dotnet/designs/blob/master/accepted/runtime-binding.md>. About this setting, it says:
+The spec for this setting can be found at <https://github.com/dotnet/designs/blob/master/accepted/2019/runtime-binding.md>. About this setting, it says:
 
 > `RollForward` can have the following values:
 > 
@@ -178,7 +183,7 @@ The spec for this setting can be found at <https://github.com/dotnet/designs/blo
 > * `LatestMajor` -- Roll forward to highest major and highest minor version, even if requested major is present.
 > * `Disable` -- Do not roll forward. Only bind to specified version. This policy is not recommended for general use since it disable the ability to roll-forward to the latest patches. It is only recommended for testing.
 > 
-> `Minor` is the default setting. See [**Configuration Precedence**](https://github.com/dotnet/designs/blob/master/accepted/runtime-binding.md#configuration-precedence) for more information.
+> `Minor` is the default setting. See [**Configuration Precedence**](https://github.com/dotnet/designs/blob/master/accepted/2019/runtime-binding.md#configuration-precedence) for more information.
 > 
 > In all cases except `Disable` the highest available patch version is selected.
 > 
