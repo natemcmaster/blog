@@ -5,6 +5,8 @@ header: true
 group: navigation
 permalink: /profile/
 ---
+<script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
+
 <div class="post-header">
     <h1>About Me</h1>
 </div>
@@ -12,6 +14,16 @@ permalink: /profile/
     <div id="professional">
         <h2>@natemcmaster</h2>
         <p>Feel free to reach out and connect with me on social media</p>
+        {% if site.linkedin_username %}
+        <p> The best way to reach me is through
+            <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}">
+                <span class="icon-linkedin"></span>
+                LinkedIn
+            </a>.
+            <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="large" data-theme="light" data-type="VERTICAL" data-vanity="natemcmaster" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://www.linkedin.com/in/natemcmaster?trk=profile-badge">Nate McMaster</a></div>
+        </p>
+        {% endif %}
+        <p>But you can also try finding me on these platforms:</p>
         {% if site.github_username %}
         <p>
             <a href="https://github.com/{{ site.github_username }}">
@@ -28,13 +40,6 @@ permalink: /profile/
             </a>
         </p>
         {% endif %}
-            {% if site.linkedin_username %}
-        <p>
-            <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}">
-                <span class="icon-linkedin"></span>
-                LinkedIn
-            </a>
-        </p>
-        {% endif %}
+
     </div>
 </div>
